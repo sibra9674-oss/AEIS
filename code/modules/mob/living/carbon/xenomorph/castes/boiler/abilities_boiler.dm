@@ -662,7 +662,7 @@ GLOBAL_LIST_INIT(boiler_glob_image_list, list(
 // ***************************************
 /datum/action/ability/activable/xeno/high_pressure_spit
 	name = "High-Pressure Spit"
-	action_icon_state = "corrosive_glob_lance"
+	action_icon_state = "acid_lance_glob"
 	action_icon = 'icons/Xeno/actions/boiler.dmi'
 	desc = "Fire a high pressure glob of acid that knocks back, stuns, and shatters the target."
 	ability_cost = 75
