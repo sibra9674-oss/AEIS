@@ -52,6 +52,7 @@
 #define COOLDOWN_EVACUATION "evacuation"
 #define COOLDOWN_SENTIENT_HUGGER "sentient_hugger"
 #define COOLDOWN_EVASION_ACTIVATION "cooldown_evasion_activation"
+#define COOLDOWN_ACID_DASH_ACTIVATION "cooldown_acid_dash_activation"
 #define COOLDOWN_TANK_SWIVEL "tank_turret_swivel"
 #define COOLDOWN_ARMORED_HORN "cooldown_armored_horn"
 #define COOLDOWN_MOB_EX_ACT "mob_ex_act"
@@ -107,6 +108,9 @@
 #define COMSIG_CD_RESET(cd_index) "cd_reset_[cd_index]"
 
 #define TIMER_COOLDOWN_START(cd_source, cd_index, cd_time) LAZYSET(cd_source.cooldowns, cd_index, addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(end_cooldown), cd_source, cd_index), cd_time))
+
+/// Returns TRUE if still cooling down, FALSE otherwise
+#define TIMER_COOLDOWN_RUNNING(cd_source, cd_index) LAZYACCESS(cd_source.cooldowns, cd_index)
 
 /// Returns TRUE if still cooling down, FALSE otherwise
 #define TIMER_COOLDOWN_CHECK(cd_source, cd_index) LAZYACCESS(cd_source.cooldowns, cd_index)

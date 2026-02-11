@@ -20,6 +20,11 @@
 		/datum/xenomorph_skin/boiler/rouny,
 	)
 
+/mob/living/carbon/xenomorph/boiler/sizzler
+	icon = 'icons/Xeno/castes/boiler/sizzler.dmi'
+	caste_base_type = /datum/xeno_caste/boiler/sizzler
+	skins = null
+
 /mob/living/carbon/xenomorph/boiler/get_liquid_slowdown()
 	return BOILER_WATER_SLOWDOWN
 
@@ -38,6 +43,9 @@
 	return ..()
 
 /mob/living/carbon/xenomorph/boiler/primordial
+	upgrade = XENO_UPGRADE_PRIMO
+
+/mob/living/carbon/xenomorph/boiler/sizzler/primordial
 	upgrade = XENO_UPGRADE_PRIMO
 
 /mob/living/carbon/xenomorph/boiler/Corrupted

@@ -259,6 +259,33 @@
 	description = "Create a smokescreen for a getaway."
 	keybind_signal = COMSIG_XENOABILITY_ACID_SHROUD_SELECT
 
+/datum/keybinding/xeno/smokescreen_spit
+	name = "smokescreen_spit"
+	full_name = "Sizzler: Smokescreen Spit"
+	description = "Empowers your next spit to create a smokescreen."
+	keybind_signal = COMSIG_XENOABILITY_SMOKESCREEN_SPIT
+	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/steam_rush
+	name = "steam_rush"
+	full_name = "Sizzler: Steam Rush"
+	description = "Speeds up and increases slash damage."
+	keybind_signal = COMSIG_XENOABILITY_STEAM_RUSH
+	hotkey_keys = list("Space")
+
+/datum/keybinding/xeno/acid_dash
+	name = "acid_dash"
+	full_name = "Sizzler: Acid Dash"
+	description = "Quickly dash, leaving acid in your path and knocking down the first marine hit. Gain another cast if hitting a marine."
+	keybind_signal = COMSIG_XENOABILITY_ACID_DASH
+	hotkey_keys = list("F")
+/datum/keybinding/xeno/high_pressure_spit
+	name = "high_pressure_spit"
+	full_name = "Sizzler: High Pressure Spit"
+	description = "Fires a high pressure glob of acid that shatters and massively knocksback the target."
+	keybind_signal = COMSIG_XENOABILITY_HIGH_PRESSURE_SPIT
+	hotkey_keys = list("E")
+
 /datum/keybinding/xeno/acid_charge
 	name = "acid_charge"
 	full_name = "Bull: Acid charge"

@@ -34,6 +34,8 @@
 #define VREF_MUTABLE_SPIDERLING_CHARGES "VREF_SPIDERLING_CHARGES"
 // extra reference for how many boiler acid globs we have
 #define VREF_MUTABLE_AMMO_COUNTER "VREF_AMMO_COUNTER"
+// extra reference for how many stacks of sizzler steam rush we have
+#define VREF_MUTABLE_STEAMRUSH_STACKS "VREF_STEAMRUSH_STACKS"
 
 
 /// Actions that toggle on click/trigger

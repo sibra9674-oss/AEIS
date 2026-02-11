@@ -353,6 +353,9 @@
 	opacity = FALSE
 	smoke_traits = SMOKE_XENO|SMOKE_XENO_ACID|SMOKE_GASP|SMOKE_COUGH
 
+/obj/effect/particle_effect/smoke/xeno/burn/fast
+	lifetime = 1
+
 //Xeno neurotox smoke.
 /obj/effect/particle_effect/smoke/xeno/neuro
 	color = "#ffbf58" //Mustard orange?
@@ -363,11 +366,22 @@
 	color = "#ffbf58" //Mustard orange?
 	smoke_traits = SMOKE_XENO|SMOKE_XENO_NEURO|SMOKE_GASP|SMOKE_COUGH|SMOKE_HUGGER_PACIFY
 
+//Used for smokebomb nades.
+/obj/effect/particle_effect/smoke/xeno/burn/opaque
+	alpha = 255
+	opacity = TRUE
+	smoke_traits = SMOKE_XENO|SMOKE_XENO_ACID|SMOKE_GASP|SMOKE_COUGH|SMOKE_HUGGER_PACIFY
+
 ///Xeno neurotox smoke for neurospit; doesn't extinguish or blind
 /obj/effect/particle_effect/smoke/xeno/neuro/light
 	alpha = 60
 	opacity = FALSE
 	smoke_traits = SMOKE_XENO|SMOKE_XENO_NEURO|SMOKE_GASP|SMOKE_COUGH|SMOKE_NEURO_LIGHT //Light neuro smoke doesn't extinguish
+
+/// Can extinguish fire, but has significantly less lifetime.
+/obj/effect/particle_effect/smoke/xeno/neuro/light/fast
+	lifetime = 1
+	smoke_traits = SMOKE_XENO|SMOKE_XENO_NEURO|SMOKE_GASP|SMOKE_COUGH|SMOKE_EXTINGUISH|SMOKE_HUGGER_PACIFY
 
 /obj/effect/particle_effect/smoke/xeno/toxic
 	lifetime = 2
@@ -451,8 +465,14 @@
 /datum/effect_system/smoke_spread/xeno/acid
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn
 
+/datum/effect_system/smoke_spread/xeno/acid/opaque
+	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/opaque
+
 /datum/effect_system/smoke_spread/xeno/acid/light
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/light
+
+/datum/effect_system/smoke_spread/xeno/acid/fast
+	smoke_type = /obj/effect/particle_effect/smoke/xeno/burn/fast
 
 /datum/effect_system/smoke_spread/xeno/neuro
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/neuro
@@ -462,6 +482,9 @@
 
 /datum/effect_system/smoke_spread/xeno/neuro/light
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/neuro/light
+
+/datum/effect_system/smoke_spread/xeno/neuro/light/fast
+	smoke_type = /obj/effect/particle_effect/smoke/xeno/neuro/light/fast
 
 /datum/effect_system/smoke_spread/xeno/toxic
 	smoke_type = /obj/effect/particle_effect/smoke/xeno/toxic
