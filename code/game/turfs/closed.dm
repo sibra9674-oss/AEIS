@@ -20,7 +20,7 @@
 	return EXPLOSION_MAX_POWER
 
 /turf/closed/hitby(atom/movable/AM, speed = 5)
-	AM.stop_throw()
+	AM.set_throwing(FALSE)
 	AM.turf_collision(src, speed)
 	return TRUE
 

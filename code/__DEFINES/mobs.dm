@@ -159,6 +159,7 @@
 //=================================================
 
 #define EFFECT_STUN "stun"
+#define EFFECT_KNOCKDOWN "knockdown"
 #define EFFECT_PARALYZE "paralyze"
 #define EFFECT_UNCONSCIOUS "unconscious"
 #define EFFECT_STAGGER "stagger"
