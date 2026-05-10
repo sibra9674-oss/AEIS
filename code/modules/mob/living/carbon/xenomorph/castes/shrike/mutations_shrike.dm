@@ -1,5 +1,4 @@
 #define STATUS_EFFECT_LONE_HEALER /datum/status_effect/shrike/lone_healer
-#define STATUS_EFFECT_SHARED_CURE /datum/status_effect/shrike/shared_cure
 #define STATUS_EFFECT_RESISTANT_CURE /datum/status_effect/shrike/resistant_cure
 #define STATUS_EFFECT_SMASHING_FLING /datum/status_effect/shrike/smashing_fling
 #define STATUS_EFFECT_GRAVITY_TIDE /datum/status_effect/shrike/gravity_tide
@@ -28,6 +27,7 @@
 	child_name = null
 	status_effect_type = STATUS_EFFECT_LONE_HEALER
 	buff_desc = "Psychic Cure доступно на себя, 70% эффективности"
+	conflicting_mutation_types = list(STATUS_EFFECT_DELAYED_CONDITION)
 
 /atom/movable/screen/alert/status_effect/shrike/lone_healer
 	name = "Lone Healer"
@@ -55,47 +55,6 @@
 		return ..()
 	cure_ability.use_state_flags &= ~(ABILITY_TARGET_SELF)
 	cure_ability.self_heal_multiplier -= self_heal_multiplier_value
-	return ..()
-
-//
-//
-//
-
-/datum/xeno_mutation/shrike/shared_cure
-	name = "Shared Cure"
-	desc = "50% от восстановленного здоровья от Psychic Cure применяется к вам."
-	cost = 10
-	icon_state = "xenobuff_generic"
-	tier = 2
-	parent_name = null
-	child_name = null
-	status_effect_type = STATUS_EFFECT_SHARED_CURE
-	buff_desc = "50% здоровья от Psychic Cure к владельцу"
-
-/atom/movable/screen/alert/status_effect/shrike/shared_cure
-	name = "Shared Cure"
-	desc = "50% от восстановленного здоровья от Psychic Cure применяется к вам."
-	icon_state = "xenobuff_attack"
-
-/datum/status_effect/shrike/shared_cure
-	id = "upgrade_shared_cure"
-	alert_type = /atom/movable/screen/alert/status_effect/shrike/shared_cure
-
-	var/rebound_value = 0.5  // 50%
-
-/datum/status_effect/shrike/shared_cure/on_apply()
-	xenomorph_owner = owner
-	var/datum/action/ability/activable/xeno/psychic_cure/cure_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_cure]
-	if(!cure_ability)
-		return FALSE
-	cure_ability.rebound_percentage += rebound_value
-	return TRUE
-
-/datum/status_effect/shrike/shared_cure/on_remove()
-	var/datum/action/ability/activable/xeno/psychic_cure/cure_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_cure]
-	if(!cure_ability)
-		return ..()
-	cure_ability.rebound_percentage -= rebound_value
 	return ..()
 
 //
@@ -153,6 +112,7 @@
 	child_name = null
 	status_effect_type = STATUS_EFFECT_SMASHING_FLING
 	buff_desc = "Урон Psychic Fling 200% от melee, с столкновениями"
+	conflicting_mutation_types = list(STATUS_EFFECT_PSYCHIC_CHOKE)
 
 /atom/movable/screen/alert/status_effect/shrike/smashing_fling
 	name = "Smashing Fling"
@@ -243,6 +203,7 @@
 	child_name = null
 	status_effect_type = STATUS_EFFECT_BODY_FLING
 	buff_desc = "Fling себя/ксенов, 200% slash урона по людям"
+	conflicting_mutation_types = list(STATUS_EFFECT_PSYCHIC_CHOKE)
 
 /atom/movable/screen/alert/status_effect/shrike/body_fling
 	name = "Body Fling"
@@ -370,6 +331,7 @@
 	child_name = null
 	status_effect_type = STATUS_EFFECT_PSYCHIC_CHOKE
 	buff_desc = "Choke вместо Fling, порог прерывания 80"
+	conflicting_mutation_types = list(STATUS_EFFECT_BODY_FLING)
 
 /atom/movable/screen/alert/status_effect/shrike/psychic_choke
 	name = "Psychic Choke"

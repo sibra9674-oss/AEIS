@@ -156,11 +156,11 @@
 		return FALSE
 	if(QDELETED(target))
 		return FALSE
-	if(!isitem(target) && !ishuman(target) && !isdroid(target))	//only items, droids, and mobs can be flung.
+	if(!isitem(target) && !ishuman(target) && !isdroid(target) && !isxeno(target)) // Добавили isxeno
 		return FALSE
 	if(target.move_resist >= MOVE_FORCE_OVERPOWERING)
 		return FALSE
-	var/max_dist = 3 //the distance only goes to 3 now, since this is more of a utility then an attack.
+	var/max_dist = 3
 	if(!line_of_sight(owner, target, max_dist))
 		if(!silent)
 			to_chat(owner, span_warning("We must get closer to fling, our mind cannot reach this far."))
@@ -171,6 +171,10 @@
 			return FALSE
 		if(!CHECK_BITFIELD(use_state_flags|override_flags, ABILITY_IGNORE_DEAD_TARGET) && victim.stat == DEAD)
 			return FALSE
+	if(isxeno(target) && !(use_state_flags & ABILITY_TARGET_SELF)) // Разрешаем только если есть флаг
+		var/mob/living/carbon/xenomorph/xeno_target = target
+		if(!xeno_target.issamexenohive(owner))
+			return FALSE // Только союзники
 
 /datum/action/ability/activable/xeno/psychic_fling/use_ability(atom/target)
 	var/mob/living/carbon/human/victim = target
@@ -187,17 +191,24 @@
 	succeed_activate()
 	add_cooldown()
 	if(ishuman(victim))
+		var/mob/living/carbon/human/human_target = victim
 		if(stun_duration)
-			victim.Stun(stun_duration)
-			victim.drop_all_held_items()
+			human_target.Stun(stun_duration)
+			human_target.drop_all_held_items()
 		if(damage_multiplier)
-			victim.apply_damage(xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier * damage_multiplier, BRUTE, blocked = MELEE, updating_health = TRUE)
-		RegisterSignal(victim, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_post_throw))
+			human_target.apply_damage(xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier * damage_multiplier, BRUTE, blocked = MELEE, updating_health = TRUE)
+		RegisterSignal(human_target, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_post_throw))
+		if(collusion_paralyze_duration || collusion_damage_multiplier)
+			RegisterSignal(human_target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
+		else
+			human_target.add_pass_flags(PASS_MOB, THROW_TRAIT)
+		shake_camera(human_target, 2, 1)
+	else if(isxeno(victim) && (use_state_flags & ABILITY_TARGET_SELF))
+		// Body Fling
 		if(collusion_paralyze_duration || collusion_damage_multiplier)
 			RegisterSignal(victim, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
 		else
 			victim.add_pass_flags(PASS_MOB, THROW_TRAIT)
-		shake_camera(victim, 2, 1)
 
 	var/atom/movable/movable_target = target
 	var/facing = xeno_owner == movable_target ? xeno_owner.dir : get_dir(xeno_owner, movable_target)
@@ -231,6 +242,7 @@
 	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
 	var/damage = xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier * collusion_damage_multiplier
 	var/valid_impact = FALSE
+
 	if(isliving(hit_atom))
 		valid_impact = TRUE
 		var/mob/living/living_hit = hit_atom
@@ -442,7 +454,7 @@
 	if(owner.do_actions)
 		return FALSE
 
-	owner.face_atom(target) //Face the target so we don't look stupid
+	owner.face_atom(target)
 	if(!do_after(owner, 1 SECONDS, NONE, target, BUSY_ICON_FRIENDLY, BUSY_ICON_MEDICAL))
 		return FALSE
 
@@ -459,9 +471,12 @@
 	playsound(target,'sound/effects/magic.ogg', 75, 1)
 	new /obj/effect/temp_visual/telekinesis(get_turf(target))
 	var/mob/living/carbon/xenomorph/patient = target
+
+	// heal_wounds возвращает список [старое_знач, новое_знач]
 	var/healing_results = patient.heal_wounds(xeno_owner == patient ? SHRIKE_CURE_HEAL_MULTIPLIER * self_heal_multiplier : SHRIKE_CURE_HEAL_MULTIPLIER)
 	patient.adjust_sunder(xeno_owner == patient ?  -SHRIKE_CURE_HEAL_MULTIPLIER * self_heal_multiplier : -SHRIKE_CURE_HEAL_MULTIPLIER)
-	if(patient.health > 0) //If they are not in crit after the heal, let's remove evil debuffs.
+
+	if(patient.health > 0)
 		patient.SetUnconscious(0)
 		patient.SetStun(0)
 		patient.SetParalyzed(0)
@@ -469,10 +484,14 @@
 		patient.set_slowdown(0)
 	patient.update_health()
 
+	// Расчёт восстановленного здоровья: новое - старое
 	var/amount_healed = healing_results[2] - healing_results[1]
+
+	// Shared Cure: отхил кастера
 	if(rebound_percentage && amount_healed)
 		var/amount_to_heal = amount_healed * rebound_percentage
 		HEAL_XENO_DAMAGE(xeno_owner, amount_to_heal, FALSE)
+
 	if(resin_jelly_duration)
 		xeno_owner.apply_status_effect(STATUS_EFFECT_RESIN_JELLY_COATING, resin_jelly_duration)
 		xeno_owner.emote("roar")
