@@ -57,6 +57,10 @@
 	cure_ability.self_heal_multiplier -= self_heal_multiplier_value
 	return ..()
 
+//
+//
+//
+
 /datum/xeno_mutation/shrike/shared_cure
 	name = "Shared Cure"
 	desc = "50% от восстановленного здоровья от Psychic Cure применяется к вам."
@@ -94,6 +98,10 @@
 	cure_ability.rebound_percentage -= rebound_value
 	return ..()
 
+//
+//
+//
+
 /datum/xeno_mutation/shrike/resistant_cure
 	name = "Resistant Cure"
 	desc = "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 90 секунд."
@@ -130,6 +138,10 @@
 		return ..()
 	cure_ability.resin_jelly_duration -= duration_value
 	return ..()
+
+//
+//
+//
 
 /datum/xeno_mutation/shrike/smashing_fling
 	name = "Smashing Fling"
@@ -174,6 +186,10 @@
 	fling_ability.collusion_damage_multiplier -= multiplier_value
 	return ..()
 
+//
+//
+//
+
 /datum/xeno_mutation/shrike/gravity_tide
 	name = "Gravity Tide"
 	desc = "Unrelenting Force тянет объекты к вам, затем отбрасывает их. Расстояние отбрасывания увеличено на 1."
@@ -213,6 +229,10 @@
 	force_ability.throwing_distance -= distance_value
 	return ..()
 
+//
+//
+//
+
 /datum/xeno_mutation/shrike/body_fling
 	name = "Body Fling"
 	desc = "Psychic Fling можно использовать на себя и союзных ксеноморфов. Люди, попавшие под брошенного ксеноморфа, парализуются на 2 секунды и получают 200% от вашего slash урона."
@@ -243,7 +263,6 @@
 	fling_ability.use_state_flags |= ABILITY_TARGET_SELF
 	fling_ability.collusion_damage_multiplier += multiplier_value
 	fling_ability.collusion_paralyze_duration += 2 SECONDS
-	fling_ability.collusion_xenos_only = TRUE
 	return TRUE
 
 /datum/status_effect/shrike/body_fling/on_remove()
@@ -253,8 +272,11 @@
 	fling_ability.use_state_flags &= ~ABILITY_TARGET_SELF
 	fling_ability.collusion_damage_multiplier -= multiplier_value
 	fling_ability.collusion_paralyze_duration -= 2 SECONDS
-	fling_ability.collusion_xenos_only = initial(fling_ability.collusion_xenos_only)
 	return ..()
+
+//
+//
+//
 
 /datum/xeno_mutation/shrike/delayed_condition
 	name = "Delayed Condition"
@@ -293,6 +315,10 @@
 	cure_ability.delayed_status_duration -= duration_value
 	return ..()
 
+//
+//
+//
+
 /datum/xeno_mutation/shrike/deflective_force
 	name = "Deflective Force"
 	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снародов перезарядка Psychic Scream становится 40% от оригинальной."
@@ -329,6 +355,10 @@
 		return ..()
 	force_ability.projectile_cooldown_mulitplier -= multiplier_value
 	return ..()
+
+//
+//
+//
 
 /datum/xeno_mutation/shrike/psychic_choke
 	name = "Psychic Choke"
@@ -373,8 +403,4 @@
 	fling_ability.give_action(xenomorph_owner)
 	return ..()
 
-/datum/status_effect/shrike/psychic_choke/on_xenomorph_upgrade()
-	// Since upgrading gives missing abilities, we must ensure fling stays removed
-	var/datum/action/ability/activable/xeno/psychic_fling/fling_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_fling]
-	if(fling_ability)
-		fling_ability.remove_action(xenomorph_owner)
+// on_xenomorph_upgrade не существует в этой версии, пропускаем

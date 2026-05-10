@@ -290,7 +290,7 @@
 	succeed_activate()
 	add_cooldown()
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_icons)), 1 SECONDS)
-	owner.icon_state = "[xeno_owner.xeno_caste.caste_name][(xeno_owner.xeno_flags & XENO_ROUNY) ? " rouny" : ""] Screeching"
+	xeno_owner.icon_state = "[xeno_owner.xeno_caste.caste_name] Screeching"
 	if(target) // Keybind use doesn't have a target
 		xeno_owner.face_atom(target)
 	starting_direction = xeno_owner.dir
