@@ -57,11 +57,6 @@
 	cure_ability.self_heal_multiplier -= self_heal_multiplier_value
 	return ..()
 
-/datum/status_effect/shrike/lone_healer/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Psychic Cure может использоваться на себя. Лечение себя эффективно только на 70%."
-
 /datum/xeno_mutation/shrike/shared_cure
 	name = "Shared Cure"
 	desc = "50% от восстановленного здоровья от Psychic Cure применяется к вам."
@@ -99,11 +94,6 @@
 	cure_ability.rebound_percentage -= rebound_value
 	return ..()
 
-/datum/status_effect/shrike/shared_cure/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "50% от восстановленного здоровья от Psychic Cure применяется к вам."
-
 /datum/xeno_mutation/shrike/resistant_cure
 	name = "Resistant Cure"
 	desc = "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 90 секунд."
@@ -140,11 +130,6 @@
 		return ..()
 	cure_ability.resin_jelly_duration -= duration_value
 	return ..()
-
-/datum/status_effect/shrike/resistant_cure/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 90 секунд."
 
 /datum/xeno_mutation/shrike/smashing_fling
 	name = "Smashing Fling"
@@ -189,11 +174,6 @@
 	fling_ability.collusion_damage_multiplier -= multiplier_value
 	return ..()
 
-/datum/status_effect/shrike/smashing_fling/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Psychic Fling наносит 200% урона, равного вашему melee урону, позволяет столкновения, но больше не оглушает сразу. При столкновении с человеком/объектом/стеной: оба получают кратковременный паралич и снова получают урон."
-
 /datum/xeno_mutation/shrike/gravity_tide
 	name = "Gravity Tide"
 	desc = "Unrelenting Force тянет объекты к вам, затем отбрасывает их. Расстояние отбрасывания увеличено на 1."
@@ -233,11 +213,6 @@
 	force_ability.throwing_distance -= distance_value
 	return ..()
 
-/datum/status_effect/shrike/gravity_tide/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Unrelenting Force тянет объекты к вам, затем отбрасывает их. Расстояние отбрасывания увеличено на 1."
-
 /datum/xeno_mutation/shrike/body_fling
 	name = "Body Fling"
 	desc = "Psychic Fling можно использовать на себя и союзных ксеноморфов. Люди, попавшие под брошенного ксеноморфа, парализуются на 2 секунды и получают 200% от вашего slash урона."
@@ -248,7 +223,6 @@
 	child_name = null
 	status_effect_type = STATUS_EFFECT_BODY_FLING
 	buff_desc = "Fling себя/ксенов, 200% slash урона по людям"
-	conflicting_mutations = list(/datum/xeno_mutation/shrike/psychic_choke)
 
 /atom/movable/screen/alert/status_effect/shrike/body_fling
 	name = "Body Fling"
@@ -266,7 +240,7 @@
 	var/datum/action/ability/activable/xeno/psychic_fling/fling_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_fling]
 	if(!fling_ability)
 		return FALSE
-	fing_ability.use_state_flags |= ABILITY_TARGET_SELF
+	fling_ability.use_state_flags |= ABILITY_TARGET_SELF
 	fling_ability.collusion_damage_multiplier += multiplier_value
 	fling_ability.collusion_paralyze_duration += 2 SECONDS
 	fling_ability.collusion_xenos_only = TRUE
@@ -281,11 +255,6 @@
 	fling_ability.collusion_paralyze_duration -= 2 SECONDS
 	fling_ability.collusion_xenos_only = initial(fling_ability.collusion_xenos_only)
 	return ..()
-
-/datum/status_effect/shrike/body_fling/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Psychic Fling можно использовать на себя и союзных ксеноморфов. Люди, попавшие под брошенного ксеноморфа, парализуются на 2 секунды и получают 200% от вашего slash урона."
 
 /datum/xeno_mutation/shrike/delayed_condition
 	name = "Delayed Condition"
@@ -324,14 +293,9 @@
 	cure_ability.delayed_status_duration -= duration_value
 	return ..()
 
-/datum/status_effect/shrike/delayed_condition/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Psychic Cure дает иммунитет к замедлению и задерживает все входящие эффекты оглушения/падения/шатания на 20 секунд. По окончании задержки эффекты применяются повторно."
-
 /datum/xeno_mutation/shrike/deflective_force
 	name = "Deflective Force"
-	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снарядов перезарядка Psychic Scream становится 40% от оригинальной."
+	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снародов перезарядка Psychic Scream становится 40% от оригинальной."
 	cost = 12
 	icon_state = "xenobuff_generic"
 	tier = 3
@@ -342,7 +306,7 @@
 
 /atom/movable/screen/alert/status_effect/shrike/deflective_force
 	name = "Deflective Force"
-	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снарядов перезарядка Psychic Scream становится 40% от оригинальной."
+	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снародов перезарядка Psychic Scream становится 40% от оригинальной."
 	icon_state = "xenobuff_attack"
 
 /datum/status_effect/shrike/deflective_force
@@ -366,11 +330,6 @@
 	force_ability.projectile_cooldown_mulitplier -= multiplier_value
 	return ..()
 
-/datum/status_effect/shrike/deflective_force/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снарядов перезарядка Psychic Scream становится 40% от оригинальной."
-
 /datum/xeno_mutation/shrike/psychic_choke
 	name = "Psychic Choke"
 	desc = "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 80."
@@ -381,7 +340,6 @@
 	child_name = null
 	status_effect_type = STATUS_EFFECT_PSYCHIC_CHOKE
 	buff_desc = "Choke вместо Fling, порог прерывания 80"
-	conflicting_mutations = list(/datum/xeno_mutation/shrike/body_fling)
 
 /atom/movable/screen/alert/status_effect/shrike/psychic_choke
 	name = "Psychic Choke"
@@ -420,8 +378,3 @@
 	var/datum/action/ability/activable/xeno/psychic_fling/fling_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_fling]
 	if(fling_ability)
 		fling_ability.remove_action(xenomorph_owner)
-
-/datum/status_effect/shrike/psychic_choke/get_desc_for_alert(new_amount)
-	if(!new_amount)
-		return ..()
-	return "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 80."

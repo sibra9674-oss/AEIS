@@ -114,12 +114,12 @@
 			hugger.kill_hugger()
 			xeno_owner.dropItemToGround(hugger)
 		var/mob/living/carbon/human/human_target = movable_target
-		victim.apply_effects(0.4, 0.1) 	// The fling stuns you enough to remove your gun, otherwise the marine effectively isn't stunned for long.
-		shake_camera(victim, 2, 1)
+		human_target.apply_effects(0.4, 0.1) 	// The fling stuns you enough to remove your gun, otherwise the marine effectively isn't stunned for long.
+		shake_camera(human_target, 2, 1)
 
-	var/grab_distance = (isitem(victim)) ? 5 : 4 //Objects get flung further away.
+	var/grab_distance = (isitem(movable_target)) ? 5 : 4 //Objects get flung further away.
 
-	victim.throw_at(owner, grab_distance, 1, owner, TRUE)
+	movable_target.throw_at(owner, grab_distance, 1, owner, TRUE)
 
 // ***************************************
 // *********** Psychic Fling
@@ -135,6 +135,16 @@
 		KEYBINDING_NORMAL = COMSIG_XENOABILITY_PSYCHIC_FLING,
 	)
 	target_flags = ABILITY_MOB_TARGET
+	/// How long in deciseconds should humans be stunned? If they are to be stunned, they will also drop held items.
+	var/stun_duration = 2 SECONDS
+	/// Should humans take damage immediately? If so, what is the multiplier of the owner's melee damage for determining how much damage to deal?
+	var/damage_multiplier = 0
+	/// If humans were to collide with something, how long in deciseconds should they be paralyzed for collusion?
+	var/collusion_paralyze_duration = 0
+	/// If humans were to collide with something, what is the multiplier of the owner's melee damage for determining how much damage to deal?
+	var/collusion_damage_multiplier = 0
+	/// Can this ability be used on xenomorphs? If so, what amount should the cooldown duration be mulitplied by?
+	var/friendly_cooldown_multiplier = 0
 
 /datum/action/ability/activable/xeno/psychic_fling/on_cooldown_finish()
 	to_chat(owner, span_notice("We gather enough mental strength to fling something again."))
@@ -163,7 +173,7 @@
 			return FALSE
 
 /datum/action/ability/activable/xeno/psychic_fling/use_ability(atom/target)
-	var/mob/living/victim = target
+	var/mob/living/carbon/human/victim = target
 	GLOB.round_statistics.psychic_flings++
 	SSblackbox.record_feedback(FEEDBACK_TALLY, "round_statistics", 1, "psychic_flings")
 
@@ -178,17 +188,18 @@
 	add_cooldown()
 	if(ishuman(victim))
 		if(stun_duration)
-			human_target.Stun(stun_duration)
-			human_target.drop_all_held_items()
+			victim.Stun(stun_duration)
+			victim.drop_all_held_items()
 		if(damage_multiplier)
-			human_target.apply_damage(xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier * damage_multiplier, BRUTE, blocked = MELEE, updating_health = TRUE)
-		RegisterSignal(human_target, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_post_throw))
+			victim.apply_damage(xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier * damage_multiplier, BRUTE, blocked = MELEE, updating_health = TRUE)
+		RegisterSignal(victim, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_post_throw))
 		if(collusion_paralyze_duration || collusion_damage_multiplier)
-			RegisterSignal(human_target, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
+			RegisterSignal(victim, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
 		else
-			human_target.add_pass_flags(PASS_MOB, THROW_TRAIT)
-		shake_camera(human_target, 2, 1)
+			victim.add_pass_flags(PASS_MOB, THROW_TRAIT)
+		shake_camera(victim, 2, 1)
 
+	var/atom/movable/movable_target = target
 	var/facing = xeno_owner == movable_target ? xeno_owner.dir : get_dir(xeno_owner, movable_target)
 	var/fling_distance = (isitem(movable_target)) ? 4 : 3 // Objects get flung further away.
 	var/turf/T = movable_target.loc
@@ -276,8 +287,10 @@
 	return ..()
 
 /datum/action/ability/activable/xeno/unrelenting_force/use_ability(atom/target)
-	addtimer(CALLBACK(xeno_owner, TYPE_PROC_REF(/mob, update_icons)), 1 SECONDS)
-	xeno_owner.icon_state = "[xeno_owner.xeno_caste.caste_name][(xeno_owner.xeno_flags & XENO_ROUNY) ? " rouny" : ""] Screeching"
+	succeed_activate()
+	add_cooldown()
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, update_icons)), 1 SECONDS)
+	owner.icon_state = "[xeno_owner.xeno_caste.caste_name][(xeno_owner.xeno_flags & XENO_ROUNY) ? " rouny" : ""] Screeching"
 	if(target) // Keybind use doesn't have a target
 		xeno_owner.face_atom(target)
 	starting_direction = xeno_owner.dir
@@ -312,20 +325,21 @@
 				var/mob/living/carbon/human/H = affected
 				if(H.stat == DEAD)
 					continue
+				H.apply_effects(paralyze = 2 SECONDS)
+				shake_camera(H, 2, 1)
 			if(projectile_cooldown_mulitplier && istype(affected, /atom/movable/projectile))
 				things_to_deflect += affected
 				continue
-				H.apply_effects(paralyze = 2 SECONDS)
-				shake_camera(H, 2, 1)
 			things_to_throw += affected
 
 	for(var/atom/movable/affected AS in things_to_throw)
-		var/throwlocation = affected.loc
+		var/atom/movable/movable_target = affected
+		var/throwlocation = movable_target.loc
 		for(var/x in 1 to throwing_distance)
 			throwlocation = get_step(throwlocation, rebound_throwing ? REVERSE_DIR(starting_direction) : starting_direction)
 		if(rebound_throwing)
-			RegisterSignal(affected, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_throw_end))
-		affected.throw_at(throwlocation, throwing_distance, 1, xeno_owner, TRUE)
+			RegisterSignal(movable_target, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_throw_end))
+		movable_target.throw_at(throwlocation, throwing_distance, 1, xeno_owner, TRUE)
 
 	var/damage_deflected = 0
 	for(var/atom/movable/projectile/affected_projectile AS in things_to_deflect)
