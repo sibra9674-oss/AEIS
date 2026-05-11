@@ -19,10 +19,10 @@
 
 /datum/xeno_mutation/shrike/lone_healer
 	name = "Lone Healer"
-	desc = "Psychic Cure может использоваться на себя. Лечение себя эффективно только на 70%."
-	cost = 12
+	desc = "Psychic Cure может использоваться на себя. Лечение себя эффективно только на 70%. Несовместим с Delayed condition."
+	cost = 15
 	icon_state = "xenobuff_generic"
-	tier = 2
+	tier = 1
 	parent_name = null
 	child_name = null
 	status_effect_type = STATUS_EFFECT_LONE_HEALER
@@ -64,9 +64,9 @@
 /datum/xeno_mutation/shrike/resistant_cure
 	name = "Resistant Cure"
 	desc = "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 90 секунд."
-	cost = 15
+	cost = 10
 	icon_state = "xenobuff_generic"
-	tier = 2
+	tier = 1
 	parent_name = null
 	child_name = null
 	status_effect_type = STATUS_EFFECT_RESISTANT_CURE
@@ -104,15 +104,15 @@
 
 /datum/xeno_mutation/shrike/smashing_fling
 	name = "Smashing Fling"
-	desc = "Psychic Fling наносит 200% урона, равного вашему melee урону, позволяет столкновения, но больше не оглушает сразу. При столкновении с человеком/объектом/стеной: оба получают кратковременный паралич и снова получают урон."
-	cost = 12
+	desc = "Psychic Fling наносит 200% урона, равного вашему melee урону, позволяет столкновения, но больше не оглушает сразу. При столкновении с человеком/объектом/стеной: оба получают кратковременный паралич и снова получают урон. Несовместим с Psychic choke и Body fling."
+	cost = 15
 	icon_state = "xenobuff_generic"
-	tier = 2
+	tier = 1
 	parent_name = null
 	child_name = null
 	status_effect_type = STATUS_EFFECT_SMASHING_FLING
 	buff_desc = "Урон Psychic Fling 200% от melee, с столкновениями"
-	conflicting_mutation_types = list(STATUS_EFFECT_PSYCHIC_CHOKE)
+	conflicting_mutation_types = list(STATUS_EFFECT_PSYCHIC_CHOKE, STATUS_EFFECT_BODY_FLING)
 
 /atom/movable/screen/alert/status_effect/shrike/smashing_fling
 	name = "Smashing Fling"
@@ -152,14 +152,15 @@
 
 /datum/xeno_mutation/shrike/gravity_tide
 	name = "Gravity Tide"
-	desc = "Unrelenting Force тянет объекты к вам, затем отбрасывает их. Расстояние отбрасывания увеличено на 1."
-	cost = 8
+	desc = "Unrelenting Force тянет объекты к вам, затем отбрасывает их. Расстояние отбрасывания увеличено на 1. Несовместим с Deflective force."
+	cost = 10
 	icon_state = "xenobuff_generic"
-	tier = 2
+	tier = 1
 	parent_name = null
 	child_name = null
 	status_effect_type = STATUS_EFFECT_GRAVITY_TIDE
 	buff_desc = "Отбрасывание Unrelenting Force увеличено на 1"
+	conflicting_mutation_types = list(STATUS_EFFECT_DEFLECTIVE_FORCE)
 
 /atom/movable/screen/alert/status_effect/shrike/gravity_tide
 	name = "Gravity Tide"
@@ -170,7 +171,7 @@
 	id = "upgrade_gravity_tide"
 	alert_type = /atom/movable/screen/alert/status_effect/shrike/gravity_tide
 
-	var/distance_value = 1  // Только один уровень - 1
+	var/distance_value = 1
 
 /datum/status_effect/shrike/gravity_tide/on_apply()
 	xenomorph_owner = owner
@@ -195,15 +196,15 @@
 
 /datum/xeno_mutation/shrike/body_fling
 	name = "Body Fling"
-	desc = "Psychic Fling можно использовать на себя и союзных ксеноморфов. Люди, попавшие под брошенного ксеноморфа, парализуются на 2 секунды и получают 200% от вашего slash урона."
+	desc = "Psychic Fling можно использовать на себя и союзных ксеноморфов. Люди, попавшие под брошенного ксеноморфа, парализуются на 2 секунды и получают 200% от вашего slash урона. Несовместим с Psychic choke и Smashing fling."
 	cost = 10
 	icon_state = "xenobuff_generic"
-	tier = 2
+	tier = 1
 	parent_name = null
 	child_name = null
 	status_effect_type = STATUS_EFFECT_BODY_FLING
 	buff_desc = "Fling себя/ксенов, 200% slash урона по людям"
-	conflicting_mutation_types = list(STATUS_EFFECT_PSYCHIC_CHOKE)
+	conflicting_mutation_types = list(STATUS_EFFECT_PSYCHIC_CHOKE, STATUS_EFFECT_SMASHING_FLING)
 
 /atom/movable/screen/alert/status_effect/shrike/body_fling
 	name = "Body Fling"
@@ -241,14 +242,15 @@
 
 /datum/xeno_mutation/shrike/delayed_condition
 	name = "Delayed Condition"
-	desc = "Psychic Cure дает иммунитет к замедлению и задерживает все входящие эффекты оглушения/падения/шатания на 20 секунд. По окончании задержки эффекты применяются повторно."
+	desc = "Psychic Cure дает иммунитет к замедлению и задерживает все входящие эффекты оглушения/падения/шатания на 20 секунд. По окончании задержки эффекты применяются повторно. Несовместим с Lone healer."
 	cost = 15
 	icon_state = "xenobuff_generic"
-	tier = 3
+	tier = 1
 	parent_name = null
 	child_name = null
 	status_effect_type = STATUS_EFFECT_DELAYED_CONDITION
 	buff_desc = "Задержка статус-эффектов на 20с"
+	conflicting_mutation_types = list(STATUS_EFFECT_LONE_HEALER)
 
 /atom/movable/screen/alert/status_effect/shrike/delayed_condition
 	name = "Delayed Condition"
@@ -282,14 +284,15 @@
 
 /datum/xeno_mutation/shrike/deflective_force
 	name = "Deflective Force"
-	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снародов перезарядка Psychic Scream становится 40% от оригинальной."
-	cost = 12
+	desc = "Unrelenting Force теперь отражает все снаряды в своей области. При отражении >50 урона от снародов перезарядка Psychic Scream становится 40% от оригинальной. Несовместим с Gravity tide."
+	cost = 10
 	icon_state = "xenobuff_generic"
-	tier = 3
+	tier = 1
 	parent_name = null
 	child_name = null
 	status_effect_type = STATUS_EFFECT_DEFLECTIVE_FORCE
 	buff_desc = "Отражение снарядов, перезарядка крика 40%"
+	conflicting_mutation_types = list(STATUS_EFFECT_GRAVITY_TIDE)
 
 /atom/movable/screen/alert/status_effect/shrike/deflective_force
 	name = "Deflective Force"
@@ -323,15 +326,15 @@
 
 /datum/xeno_mutation/shrike/psychic_choke
 	name = "Psychic Choke"
-	desc = "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 80."
+	desc = "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 80. Несовместим с Body fling и Smashing fling."
 	cost = 10
 	icon_state = "xenobuff_generic"
-	tier = 2
+	tier = 1
 	parent_name = null
 	child_name = null
 	status_effect_type = STATUS_EFFECT_PSYCHIC_CHOKE
 	buff_desc = "Choke вместо Fling, порог прерывания 80"
-	conflicting_mutation_types = list(STATUS_EFFECT_BODY_FLING)
+	conflicting_mutation_types = list(STATUS_EFFECT_BODY_FLING, STATUS_EFFECT_SMASHING_FLING)
 
 /atom/movable/screen/alert/status_effect/shrike/psychic_choke
 	name = "Psychic Choke"
@@ -346,23 +349,27 @@
 
 /datum/status_effect/shrike/psychic_choke/on_apply()
 	xenomorph_owner = owner
-	// Remove fling
-	var/datum/action/ability/activable/xeno/psychic_fling/fling_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_fling]
-	if(fling_ability)
-		fling_ability.remove_action(xenomorph_owner)
-	// Add choke
+	// Удаляем ВСЕ копии Psychic Fling, чтобы не плодить дубликаты
+	for(var/datum/action/ability/activable/xeno/psychic_fling/fling in xenomorph_owner.actions)
+		fling.remove_action(xenomorph_owner)
+	// Добавляем Choke
 	var/datum/action/ability/activable/xeno/psychic_choke/choke_ability = new()
 	choke_ability.give_action(xenomorph_owner)
 	return TRUE
 
 /datum/status_effect/shrike/psychic_choke/on_remove()
-	// Remove choke
-	var/datum/action/ability/activable/xeno/psychic_choke/choke_ability = xenomorph_owner.actions_by_path[/datum/action/ability/activable/xeno/psychic_choke]
-	if(choke_ability)
-		choke_ability.remove_action(xenomorph_owner)
-	// Restore fling
-	var/datum/action/ability/activable/xeno/psychic_fling/fling_ability = new()
-	fling_ability.give_action(xenomorph_owner)
+	// Удаляем ВСЕ копии Choke
+	for(var/datum/action/ability/activable/xeno/psychic_choke/choke in xenomorph_owner.actions)
+		choke.remove_action(xenomorph_owner)
+	// Проверяем, есть ли уже Fling у моба
+	var/has_fling = FALSE
+	for(var/datum/action/ability/activable/xeno/psychic_fling/fling in xenomorph_owner.actions)
+		has_fling = TRUE
+		break
+	// Добавляем Fling ТОЛЬКО если его нет
+	if(!has_fling)
+		var/datum/action/ability/activable/xeno/psychic_fling/fling_ability = new()
+		fling_ability.give_action(xenomorph_owner)
 	return ..()
 
 // on_xenomorph_upgrade не существует в этой версии, пропускаем
