@@ -253,6 +253,12 @@
 	keybind_signal = COMSIG_XENOABILITY_ACID_SHROUD
 	hotkey_keys = list("Q")
 
+/datum/keybinding/xeno/acid_shroud_melter
+	name = "Melter: Acid Shroud"
+	full_name = "Melter: Acid Shroud"
+	description = "Create a smokescreen for a getaway."
+	keybind_signal = COMSIG_XENOABILITY_ACID_SHROUD_MELTER
+
 /datum/keybinding/xeno/acid_shroud_select
 	name = "select_acid_shroud"
 	full_name = "Boiler: Select Acid Shroud"
@@ -751,6 +757,18 @@
 	keybind_signal = COMSIG_XENOABILITY_ACID_DASH
 	hotkey_keys = list("E")
 
+/datum/keybinding/xeno/acid_dash_melter
+	name = "Melter: Acid Dash"
+	full_name = "Melter: Acid Dash"
+	description = "Quickly dash, leaving acid in your path and knocking down the first marine hit. Has reset potential."
+	keybind_signal = COMSIG_XENOABILITY_ACID_DASH_MELTER
+
+/datum/keybinding/xeno/acidic_missile
+	name = "Melter: Acidic Missile"
+	full_name = "Melter: Acid Missile"
+	description = "Begin building up acid. If you're already building up acid, launch yourself at a target and splash acid all around you."
+	keybind_signal = COMSIG_XENOABILITY_ACIDIC_MISSILE
+
 /datum/keybinding/xeno/dodge
 	name = "Dodge"
 	full_name = "Dancer: Dodge"
@@ -785,6 +803,42 @@
 	description = "Inject another xenomorph with your built-up adrenaline, increasing their movement speed considerably for 6 seconds. Puts dodge on cooldown when used. Less effect on quick xenos."
 	keybind_signal = COMSIG_XENOABILITY_BATONPASS
 	hotkey_keys = list("C")
+
+/datum/keybinding/xeno/abduct
+	name = "Abduct"
+	full_name = "Praetorian: Abduct"
+	description = "After a delay, grab marines from a 7 tiles away. Canceling early has consequences."
+	keybind_signal = COMSIG_XENOABILITY_ABDUCT
+
+/datum/keybinding/xeno/dislocate
+	name = "Dislocate"
+	full_name = "Praetorian: Dislocate"
+	description = "Punch a marine and knock them back by two tiles."
+	keybind_signal = COMSIG_XENOABILITY_DISLOCATE
+
+/datum/keybinding/xeno/item_throw
+	name = "Item Throw"
+	full_name = "Praetorian: Item Throw"
+	description = "Pick up an item and throw it. Damage and range varies based on item's size."
+	keybind_signal = COMSIG_XENOABILITY_ITEM_THROW
+
+/datum/keybinding/xeno/tail_lash
+	name = "Tail Lash"
+	full_name = "Praetorian: Tail Lash"
+	description = "Knock back marines in a 2x3 radius where you're facing by two tiles."
+	keybind_signal = COMSIG_XENOABILITY_TAIL_LASH
+
+/datum/keybinding/xeno/tail_lash_select
+	name = "Tail Lash (Select)"
+	full_name = "Praetorian: Select Tail Lash"
+	description = "Knock back marines in a 2x3 radius where you're facing by two tiles."
+	keybind_signal = COMSIG_XENOABILITY_TAIL_LASH_SELECT
+
+/datum/keybinding/xeno/advance_oppressor
+	name = "Advance (Oppressor)"
+	full_name = "Praetorian: Advance"
+	description = "Launch yourself with tremendous speed toward a location. Hitting a marine will cause them to be launched incredibly far."
+	keybind_signal = COMSIG_XENOABILITY_ADVANCE_OPPRESSOR
 
 /datum/keybinding/xeno/screech
 	name = "screech"
@@ -968,6 +1022,41 @@
 	description = "Fires a scattershot of 6 acid globules which create acid puddles on impact or at the end of their range."
 	keybind_signal = COMSIG_XENOABILITY_SCATTER_SPIT
 	hotkey_keys = list("V")
+
+/datum/keybinding/xeno/toss_grenade
+	name = "toss_grenade"
+	full_name = "Spitter: Toss Grenade"
+	description = "Toss a grenade at your target."
+	keybind_signal = COMSIG_XENOABILITY_TOSS_GRENADE
+	hotkey_keys = list("R")
+
+/datum/keybinding/xeno/pick_grenade
+	name = "pick_grenade"
+	full_name = "Spitter: Pick Grenade"
+	description = "Pick which grenade to use with Toss Grenade."
+	keybind_signal = COMSIG_XENOABILITY_PICK_GRENADE
+	hotkey_keys = list("F")
+
+/datum/keybinding/xeno/acid_mine
+	name = "acid_mine"
+	full_name = "Spitter: Place Acid Mine"
+	description = "Place a Acid Mine at your location."
+	keybind_signal = COMSIG_XENOABILITY_ACID_MINE
+	hotkey_keys = list("G")
+
+/datum/keybinding/xeno/gas_mine
+	name = "gas_mine"
+	full_name = "Spitter: Gas Mine"
+	description = "Place a Gas Mine at your location."
+	keybind_signal = COMSIG_XENOABILITY_GAS_MINE
+	hotkey_keys = list("H")
+
+/datum/keybinding/xeno/acid_rocket
+	name = "acid_rocket"
+	full_name = "Spitter: Acid Rocket"
+	description = "Fire a acid rocket at your target, after a short charge up."
+	keybind_signal = COMSIG_XENOABILITY_ACID_ROCKET
+	hotkey_keys = list("Y")
 
 /datum/keybinding/xeno/slime_grenade
 	name = "slime_grenade"
