@@ -734,6 +734,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define BOILER_LUMINOSITY_AMMO_CORROSIVE_COLOR LIGHT_COLOR_GREEN
 #define BOILER_BOMBARD_COOLDOWN_REDUCTION 1.5 //Amount of seconds each glob stored reduces bombard cooldown by
 #define	BOILER_LUMINOSITY_THRESHOLD 2 //Amount of ammo needed to start glowing
+#define BOILER_CHARGEDISTANCE 5/// Charge distance for Sizzler's acid dash
 
 //Panther defines
 #define PANTHER_EVASION_COOLDOWN 2.5 SECONDS // how close a nearby human has to be in order to be targeted
