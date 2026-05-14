@@ -1,4 +1,0 @@
-author: "MrShlepa"
-delete-after: True
-changes:
-  - rscadd: "Теперь после полной перезарядки проигрывается звук передёргивания затвора."

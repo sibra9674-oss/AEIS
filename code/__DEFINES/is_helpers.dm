@@ -125,6 +125,8 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 #define isxenobehemoth(A) (istype(A, /mob/living/carbon/xenomorph/behemoth))
 #define isxenopanther(A) (istype(A, /mob/living/carbon/xenomorph/panther))
 #define isxenofacehugger(A) (istype(A, /mob/living/carbon/xenomorph/facehugger))
+#define isxenodragon(A) (istype(A, /mob/living/carbon/xenomorph/dragon))
+#define isxenopyrogen(A) (istype(A, /mob/living/carbon/xenomorph/pyrogen))
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
@@ -259,6 +261,8 @@ GLOBAL_VAR_INIT(refid_filter, TYPEID(filter(type="angular_blur")))
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
 
 #define isvehicle(A) (istype(A, /obj/vehicle))
+
+#define issealedvehicle(A) (istype(A, /obj/vehicle/sealed))
 
 #define ismecha(A) (istype(A, /obj/vehicle/sealed/mecha))
 

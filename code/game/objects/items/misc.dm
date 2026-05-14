@@ -176,9 +176,9 @@
 
 /obj/item/storage/bible/koran/attack_self(mob/living/carbon/human/activator)
 	TIMER_COOLDOWN_START(activator, "KoranSpam", 5 SECONDS)
-	if(TIMER_COOLDOWN_CHECK(activator, "Koran"))
+	if(TIMER_COOLDOWN_RUNNING(activator, "Koran"))
 		activator.balloon_alert(activator, "Allah has already helped you")
-		if(TIMER_COOLDOWN_CHECK(activator, "KoranSpam"))
+		if(TIMER_COOLDOWN_RUNNING(activator, "KoranSpam"))
 			activator.adjust_brain_loss(1, TRUE)
 			return
 		return

@@ -15,7 +15,7 @@
 /datum/reagent/medicine/inaprovaline/on_mob_add(mob/living/L, metabolism)
 	ADD_TRAIT(L, TRAIT_IGNORE_SUFFOCATION, REAGENT_TRAIT(src))
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_CHECK(L, name) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_RUNNING(L, name) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume > 14) //If you are in crit, and someone injects at least 15u into you at once, you will heal 30% of your physical damage instantly.
 		to_chat(L, span_userdanger("You feel a rush of energy as stimulants course through your veins!"))
@@ -149,7 +149,7 @@
 	overdose_crit_threshold = REAGENTS_OVERDOSE_CRITICAL * 0.5
 
 /datum/reagent/medicine/oxycodone/on_mob_add(mob/living/L, metabolism)
-	if(TIMER_COOLDOWN_CHECK(L, name))
+	if(TIMER_COOLDOWN_RUNNING(L, name))
 		return
 	L.adjust_stamina_loss(-20*effect_str)
 	to_chat(L, span_userdanger("You feel a burst of energy revitalize you all of a sudden! You can do anything!"))
@@ -342,7 +342,7 @@
 	return ..()
 
 /datum/reagent/medicine/dexalinplus/on_mob_add(mob/living/L, metabolism)
-	if(TIMER_COOLDOWN_CHECK(L, name))
+	if(TIMER_COOLDOWN_FINISHED(L, name))
 		return
 	L.adjust_stamina_loss(-100*effect_str)
 	to_chat(L, span_userdanger("You feel a complete lack of fatigue, so relaxing!"))
@@ -467,7 +467,7 @@
 	purge_rate = 5
 
 /datum/reagent/medicine/synaptizine/on_mob_add(mob/living/L, metabolism)
-	if(TIMER_COOLDOWN_CHECK(L, name))
+	if(TIMER_COOLDOWN_RUNNING(L, name))
 		return
 	L.adjust_stamina_loss(-30*effect_str)
 	to_chat(L, span_userdanger("You feel a burst of energy as the stimulants course through you! Time to go!"))
@@ -511,12 +511,12 @@
 
 /datum/reagent/medicine/adrenaline/on_mob_add(mob/living/carbon/human/L, metabolism)
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_CHECK(L, COOLDOWN_STAMINA))
+	if(TIMER_COOLDOWN_FINISHED(L, COOLDOWN_STAMINA))
 		return
 	L.adjust_stamina_loss(-30 * effect_str)
 	to_chat(L, span_userdanger("You feel a burst of energy as the adrenaline courses through you! Time to go fast!"))
 
-	if(TIMER_COOLDOWN_CHECK(L, COOLDOWN_CRIT) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_FINISHED(L, COOLDOWN_CRIT) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume >= 2)
 		to_chat(L, span_userdanger("Heart explosion! Power running in your veins!"))
@@ -563,7 +563,7 @@
 
 /datum/reagent/medicine/neuraline/on_mob_add(mob/living/L, metabolism)
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_CHECK(L, name) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_RUNNING(L, name) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume > 3) //If you are in crit, and someone injects at least 3u into you, you will heal 20% of your physical damage instantly.
 		to_chat(L, span_userdanger("You feel a rush of energy as stimulants course through your veins!"))
@@ -648,7 +648,7 @@
 
 /datum/reagent/medicine/russian_red/on_mob_add(mob/living/L, metabolism)
 	var/mob/living/carbon/human/H = L
-	if(TIMER_COOLDOWN_CHECK(L, name) || L.stat == DEAD)
+	if(TIMER_COOLDOWN_RUNNING(L, name) || L.stat == DEAD)
 		return
 	if(L.health < H.health_threshold_crit && volume > 9) //If you are in crit, and someone injects at least 9u into you, you will heal 20% of your physical damage instantly.
 		to_chat(L, span_userdanger("You feel a rush of energy as stimulants course through your veins!"))

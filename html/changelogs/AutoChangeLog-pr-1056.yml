@@ -1,4 +1,0 @@
-author: "MrShlepa"
-delete-after: True
-changes:
-  - refactor: "Портирован код барных вывесок с ТГ. Теперь их видно в темноте."

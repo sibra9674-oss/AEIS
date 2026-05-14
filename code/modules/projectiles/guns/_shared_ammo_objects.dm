@@ -179,3 +179,12 @@
 	if(.) // parent proc only returns true if it applies its effects to a human, so affected must be a human, ergo no type validation needed
 		var/mob/living/carbon/human/victim = affected
 		victim.apply_status_effect(STATUS_EFFECT_SHATTER, 3 SECONDS)
+///Reduces duration of fire
+/obj/fire/proc/reduce_fire(amount = 1)
+	if(amount <= 0)
+		return
+	burn_ticks -= amount
+	if(burn_ticks > 0)
+		update_appearance(UPDATE_ICON)
+	else
+		qdel(src)

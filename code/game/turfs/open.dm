@@ -22,7 +22,7 @@
 
 /turf/open/do_acid_melt()
 	. = ..()
-	scrape_away()
+	ScrapeAway()
 
 ///Checks if anything should override the turf's normal footstep sounds
 /turf/open/proc/get_footstep_override(footstep_type)

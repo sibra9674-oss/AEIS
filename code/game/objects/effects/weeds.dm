@@ -146,13 +146,14 @@
 	)
 	AddElement(/datum/element/connect_loc, connections)
 
-/obj/alien/weeds/sticky/proc/slow_down_crosser(datum/source, atom/movable/crosser)
+/obj/alien/weeds/sticky/proc/slow_down_crosser(atom/movable/crosser, slow_amount = 1)
 	SIGNAL_HANDLER
 	if(crosser.throwing || crosser.buckled)
 		return
 
 	if(isvehicle(crosser))
 		var/obj/vehicle/vehicle = crosser
+		COOLDOWN_INCREMENT(vehicle, cooldown_vehicle_move, slow_amount)
 		vehicle.last_move_time += WEED_SLOWDOWN
 		return
 

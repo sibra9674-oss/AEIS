@@ -81,9 +81,9 @@
 		if(1 to 9)
 			var/turf/here = get_turf(src)
 			for(var/turf/closed/T AS in RANGE_TURFS(2, src))
-				here.place_on_top(T.type)
+				here.PlaceOnTop(T.type)
 				return
-			here.place_on_top(/turf/closed/wall)
+			here.PlaceOnTop(/turf/closed/wall)
 			return
 		if(9 to 11)
 			lights = FALSE

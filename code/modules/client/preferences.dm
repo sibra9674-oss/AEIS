@@ -22,8 +22,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/ui_style = "Midnight"
 	var/ui_style_color = "#ffffff"
 	var/ui_style_alpha = 230
-	var/tgui_fancy = TRUE
 	var/tgui_lock = FALSE
+	var/ui_scale = TRUE
 	var/tgui_input = TRUE
 	var/tgui_input_big_buttons = FALSE
 	var/tgui_input_buttons_swap = FALSE
@@ -152,6 +152,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/mute_others_combat_messages = FALSE
 	///Whether we generate a xeno name to show in the chatbox and on the mob.
 	var/show_xeno_rank = TRUE
+
+	///whether the user wants to hear tts
+	var/sound_tts = TTS_SOUND_ENABLED
+	///What tts voice should be used
+	var/tts_voice = "Male 01"
+	///how much to pitch the tts voice up and down
+	var/tts_pitch = 0
+	///Volume to use for tts
+	var/volume_tts = 100
+	///Which types of comms the user wants to hear TTS from
+	var/radio_tts_flags = RADIO_TTS_SL | RADIO_TTS_SQUAD | RADIO_TTS_COMMAND | RADIO_TTS_HIVEMIND
 
 	/// Preference for letting people make TGUI windows use more accessible (basically, default) themes, where needed/possible.
 	/// Example application: health analyzers using this to choose between default themes or the NtOS themes.

@@ -99,7 +99,6 @@
 	var/resting = FALSE
 
 	var/list/icon/pipes_shown = list()
-	var/last_played_vent = 0
 	/// The last direction we moved in a vent. Used to make holding two directions feel nice
 	var/last_vent_dir = 0
 	/// Cell tracker datum we use to manage the pipes around us, for faster ventcrawling

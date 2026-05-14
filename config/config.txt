@@ -31,6 +31,9 @@ ALLOW_SHUTDOWN
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
 
+## Uncomment to disable TTS messages on whispering, such as radio messages or the whisper verb. Useful for reducing your TTS load.
+#TTS_NO_WHISPER
+
 ## Link to a HTTP server that's been set up on a server. Docker-compose file can be found in tools/tts
 #TTS_HTTP_URL http://localhost:5002
 
@@ -39,6 +42,9 @@ ALLOW_SHUTDOWN
 
 ## The maximum number of concurrent tts http requests that can be made by the server at once.
 #TTS_MAX_CONCURRENT_REQUESTS 4
+
+## The number of seconds before tts https requests timeout (0 for infinite not recommended)
+#TTS_HTTP_TIMEOUT_SECONDS 30
 
 ## Add voices to the TTS voice blacklist.
 #TTS_VOICE_BLACKLIST Sans Undertale
@@ -244,6 +250,10 @@ CACHE_ASSETS 0
 ## Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
 ## Will only seek to waste disk space if ran on production.
 #SAVE_SPRITESHEETS
+
+## Tgui payloads larger than the 2kb limit for BYOND topic requests are split into roughly 1kb chunks and sent in sequence.
+## This config option limits the maximum chunk count for which the server will accept a payload, default is 32
+TGUI_MAX_CHUNK_COUNT 32
 
 ## If this is uncommented TGS bot will send specific spam messages to discord or wherever
 #TGS_EVENT_APPROVAL_MESSAGING

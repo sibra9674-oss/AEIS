@@ -316,6 +316,12 @@
 #define COMSIG_XENOABILITY_TOGGLE_WARLOCK_ZOOM "xenoability_toggle_warlock_zoom"
 #define COMSIG_XENOABILITY_PSYCHIC_CRUSH "xenoability_psychic_crush"
 
+#define COMSIG_XENOABILITY_FIRECHARGE "xenoability_firecharge"
+#define COMSIG_XENOABILITY_FIRENADO "xenoability_firenado"
+#define COMSIG_XENOABILITY_FIREBALL "xenoability_fireball"
+#define COMSIG_XENOABILITY_INFERNO "xenoability_inferno"
+#define COMSIG_XENOABILITY_INFERNAL_TRIGGER "xenoability_infernal_trigger"
+
 #define COMSIG_XENOABILITY_BANELING_EXPLODE "xenoability_baneling_explode"
 
 #define COMSIG_XENOABILITY_BEHEMOTH_ROLL "xenoability_behemoth_roll"
@@ -372,3 +378,10 @@
 #define COMSIG_XENOABILITY_CHIMERA_CRIPPLING_STRIKE "xenoability_chimera_crippling_strike"
 
 #define COMSIG_XENOABILITY_CRESTTOSS_BEHIND "xenoability_cresttoss_behind"
+
+#define COMSIG_XENOABILITY_BACKHAND "xenoability_backhand"
+#define COMSIG_XENOABILITY_FLY "xenoability_fly"
+#define COMSIG_XENOABILITY_DRAGON_BREATH "xenoability_dragon_breath"
+#define COMSIG_XENOABILITY_WIND_CURRENT "xenoability_wind_current"
+#define COMSIG_XENOABILITY_GRAB "xenoability_grab"
+#define COMSIG_XENOABILITY_SCORCHED_LAND "xenoability_scorched_land"

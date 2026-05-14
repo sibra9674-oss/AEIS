@@ -422,7 +422,7 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 /datum/action/ability/xeno_action/dodge/proc/on_move(datum/source)
 	if(owner.stat == DEAD)
 		return FALSE
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_BUMP_ATTACK) || owner.next_move > world.time)
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_BUMP_ATTACK) || owner.next_move > world.time)
 		return FALSE
 
 	var/turf/current_turf = get_turf(owner)

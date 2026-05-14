@@ -54,7 +54,7 @@
 		balloon_alert(user, "Too damaged. Use [material_sheets.name] sheets.")
 
 /obj/structure/barricade/folding/screwdriver_act(mob/living/user, obj/item/I)
-	if(busy || !COOLDOWN_CHECK(src, tool_cooldown))
+	if(busy || !COOLDOWN_FINISHED(src, tool_cooldown))
 		return
 
 	if(LAZYACCESS(user.do_actions, src))
@@ -90,7 +90,7 @@
 			build_state = BARRICADE_PLASTEEL_FIRM
 
 /obj/structure/barricade/folding/crowbar_act(mob/living/user, obj/item/I)
-	if(busy || !COOLDOWN_CHECK(src, tool_cooldown))
+	if(busy || !COOLDOWN_FINISHED(src, tool_cooldown))
 		return
 
 	if(LAZYACCESS(user.do_actions, src))
@@ -126,7 +126,7 @@
 			deconstruct(!get_self_acid())
 
 /obj/structure/barricade/folding/wrench_act(mob/living/user, obj/item/I)
-	if(busy || !COOLDOWN_CHECK(src, tool_cooldown))
+	if(busy || !COOLDOWN_FINISHED(src, tool_cooldown))
 		return
 
 	if(LAZYACCESS(user.do_actions, src))

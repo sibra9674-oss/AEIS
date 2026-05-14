@@ -128,9 +128,6 @@
 	/// Stat panel window declaration
 	var/datum/tgui_window/stat_panel
 
-	/** Assigned say modal of the client */
-	var/datum/tgui_say/tgui_say
-
 	/**
 	 * Assoc list with all the active maps - when a screen obj is added to
 	 * a map, it's put in here as well.

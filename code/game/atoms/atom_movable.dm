@@ -58,6 +58,15 @@
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/render_step/emissive_blocker/em_block
 
+	/// The voice that this movable makes when speaking
+	var/voice
+	/// The pitch adjustment that this movable uses when speaking.
+	var/pitch = 0
+	/// The filter to apply to the voice when processing the TTS audio message.
+	var/voice_filter = ""
+	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
+	var/tts_silicon_voice_effect = ""
+
 	/// String representing the spatial grid groups we want to be held in.
 	/// acts as a key to the list of spatial grid contents types we exist in via SSspatial_grid.spatial_grid_categories.
 	/// We do it like this to prevent people trying to mutate them and to save memory on holding the lists ourselves
@@ -1499,3 +1508,12 @@ GLOBAL_LIST_EMPTY(submerge_filter_timer_list)
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+/// Sets and deals with any changes to the move_resist variable.
+/atom/movable/proc/set_move_resist(new_move_resist)
+	if(move_resist == new_move_resist)
+		return
+	move_resist = new_move_resist
+	if(pulledby && !can_be_pulled(pulledby))
+		pulledby.stop_pulling()
+
