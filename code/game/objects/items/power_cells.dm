@@ -375,7 +375,7 @@
 	name = "night vision goggle battery"
 	desc = "A small, non-rechargable, proprietary battery for night vision goggles."
 	icon_state = "night_vision"
-	maxcharge = 240
+	maxcharge = 500
 	w_class = WEIGHT_CLASS_TINY
 	charge_overlay = ""
 	rechargable = FALSE
