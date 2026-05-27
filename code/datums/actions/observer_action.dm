@@ -47,6 +47,10 @@
 	for(var/mob/living/ssd_mob AS in GLOB.ssd_living_mobs)
 		if(is_centcom_level(ssd_mob.z) || ssd_mob.afk_status == MOB_RECENTLY_DISCONNECTED || isyautja(ssd_mob))
 			continue
+		if(isxeno(ssd_mob))
+			var/mob/living/carbon/xenomorph/X = ssd_mob
+			if(X.tier == XENO_TIER_MINION && SSticker.mode?.config_tag == "Crash")
+				continue
 		free_ssd_mobs += ssd_mob
 
 	if(!length(free_ssd_mobs))
