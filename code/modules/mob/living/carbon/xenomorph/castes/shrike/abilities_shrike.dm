@@ -120,6 +120,8 @@
 	var/grab_distance = (isitem(movable_target)) ? 5 : 4 //Objects get flung further away.
 
 	movable_target.throw_at(owner, grab_distance, 1, owner, TRUE)
+	add_cooldown(cooldown_duration)
+	succeed_activate()
 
 // ***************************************
 // *********** Psychic Fling
@@ -171,7 +173,7 @@
 			return FALSE
 		if(!CHECK_BITFIELD(use_state_flags|override_flags, ABILITY_IGNORE_DEAD_TARGET) && victim.stat == DEAD)
 			return FALSE
-	if(isxeno(target) && !(use_state_flags & ABILITY_TARGET_SELF)) // Разрешаем только если есть флаг
+	if(isxeno(target) && !(use_state_flags & ABILITY_TARGET_SELF))
 		var/mob/living/carbon/xenomorph/xeno_target = target
 		if(!xeno_target.issamexenohive(owner))
 			return FALSE // Только союзники
