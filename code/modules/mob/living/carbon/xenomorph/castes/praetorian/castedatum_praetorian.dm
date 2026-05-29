@@ -154,10 +154,10 @@
 		/datum/action/ability/activable/xeno/psydrain,
 		/datum/action/ability/xeno_action/place_acidwell,
 		/datum/action/ability/activable/xeno/corrosive_acid,
-		/datum/action/ability/activable/xeno/abduct,
-		/datum/action/ability/activable/xeno/dislocate,
-		/datum/action/ability/activable/xeno/advance_oppressor,
-		/datum/action/ability/activable/xeno/tail_lash,
+		/datum/action/ability/activable/xeno/oppressor/abduct,
+		/datum/action/ability/activable/xeno/oppressor/dislocate,
+		/datum/action/ability/activable/xeno/oppressor/advance,
+		/datum/action/ability/activable/xeno/oppressor/tail_lash,
 	)
 
 /datum/xeno_caste/praetorian/oppressor/normal
@@ -175,9 +175,9 @@
 		/datum/action/ability/activable/xeno/psydrain,
 		/datum/action/ability/xeno_action/place_acidwell,
 		/datum/action/ability/activable/xeno/corrosive_acid,
-		/datum/action/ability/activable/xeno/abduct,
-		/datum/action/ability/activable/xeno/dislocate,
-		/datum/action/ability/activable/xeno/advance_oppressor,
-		/datum/action/ability/activable/xeno/tail_lash,
+		/datum/action/ability/activable/xeno/oppressor/abduct,
+		/datum/action/ability/activable/xeno/oppressor/dislocate,
+		/datum/action/ability/activable/xeno/oppressor/advance,
+		/datum/action/ability/activable/xeno/oppressor/tail_lash,
 		/datum/action/ability/activable/xeno/item_throw,
 	)
