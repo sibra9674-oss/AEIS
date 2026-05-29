@@ -1185,7 +1185,7 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 /// Ends the charge when hitting an object.
 /datum/action/ability/activable/xeno/oppressor/advance/proc/obj_hit(datum/source, obj/obj_hit, speed)
 	SIGNAL_HANDLER
-	obj_hit.hitby(xeno_owner, speed)Expand commentComment on line R888Resolved
+	obj_hit.hitby(xeno_owner, speed)
 
 /// Ends the charge when hitting a human. Knocks them back pretty far.
 /datum/action/ability/activable/xeno/oppressor/advance/proc/mob_hit(datum/source, mob/living/living_hit)
