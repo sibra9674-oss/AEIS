@@ -186,6 +186,10 @@ GLOBAL_LIST_EMPTY(hive_ui_caste_index)
 ///Contains static data passed to all hive status UI.
 GLOBAL_LIST_INIT(hive_ui_static_data, init_hive_status_lists()) // init by make_datum_references_lists()
 
+/proc/get_hive_ui_caste_index(datum/xeno_caste/caste)
+	var/path = caste.base_caste_type_path || caste.caste_type_path
+	return GLOB.hive_ui_caste_index[path]
+
 /proc/init_hive_status_lists()
 	. = list()
 	// Initializes static ui data used by all hive status UI
@@ -194,11 +198,11 @@ GLOBAL_LIST_INIT(hive_ui_static_data, init_hive_status_lists()) // init by make_
 		var/datum/xeno_caste/caste = GLOB.xeno_caste_datums[caste_type_path][XENO_UPGRADE_BASETYPE]
 		if(caste.caste_flags & CASTE_HIDE_IN_STATUS)
 			continue
-		if(caste.base_caste_type_path)
+		var/index_path = initial(caste.base_caste_type_path) || initial(caste.caste_type_path)
+		if(GLOB.hive_ui_caste_index[index_path])
 			continue
-		var/type_path = initial(caste.caste_type_path)
 
-		GLOB.hive_ui_caste_index[type_path] = length(.) //Starts from 0.
+		GLOB.hive_ui_caste_index[index_path] = length(.) //Starts from 0.
 
 		var/icon/xeno_minimap = icon('icons/UI_icons/map_blips.dmi', initial(caste.minimap_icon))
 		var/tier = initial(caste.tier)
@@ -209,7 +213,7 @@ GLOBAL_LIST_INIT(hive_ui_static_data, init_hive_status_lists()) // init by make_
 
 		. += list(list(
 			"name" = initial(caste.caste_name),
-			"is_queen" = type_path == /mob/living/carbon/xenomorph/queen,
+			"is_queen" = index_path == /mob/living/carbon/xenomorph/queen,
 			"minimap" = icon2base64(xeno_minimap),
 			"sort_mod" = per_tier_counter[tier]++,
 			"tier" = GLOB.tier_as_number[tier],
