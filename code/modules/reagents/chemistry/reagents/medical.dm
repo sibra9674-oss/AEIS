@@ -1565,11 +1565,11 @@
 		if(L.get_brute_loss(organic_only = TRUE))
 			absorbtion = -5
 			L.heal_overall_damage(4*effect_str, 0)
-			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 2.5)
+			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 2)
 		if(L.get_fire_loss(organic_only = TRUE))
 			absorbtion = -5
 			L.heal_overall_damage(0, 4*effect_str)
-			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 2.5)
+			holder.remove_reagent(/datum/reagent/medicine/sulfasalazine, 2)
 
 	var/static/list/excluded_reagents_sulfa = list(
 		/datum/reagent/medicine/sulfasalazine,
