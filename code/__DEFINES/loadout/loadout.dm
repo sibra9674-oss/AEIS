@@ -40,7 +40,7 @@
 /// How many points a medic can spend on pills
 #define MEDIC_TOTAL_BUY_POINTS 45
 /// How many points an engineer can spend
-#define ENGINEER_TOTAL_BUY_POINTS 75
+#define ENGINEER_TOTAL_BUY_POINTS 65
 /// How many points the field commander can spend
 #define COMMANDER_TOTAL_BUY_POINTS 45
 /// How many points the synthetic can spend
@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(marine_selector_cats, list(
 
 #define METAL_PRICE_IN_GEAR_VENDOR 2
 #define PLASTEEL_PRICE_IN_GEAR_VENDOR 4
-#define SANDBAG_PRICE_IN_GEAR_VENDOR 3
+#define SANDBAG_PRICE_IN_GEAR_VENDOR 2
 
 //List of all visible and accessible slot on the loadout maker
 GLOBAL_LIST_INIT(visible_item_slot_list, list(
