@@ -64,7 +64,7 @@
 /datum/xeno_mutation/shrike/resistant_cure
 	name = "Resistant Cure"
 	desc = "Psychic Cure также применяет эффекты смолистого желе к вам и цели на 90 секунд."
-	cost = 10
+	cost = 5
 	icon_state = "xenobuff_generic"
 	tier = 1
 	parent_name = null
@@ -105,7 +105,7 @@
 /datum/xeno_mutation/shrike/smashing_fling
 	name = "Smashing Fling"
 	desc = "Psychic Fling наносит 200% урона, равного вашему melee урону, позволяет столкновения, но больше не оглушает сразу. При столкновении с человеком/объектом/стеной: оба получают кратковременный паралич и снова получают урон. Несовместим с Psychic choke и Body fling."
-	cost = 15
+	cost = 20
 	icon_state = "xenobuff_generic"
 	tier = 1
 	parent_name = null
@@ -153,7 +153,7 @@
 /datum/xeno_mutation/shrike/gravity_tide
 	name = "Gravity Tide"
 	desc = "Unrelenting Force тянет объекты к вам, затем отбрасывает их. Расстояние отбрасывания увеличено на 1. Несовместим с Deflective force."
-	cost = 10
+	cost = 5
 	icon_state = "xenobuff_generic"
 	tier = 1
 	parent_name = null
@@ -327,7 +327,7 @@
 /datum/xeno_mutation/shrike/psychic_choke
 	name = "Psychic Choke"
 	desc = "Вы теряете способность Psychic Fling и получаете Psychic Choke. Choke позволяет парализовать морпеха во время использования. Порог урона для прерывания - 80. Несовместим с Body fling и Smashing fling."
-	cost = 10
+	cost = 5
 	icon_state = "xenobuff_generic"
 	tier = 1
 	parent_name = null
@@ -372,4 +372,3 @@
 		fling_ability.give_action(xenomorph_owner)
 	return ..()
 
-// on_xenomorph_upgrade не существует в этой версии, пропускаем
