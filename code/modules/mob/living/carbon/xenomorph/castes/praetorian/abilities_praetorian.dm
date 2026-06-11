@@ -712,7 +712,6 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 
-
 // ***************************************
 // *********** Abduct
 // ***************************************
