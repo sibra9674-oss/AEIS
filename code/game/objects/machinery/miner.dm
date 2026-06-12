@@ -51,7 +51,7 @@
 
 	var/passive_mode = FALSE
 	var/start_time = 0
-	var/passive_duration = 3 MINUTES
+	var/passive_duration = 15 MINUTES
 
 /obj/machinery/miner/damaged //mapping and all that shebang
 	miner_status = MINER_DESTROYED
