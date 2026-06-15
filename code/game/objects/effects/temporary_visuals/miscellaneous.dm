@@ -251,6 +251,17 @@ GLOBAL_LIST_EMPTY(blood_particles)
 	icon_state = "boiler_gas"
 	duration = 0.8 SECONDS
 
+/// Used for globadiers heal grenades
+/obj/effect/temp_visual/heal
+	name = "healing splatter"
+	icon_state = "mech_toxin"
+
+/obj/effect/temp_visual/xadar_blast
+	name = "acid cascade"
+	icon = 'icons/Xeno/96x96.dmi'
+	icon_state = "xadar_splash"
+	duration = 0.4 SECONDS
+
 /obj/effect/temp_visual/wraith_warp
 	icon = 'icons/effects/light_overlays/light_128.dmi'
 	icon_state = "light"
