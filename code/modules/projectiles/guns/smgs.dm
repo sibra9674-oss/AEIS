@@ -472,6 +472,7 @@
 	name = "\improper SMG-2 submachinegun"
 	desc = "A cheap, reliable design and manufacture make this ubiquitous submachinegun useful despite the age. Put the fire selector to full auto for maximum firepower. Use two if you really want to go ham."
 	icon_state = "uzi"
+	icon = 'icons/obj/items/gun/submachinegun64.dmi'
 	worn_icon_state = "uzi"
 	caliber = CALIBER_9X19 //codex
 	max_shells = 32 //codex
