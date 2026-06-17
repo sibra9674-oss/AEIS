@@ -1,4 +1,0 @@
-author: "Pak2024"
-delete-after: True
-changes:
-  - balance: "Теперь голос игроков, которые не голосуют в воутах считает за 0.5"
