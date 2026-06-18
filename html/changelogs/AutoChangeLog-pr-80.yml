@@ -1,4 +1,0 @@
-author: "ivan1320111"
-delete-after: True
-changes:
-  - rscdel: "бойлера больше не гибает при определённых обстоятельствах."
