@@ -19,7 +19,7 @@
 	contains = list(
 		/obj/item/reagent_containers/hypospray/autoinjector/sulfasalazine,
 	)
-	cost = 200
+	cost = 250
 
 /datum/supply_packs/medical/biomass
 	name = "Biomass beaker"
