@@ -124,32 +124,40 @@
 				return TRUE
 
 			if(reagents.has_reagent(/datum/reagent/medicine/russian_red))
+				status_hud.icon = 'icons/mob/hud/reagent.dmi'
 				status_hud.icon_state = "russian_red"
 				return TRUE
 
 			var/nanites_amt = reagents.get_reagent_amount(/datum/reagent/medicalnanites)
 			if(nanites_amt > 25)
+				status_hud.icon = 'icons/mob/hud/reagent.dmi'
 				status_hud.icon_state = "nanites"
 				return TRUE
 			else if(nanites_amt > 15)
+				status_hud.icon = 'icons/mob/hud/reagent.dmi'
 				status_hud.icon_state = "nanites_medium"
 				return TRUE
 			else if(nanites_amt > 0)
+				status_hud.icon = 'icons/mob/hud/reagent.dmi'
 				status_hud.icon_state = "nanites_low"
 				return TRUE
 
 			if(reagents.has_reagent(/datum/reagent/medicine/ifosfamide))
+				status_hud.icon = 'icons/mob/hud/reagent.dmi'
 				status_hud.icon_state = "ifosfamide"
 				return TRUE
 
 			var/sulfa_amt = reagents.get_reagent_amount(/datum/reagent/medicine/sulfasalazine)
 			if(sulfa_amt > 60)
+				status_hud.icon = 'icons/mob/hud/reagent.dmi'
 				status_hud.icon_state = "sulfasalazine"
 				return TRUE
 			else if(sulfa_amt > 30)
+				status_hud.icon = 'icons/mob/hud/reagent.dmi'
 				status_hud.icon_state = "sulfasalazine_low"
 				return TRUE
 			else if(sulfa_amt > 0)
+				status_hud.icon = 'icons/mob/hud/reagent.dmi'
 				status_hud.icon_state = "sulfasalazine_crit_low"
 				return TRUE
 
