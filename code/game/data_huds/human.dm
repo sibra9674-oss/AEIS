@@ -38,6 +38,7 @@
 //Set status for med-hud.
 /mob/living/carbon/human/proc/set_status_hud()
 	var/image/status_hud = hud_list[STATUS_HUD]
+	status_hud.icon = 'icons/mob/hud/human_misc.dmi'
 	status_hud.icon_state = ""
 	status_hud.overlays.Cut()
 	if(species.species_flags & HEALTH_HUD_ALWAYS_DEAD)
