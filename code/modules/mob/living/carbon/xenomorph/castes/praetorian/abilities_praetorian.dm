@@ -826,13 +826,22 @@ GLOBAL_LIST_INIT(acid_spray_hit, typecacheof(list(/obj/structure/barricade, /obj
 
 	last_known_multiplier = human_mobs.len
 	if(last_known_multiplier)
+		var/list/hook_sounds = list(
+			'sound/voice/alien/Pudge1.ogg',
+			'sound/voice/alien/Pudge2.ogg',
+			'sound/voice/alien/Pudge3.ogg'
+		)
+
 		for(var/mob/living/carbon/human/human_mob in human_mobs)
 			RegisterSignal(human_mob, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_post_throw))
 			ADD_TRAIT(human_mob, TRAIT_IMMOBILE, THROW_TRAIT) // Given that this throw will be slow compared to other abilities, we do not want humans to move DURING it.
 			human_mob.throw_at(turf_line[1], 6, 2, xeno_owner, TRUE)
 			INVOKE_ASYNC(human_mob, TYPE_PROC_REF(/mob/living/carbon/human, apply_damage), xeno_owner.xeno_caste.melee_damage * xeno_owner.xeno_melee_damage_modifier, STAMINA, null, 0, FALSE, FALSE, TRUE)
+
+			playsound(human_mob, pick(hook_sounds), 50, TRUE)
 		xeno_owner.add_slowdown(0.3 * last_known_multiplier)
-		playsound(human_mobs[human_mobs.len], 'sound/voice/alien/pounce.ogg', 25, TRUE)
+		// playsound(human_mobs[human_mobs.len], 'sound/voice/alien/pounce.ogg', 25, TRUE)
+
 	succeed_activate()
 	add_cooldown()
 	cleanup_variables()
