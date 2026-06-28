@@ -303,7 +303,7 @@
 	ammo_name = "charge"
 	transferable_ammo = TRUE
 	warning_sound = 'sound/effects/nightvision.ogg'
-	point_cost = 150
+	point_cost = 100
 	///The length of the beam that will come out of when we fire do both ends xxxoxxx where o is where you click
 	var/laze_radius = 5
 	ammo_type = CAS_LASER_BATTERY
