@@ -296,8 +296,8 @@
 	icon_state = "laser_battery"
 	desc = "A high-capacity laser battery used to power laser beam weapons. Moving this will require some sort of lifter."
 	travelling_time = 1 SECONDS
-	ammo_count = 150
-	max_ammo_count = 150
+	ammo_count = 300
+	max_ammo_count = 300
 	ammo_used_per_firing = 50
 	equipment_type = /obj/structure/dropship_equipment/cas/weapon/laser_beam_gun
 	ammo_name = "charge"
