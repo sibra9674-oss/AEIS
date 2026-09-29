@@ -1077,6 +1077,42 @@
 	keybind_signal = COMSIG_XENOABILITY_PSYCHIC_CRUSH
 	hotkey_keys = list("Q")
 
+/datum/keybinding/xeno/psionic_aura
+	name = "psionic_aura"
+	full_name = "Cerebral: Psionic Aura"
+	description = "Toggle the plasma-regenerating aura."
+	keybind_signal = COMSIG_XENOABILITY_PSIONIC_AURA
+
+/datum/keybinding/xeno/psionic_barrier
+	name = "psionic_barrier"
+	full_name = "Cerebral: Psionic Barrier"
+	description = "Shield nearby hive members with armor."
+	keybind_signal = COMSIG_XENOABILITY_PSIONIC_BARRIER
+
+/datum/keybinding/xeno/mind_crush
+	name = "mind_crush"
+	full_name = "Cerebral: Mind Crush"
+	description = "Crush a target's mind at range."
+	keybind_signal = COMSIG_XENOABILITY_MIND_CRUSH
+
+/datum/keybinding/xeno/psychic_resonance
+	name = "psychic_resonance"
+	full_name = "Cerebral: Psychic Resonance"
+	description = "Overcharge the aura for 10 seconds."
+	keybind_signal = COMSIG_XENOABILITY_PSYCHIC_RESONANCE
+
+/datum/keybinding/xeno/cerebral_collapse
+	name = "cerebral_collapse"
+	full_name = "Cerebral: Cerebral Collapse"
+	description = "Detonate your psychic core."
+	keybind_signal = COMSIG_XENOABILITY_CEREBRAL_COLLAPSE
+
+/datum/keybinding/xeno/cerebral_feast
+	name = "cerebral_feast"
+	full_name = "Cerebral (Primordial): Cerebral Feast"
+	description = "Devour a broken victim's mind."
+	keybind_signal = COMSIG_XENOABILITY_CEREBRAL_FEAST
+
 /datum/keybinding/xeno/toggle_agility
 	name = "toggle_agility"
 	full_name = "Warrior: Toggle Agility"
