@@ -1070,36 +1070,17 @@
 	keybind_signal = COMSIG_XENOABILITY_TOGGLE_WARLOCK_ZOOM
 	hotkey_keys = list("F")
 
-/datum/keybinding/xeno/psychic_crush
-	name = "Psychic Crush"
-	full_name = "Warlock: Psychic Crush"
-	description = "Channel an expanding AOE crush effect, activating it again pre-maturely crushes enemies over an area."
-	keybind_signal = COMSIG_XENOABILITY_PSYCHIC_CRUSH
-	hotkey_keys = list("Q")
-
-/datum/keybinding/xeno/psionic_aura
-	name = "psionic_aura"
-	full_name = "Cerebral: Psionic Aura"
-	description = "Toggle the plasma-regenerating aura."
-	keybind_signal = COMSIG_XENOABILITY_PSIONIC_AURA
-
-/datum/keybinding/xeno/psionic_barrier
-	name = "psionic_barrier"
-	full_name = "Cerebral: Psionic Barrier"
-	description = "Shield nearby hive members with armor."
-	keybind_signal = COMSIG_XENOABILITY_PSIONIC_BARRIER
+/datum/keybinding/xeno/reinforce
+	name = "reinforce"
+	full_name = "Cerebral: Reinforce"
+	description = "Channel to empower nearby hive members."
+	keybind_signal = COMSIG_XENOABILITY_REINFORCE
 
 /datum/keybinding/xeno/mind_crush
 	name = "mind_crush"
 	full_name = "Cerebral: Mind Crush"
 	description = "Crush a target's mind at range."
 	keybind_signal = COMSIG_XENOABILITY_MIND_CRUSH
-
-/datum/keybinding/xeno/psychic_resonance
-	name = "psychic_resonance"
-	full_name = "Cerebral: Psychic Resonance"
-	description = "Overcharge the aura for 10 seconds."
-	keybind_signal = COMSIG_XENOABILITY_PSYCHIC_RESONANCE
 
 /datum/keybinding/xeno/cerebral_collapse
 	name = "cerebral_collapse"
@@ -1110,7 +1091,7 @@
 /datum/keybinding/xeno/cerebral_feast
 	name = "cerebral_feast"
 	full_name = "Cerebral (Primordial): Cerebral Feast"
-	description = "Devour a broken victim's mind."
+	description = "Devour a critical victim's mind."
 	keybind_signal = COMSIG_XENOABILITY_CEREBRAL_FEAST
 
 /datum/keybinding/xeno/toggle_agility

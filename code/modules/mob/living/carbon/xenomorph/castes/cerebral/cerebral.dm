@@ -13,18 +13,14 @@
 	tier = XENO_TIER_THREE
 	upgrade = XENO_UPGRADE_NORMAL
 
-	/// Активна ли аура
 	var/aura_active = FALSE
-	/// Ксены, получавшие бафф на последнем тике ауры
 	var/list/aura_targets = list()
-	/// Были ли мы в критe на прошлом update_health
 	var/was_crit = FALSE
 
 /mob/living/carbon/xenomorph/cerebral/Destroy()
 	aura_targets = null
 	return ..()
 
-// Хук входа в крит: update_health вызывается apply_damage и лечилками
 /mob/living/carbon/xenomorph/cerebral/update_health()
 	. = ..()
 	var/crit_now = (stat == UNCONSCIOUS)
@@ -32,7 +28,6 @@
 		shatter_link()
 	was_crit = crit_now
 
-// Крит с активной аурой: все слинкованные падают, аура гаснет
 /mob/living/carbon/xenomorph/cerebral/proc/shatter_link()
 	for(var/mob/living/carbon/xenomorph/X in aura_targets)
 		if(QDELETED(X) || X.stat == DEAD)
@@ -40,7 +35,7 @@
 		X.Knockdown(2 SECONDS)
 		to_chat(X, span_xenodanger("Our link to [src] shatters our mind!"))
 	aura_targets.Cut()
-	var/datum/action/ability/xeno_action/psionic_aura/aura = actions_by_path[/datum/action/ability/xeno_action/psionic_aura]
+	var/datum/action/ability/xeno_action/reinforce_aura/aura = actions_by_path[/datum/action/ability/xeno_action/reinforce_aura]
 	aura?.force_off(src)
 
 /mob/living/carbon/xenomorph/cerebral/primordial

@@ -22,19 +22,15 @@
 	soft_armor = list(MELEE = 50, BULLET = 60, LASER = 60, ENERGY = 55, BOMB = 45, BIO = 50, FIRE = 35, ACID = 55)
 	minimap_icon = "cerebral"
 
-	/// Дрейн плазмы ауры за тик (2 сек)
 	var/aura_plasma_drain = 8
-	/// Слоудаун-модификатор при активной ауре
 	var/aura_slowdown = 0.2
 
 	actions = list(
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
-		/datum/action/ability/xeno_action/psionic_aura,
-		/datum/action/ability/xeno_action/psionic_barrier,
+		/datum/action/ability/xeno_action/reinforce,
 		/datum/action/ability/activable/xeno/mind_crush,
-		/datum/action/ability/xeno_action/psychic_resonance,
 		/datum/action/ability/xeno_action/cerebral_collapse,
 	)
 
@@ -52,10 +48,8 @@
 		/datum/action/ability/xeno_action/xeno_resting,
 		/datum/action/ability/xeno_action/watch_xeno,
 		/datum/action/ability/activable/xeno/psydrain,
-		/datum/action/ability/xeno_action/psionic_aura,
-		/datum/action/ability/xeno_action/psionic_barrier,
+		/datum/action/ability/xeno_action/reinforce,
 		/datum/action/ability/activable/xeno/mind_crush,
-		/datum/action/ability/xeno_action/psychic_resonance,
 		/datum/action/ability/xeno_action/cerebral_collapse,
 		/datum/action/ability/activable/xeno/cerebral_feast,
 	)
