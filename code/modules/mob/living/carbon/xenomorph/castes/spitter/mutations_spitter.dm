@@ -17,17 +17,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/spitter/acid_sweat
 	name = "Acid Sweat"
-	desc = "Если вы горите, тратит плазму, чтобы потушить вас и весь огонь под вами. Срабатывает не чаще раза в секунду."
-	level_costs = list(10, 15, 20)
+	desc = "Когда вы горите, мутация автоматически тратит плазму, чтобы потушить вас и огонь под вами. Срабатывает не чаще раза в секунду."
+	level_costs = list(5, 7.5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/spitter_acid_sweat,
 		/datum/status_effect/xeno_enhancement/spitter_acid_sweat/two,
 		/datum/status_effect/xeno_enhancement/spitter_acid_sweat/three,
 	)
 	level_buff_descs = list(
-		"Если вы горите, тратит 20 плазмы, чтобы потушить вас и весь огонь под вами. Не чаще раза в секунду.",
-		"Если вы горите, тратит 15 плазмы, чтобы потушить вас и весь огонь под вами. Не чаще раза в секунду.",
-		"Если вы горите, тратит 10 плазмы, чтобы потушить вас и весь огонь под вами. Не чаще раза в секунду.",
+		"Тушение стоит 20 плазмы.",
+		"Тушение стоит 15 плазмы.",
+		"Тушение стоит 10 плазмы.",
 	)
 
 /datum/status_effect/xeno_enhancement/spitter_acid_sweat
@@ -86,17 +86,17 @@
 /datum/xeno_mutation/leveled/spitter/hit_and_run
 	required_ability_types = list(/datum/action/ability/activable/xeno/scatter_spit)
 	name = "Hit and Run"
-	desc = "Cast time у Scatter Spit уменьшается, но он больше не получает бонус к урону."
-	level_costs = list(10, 15, 20)
+	desc = "Scatter Spit готовится быстрее (меньше cast time), но больше не получает бонус к урону."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/spitter_hit_and_run,
 		/datum/status_effect/xeno_enhancement/spitter_hit_and_run/two,
 		/datum/status_effect/xeno_enhancement/spitter_hit_and_run/three,
 	)
 	level_buff_descs = list(
-		"Cast time у Scatter Spit составляет 60% от обычного. Бонус к урону не применяется.",
-		"Cast time у Scatter Spit составляет 40% от обычного. Бонус к урону не применяется.",
-		"Cast time у Scatter Spit составляет 20% от обычного. Бонус к урону не применяется.",
+		"Cast time Scatter Spit: 60% от обычного. Без бонуса к урону.",
+		"Cast time Scatter Spit: 40% от обычного. Без бонуса к урону.",
+		"Cast time Scatter Spit: 20% от обычного. Без бонуса к урону.",
 	)
 
 /datum/status_effect/xeno_enhancement/spitter_hit_and_run
@@ -133,23 +133,24 @@
 // ***************************************
 /datum/xeno_mutation/leveled/spitter/wet_claws
 	name = "Wet Claws"
-	desc = "Удары по горящим людям уменьшают количество их fire stacks."
-	level_costs = list(10, 15, 20)
+	desc = "Вы лучше тушите горящих ксеноморфов. каждый удар снимает несколько fire stacks вместо обычного одного, так огонь гаснет быстрее."
+	level_costs = list(5, 7.5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/spitter_wet_claws,
 		/datum/status_effect/xeno_enhancement/spitter_wet_claws/two,
 		/datum/status_effect/xeno_enhancement/spitter_wet_claws/three,
 	)
 	level_buff_descs = list(
-		"Удары по горящим людям уменьшают их fire stacks на 1.",
-		"Удары по горящим людям уменьшают их fire stacks на 2.",
-		"Удары по горящим людям уменьшают их fire stacks на 3.",
+		"Удар по горящему союзнику-ксено снимает 2 fire stacks.",
+		"Удар по горящему союзнику-ксено снимает 3 fire stacks.",
+		"Удар по горящему союзнику-ксено снимает 4 fire stacks.",
 	)
 
 /datum/status_effect/xeno_enhancement/spitter_wet_claws
 	id = "enhancement_spitter_wet_claws"
-	/// Per level, the amount of fire stacks to add (negative reduces them).
-	var/list/stacks_per_level = list(-1, -2, -3)
+	/// Per level, the extra fire stacks removed on top of the usual 1 when extinguishing an allied xeno.
+	var/list/bonus_stacks_per_level = list(1, 2, 3)
+	var/applied_bonus = 0
 
 /datum/status_effect/xeno_enhancement/spitter_wet_claws/two
 	level = 2
@@ -158,35 +159,30 @@
 	level = 3
 
 /datum/status_effect/xeno_enhancement/spitter_wet_claws/apply_enhancement()
-	RegisterSignal(xenomorph_owner, COMSIG_XENOMORPH_POSTATTACK_LIVING, PROC_REF(on_postattack_living))
+	applied_bonus = get_level_value(bonus_stacks_per_level)
+	xenomorph_owner.extinguish_bonus_stacks += applied_bonus
 	return TRUE
 
 /datum/status_effect/xeno_enhancement/spitter_wet_claws/remove_enhancement()
-	UnregisterSignal(xenomorph_owner, COMSIG_XENOMORPH_POSTATTACK_LIVING)
-
-/// Adjusts fire stacks of the hit target.
-/datum/status_effect/xeno_enhancement/spitter_wet_claws/proc/on_postattack_living(mob/living/carbon/xenomorph/source, mob/living/target, damage)
-	SIGNAL_HANDLER
-	if(!target.on_fire)
-		return
-	target.adjust_fire_stacks(get_level_value(stacks_per_level))
+	xenomorph_owner.extinguish_bonus_stacks -= applied_bonus
+	applied_bonus = 0
 
 // ***************************************
 // *********** Self Explosion
 // ***************************************
 /datum/xeno_mutation/leveled/globadier/self_explosion
 	name = "Self Explosion"
-	desc = "Toss Grenade можно нацелить на себя: граната упадёт под вами, а время до детонации сократится. Оно не может стать меньше 0.5 секунды."
-	level_costs = list(10, 15, 20)
+	desc = "Toss Grenade можно бросить в себя: граната падает под вас и взрывается быстрее, но не быстрее чем через 0.5 секунды."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/globadier_self_explosion,
 		/datum/status_effect/xeno_enhancement/globadier_self_explosion/two,
 		/datum/status_effect/xeno_enhancement/globadier_self_explosion/three,
 	)
 	level_buff_descs = list(
-		"Toss Grenade можно нацелить на себя. Время до детонации сокращается на 0.5 секунды (минимум 0.5 секунды).",
-		"Toss Grenade можно нацелить на себя. Время до детонации сокращается на 0.75 секунды (минимум 0.5 секунды).",
-		"Toss Grenade можно нацелить на себя. Время до детонации сокращается на 1 секунду (минимум 0.5 секунды).",
+		"Детонация быстрее на 0.5 секунды.",
+		"Детонация быстрее на 0.75 секунды.",
+		"Детонация быстрее на 1 секунду.",
 	)
 
 /datum/status_effect/xeno_enhancement/globadier_self_explosion
@@ -223,17 +219,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/globadier/blood_grenades
 	name = "Blood Grenades"
-	desc = "Toss Grenade наносит вам урон в процентах от максимального здоровья и позволяет бросить гранату, даже если их не осталось (кроме healing гранаты)."
-	level_costs = list(10, 15, 20)
+	desc = "Toss Grenade можно бросать, даже когда гранаты закончились, заплатив частью своего здоровья (не работает для healing гранаты)."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/globadier_blood_grenades,
 		/datum/status_effect/xeno_enhancement/globadier_blood_grenades/two,
 		/datum/status_effect/xeno_enhancement/globadier_blood_grenades/three,
 	)
 	level_buff_descs = list(
-		"Бросок без гранат стоит 20% максимального здоровья (кроме healing гранаты).",
-		"Бросок без гранат стоит 17.5% максимального здоровья (кроме healing гранаты).",
-		"Бросок без гранат стоит 15% максимального здоровья (кроме healing гранаты).",
+		"Бросок без гранат стоит 20% макс. здоровья.",
+		"Бросок без гранат стоит 17.5% макс. здоровья.",
+		"Бросок без гранат стоит 15% макс. здоровья.",
 	)
 
 /datum/status_effect/xeno_enhancement/globadier_blood_grenades
@@ -268,17 +264,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/globadier/repurposed_capacity
 	name = "Repurposed Capacity"
-	desc = "Toss Grenade хранит меньше гранат, но восстанавливает гранату быстрее."
-	level_costs = list(10, 15, 20)
+	desc = "Toss Grenade хранит меньше гранат, но новая граната появляется быстрее."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/globadier_repurposed_capacity,
 		/datum/status_effect/xeno_enhancement/globadier_repurposed_capacity/two,
 		/datum/status_effect/xeno_enhancement/globadier_repurposed_capacity/three,
 	)
 	level_buff_descs = list(
-		"Toss Grenade хранит на 1 гранату меньше, но восстанавливает гранату на 2 секунды быстрее.",
-		"Toss Grenade хранит на 2 гранаты меньше, но восстанавливает гранату на 4 секунды быстрее.",
-		"Toss Grenade хранит на 3 гранаты меньше, но восстанавливает гранату на 6 секунд быстрее.",
+		"Запас гранат -1, восстановление быстрее на 2 сек.",
+		"Запас гранат -2, восстановление быстрее на 4 сек.",
+		"Запас гранат -3, восстановление быстрее на 6 сек.",
 	)
 
 /datum/status_effect/xeno_enhancement/globadier_repurposed_capacity

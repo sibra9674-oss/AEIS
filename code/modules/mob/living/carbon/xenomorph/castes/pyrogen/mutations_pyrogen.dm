@@ -9,17 +9,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/pyrogen/flame_cloak
 	name = "Flame Cloak"
-	desc = "Пока вы стоите на огне, вы получаете броню всех типов."
-	level_costs = list(10, 15, 20)
+	desc = "Пока вы стоите в огне, вы получаете дополнительную броню от всех типов урона."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/pyrogen_flame_cloak,
 		/datum/status_effect/xeno_enhancement/pyrogen_flame_cloak/two,
 		/datum/status_effect/xeno_enhancement/pyrogen_flame_cloak/three,
 	)
 	level_buff_descs = list(
-		"На огне: +5 брони всех типов.",
-		"На огне: +10 брони всех типов.",
-		"На огне: +15 брони всех типов.",
+		"Стоя в огне: броня +5 (все типы).",
+		"Стоя в огне: броня +10 (все типы).",
+		"Стоя в огне: броня +15 (все типы).",
 	)
 
 /datum/status_effect/xeno_enhancement/pyrogen_flame_cloak
@@ -118,17 +118,17 @@
 /datum/xeno_mutation/leveled/pyrogen/only_fire
 	required_ability_types = list(/datum/action/ability/activable/xeno/charge/fire_charge)
 	name = "Only Fire"
-	desc = "Fire Charge не наносит урона, не тратит стаки Melting Fire и теперь пробивает людей. Поражённые люди получают стаки Melting Fire."
-	level_costs = list(10, 15, 20)
+	desc = "Fire Charge перестаёт наносить урон и тратить стаки Melting Fire, зато пролетает сквозь людей и накладывает на них Melting Fire."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/pyrogen_only_fire,
 		/datum/status_effect/xeno_enhancement/pyrogen_only_fire/two,
 		/datum/status_effect/xeno_enhancement/pyrogen_only_fire/three,
 	)
 	level_buff_descs = list(
-		"Fire Charge без урона, не тратит стаки и пробивает людей. Цели получают 2 стака Melting Fire.",
-		"Fire Charge без урона, не тратит стаки и пробивает людей. Цели получают 4 стака Melting Fire.",
-		"Fire Charge без урона, не тратит стаки и пробивает людей. Цели получают 6 стаков Melting Fire.",
+		"Fire Charge без урона, проходит сквозь людей. Цель получает 2 стака Melting Fire.",
+		"Fire Charge без урона, проходит сквозь людей. Цель получает 4 стака Melting Fire.",
+		"Fire Charge без урона, проходит сквозь людей. Цель получает 6 стаков Melting Fire.",
 	)
 
 /datum/status_effect/xeno_enhancement/pyrogen_only_fire
@@ -171,17 +171,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/pyrogen/burnt_wounds
 	name = "Burnt Wounds"
-	desc = "Стаки Melting Fire, которые вы наносите, снижают лечение брут и берн повреждений."
-	level_costs = list(10, 15, 20)
+	desc = "Люди, на которых вы накладываете Melting Fire, хуже лечатся: их лечение брут и берн повреждений снижается."
+	level_costs = list(7.5, 12.5, 17.5)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/pyrogen_burnt_wounds,
 		/datum/status_effect/xeno_enhancement/pyrogen_burnt_wounds/two,
 		/datum/status_effect/xeno_enhancement/pyrogen_burnt_wounds/three,
 	)
 	level_buff_descs = list(
-		"Снижение лечения брут и берн повреждений: 15%.",
-		"Снижение лечения брут и берн повреждений: 25%.",
-		"Снижение лечения брут и берн повреждений: 35%.",
+		"Лечение брут и берн цели -15%.",
+		"Лечение брут и берн цели -25%.",
+		"Лечение брут и берн цели -35%.",
 	)
 
 /datum/status_effect/xeno_enhancement/pyrogen_burnt_wounds

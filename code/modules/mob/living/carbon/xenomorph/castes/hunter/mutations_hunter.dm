@@ -13,17 +13,17 @@
 /datum/xeno_mutation/leveled/hunter/fleeting_mirage
 	required_ability_types = list(/datum/action/ability/xeno_action/mirage)
 	name = "Fleeting Mirage"
-	desc = "Когда ваше здоровье падает до порога, появляется иллюзия и убегает от вас. При обмене через Mirage эта иллюзия имеет приоритет."
-	level_costs = list(10, 15, 20)
+	desc = "Когда ваше здоровье падает ниже порога, появляется иллюзия, которая убегает от вас. При обмене через Mirage эта иллюзия выбирается первой."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hunter_fleeting_mirage,
 		/datum/status_effect/xeno_enhancement/hunter_fleeting_mirage/two,
 		/datum/status_effect/xeno_enhancement/hunter_fleeting_mirage/three,
 	)
 	level_buff_descs = list(
-		"Иллюзия появляется при 25% здоровья.",
-		"Иллюзия появляется при 40% здоровья.",
-		"Иллюзия появляется при 55% здоровья.",
+		"Порог срабатывания: 25% здоровья.",
+		"Порог срабатывания: 40% здоровья.",
+		"Порог срабатывания: 55% здоровья.",
 	)
 
 /datum/status_effect/xeno_enhancement/hunter_fleeting_mirage
@@ -99,17 +99,17 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/mirage)
 	conflicting_base_names = list("Cloaking Mirage", "Mirage Flood")
 	name = "Splitting Mirage"
-	desc = "Mirage вместо обычных иллюзий заставляет ваши удары создавать иллюзию на всё время действия. Иллюзии исчезают, когда время выходит."
-	level_costs = list(10, 15, 20)
+	desc = "Mirage не создаёт иллюзии сразу: вместо этого каждый ваш удар создаёт иллюзию, пока Mirage активен."
+	level_costs = list(7.5, 12.5, 17.5)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hunter_splitting_mirage,
 		/datum/status_effect/xeno_enhancement/hunter_splitting_mirage/two,
 		/datum/status_effect/xeno_enhancement/hunter_splitting_mirage/three,
 	)
 	level_buff_descs = list(
-		"Mirage: иллюзии от ударов, 12 секунд.",
-		"Mirage: иллюзии от ударов, 14 секунд.",
-		"Mirage: иллюзии от ударов, 16 секунд.",
+		"Mirage длится 12 секунд.",
+		"Mirage длится 14 секунд.",
+		"Mirage длится 16 секунд.",
 	)
 
 /datum/status_effect/xeno_enhancement/hunter_splitting_mirage
@@ -156,17 +156,17 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/mirage)
 	conflicting_base_names = list("Splitting Mirage", "Mirage Flood")
 	name = "Cloaking Mirage"
-	desc = "Mirage вместо иллюзий создаёт маскирующий газ в радиусе 2."
-	level_costs = list(10, 15, 20)
+	desc = "Mirage не создаёт иллюзии, а выпускает маскирующий газ радиусом 2: ксеноморфы внутри него становятся скрытными."
+	level_costs = list(7.5, 12.5, 17.5)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hunter_cloaking_mirage,
 		/datum/status_effect/xeno_enhancement/hunter_cloaking_mirage/two,
 		/datum/status_effect/xeno_enhancement/hunter_cloaking_mirage/three,
 	)
 	level_buff_descs = list(
-		"Mirage: маскирующий газ на 12 секунд.",
-		"Mirage: маскирующий газ на 14 секунд.",
-		"Mirage: маскирующий газ на 16 секунд.",
+		"Газ держится 12 секунд.",
+		"Газ держится 14 секунд.",
+		"Газ держится 16 секунд.",
 	)
 
 /datum/status_effect/xeno_enhancement/hunter_cloaking_mirage
@@ -209,17 +209,17 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/stealth)
 	conflicting_base_names = list("Faceblind", "Ambush")
 	name = "Debilitating Strike"
-	desc = "Sneak Attack из Stealth больше не оглушает. Вместо этого его дополнительный урон увеличен."
-	level_costs = list(10, 15, 20)
+	desc = "Sneak Attack из Stealth больше не оглушает цель, зато наносит гораздо больше дополнительного урона."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hunter_debilitating_strike,
 		/datum/status_effect/xeno_enhancement/hunter_debilitating_strike/two,
 		/datum/status_effect/xeno_enhancement/hunter_debilitating_strike/three,
 	)
 	level_buff_descs = list(
-		"Sneak Attack: нет оглушения, дополнительный урон 1.25x от урона удара.",
-		"Sneak Attack: нет оглушения, дополнительный урон 1.5x от урона удара.",
-		"Sneak Attack: нет оглушения, дополнительный урон 1.75x от урона удара.",
+		"Sneak Attack: без оглушения, доп. урон x1.25 от урона удара.",
+		"Sneak Attack: без оглушения, доп. урон x1.5 от урона удара.",
+		"Sneak Attack: без оглушения, доп. урон x1.75 от урона удара.",
 	)
 
 /datum/status_effect/xeno_enhancement/hunter_debilitating_strike
@@ -260,17 +260,17 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/stealth)
 	conflicting_base_names = list("Debilitating Strike", "Faceblind")
 	name = "Ambush"
-	desc = "Движение в Stealth стоит в 3 раза больше плазмы. На максимальной скрытности следующий Sneak Attack получает дополнительное бронепробитие (AP)."
-	level_costs = list(10, 15, 20)
+	desc = "Движение в Stealth тратит втрое больше плазмы, но на максимальной скрытности ваш Sneak Attack получает бонус к бронепробитию (AP)."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hunter_ambush,
 		/datum/status_effect/xeno_enhancement/hunter_ambush/two,
 		/datum/status_effect/xeno_enhancement/hunter_ambush/three,
 	)
 	level_buff_descs = list(
-		"Движение в Stealth x3 плазмы. +15 AP на максимальной скрытности.",
-		"Движение в Stealth x3 плазмы. +22.5 AP на максимальной скрытности.",
-		"Движение в Stealth x3 плазмы. +30 AP на максимальной скрытности.",
+		"Движение в Stealth x3 плазмы. Бонус AP +15.",
+		"Движение в Stealth x3 плазмы. Бонус AP +22.5.",
+		"Движение в Stealth x3 плазмы. Бонус AP +30.",
 	)
 
 /datum/status_effect/xeno_enhancement/hunter_ambush
@@ -307,17 +307,17 @@
 /datum/xeno_mutation/leveled/hunter/maul
 	required_ability_types = list(/datum/action/ability/activable/xeno/pounce)
 	name = "Maul"
-	desc = "Pounce больше не оглушает, но бьёт цель когтями, что может сработать как sneak attack. Перезарядка Pounce уменьшена."
-	level_costs = list(10, 15, 20)
+	desc = "Pounce больше не оглушает, но сразу бьёт цель когтями (это может сработать как Sneak Attack), а перезаряжается быстрее."
+	level_costs = list(7.5, 12.5, 17.5)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hunter_maul,
 		/datum/status_effect/xeno_enhancement/hunter_maul/two,
 		/datum/status_effect/xeno_enhancement/hunter_maul/three,
 	)
 	level_buff_descs = list(
-		"Pounce: нет оглушения, удар цели. Перезарядка 60%.",
-		"Pounce: нет оглушения, удар цели. Перезарядка 50%.",
-		"Pounce: нет оглушения, удар цели. Перезарядка 40%.",
+		"Pounce без оглушения, удар цели. Перезарядка 60%.",
+		"Pounce без оглушения, удар цели. Перезарядка 50%.",
+		"Pounce без оглушения, удар цели. Перезарядка 40%.",
 	)
 
 /datum/status_effect/xeno_enhancement/hunter_maul
@@ -365,17 +365,17 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/mirage)
 	conflicting_base_names = list("Splitting Mirage", "Cloaking Mirage")
 	name = "Mirage Flood"
-	desc = "Mirage создаёт на 4 иллюзии больше, но их время действия сокращено."
-	level_costs = list(10, 15, 20)
+	desc = "Mirage создаёт на 4 иллюзии больше, но иллюзии живут меньше."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hunter_mirage_flood,
 		/datum/status_effect/xeno_enhancement/hunter_mirage_flood/two,
 		/datum/status_effect/xeno_enhancement/hunter_mirage_flood/three,
 	)
 	level_buff_descs = list(
-		"Mirage: +4 иллюзии, время действия -5 секунд.",
-		"Mirage: +4 иллюзии, время действия -3 секунды.",
-		"Mirage: +4 иллюзии, время действия -1 секунда.",
+		"+4 иллюзии, время жизни -5 сек.",
+		"+4 иллюзии, время жизни -3 сек.",
+		"+4 иллюзии, время жизни -1 сек.",
 	)
 
 /datum/status_effect/xeno_enhancement/hunter_mirage_flood
@@ -413,17 +413,17 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/stealth, /datum/action/ability/xeno_action/mirage)
 	conflicting_base_names = list("Debilitating Strike", "Ambush")
 	name = "Faceblind"
-	desc = "Sneak Attack из Stealth временно ослепляет цель, но больше не оглушает. Перезарядка Mirage уменьшена."
-	level_costs = list(10, 15, 20)
+	desc = "Sneak Attack из Stealth слепит цель на время, но больше не оглушает. Mirage перезаряжается быстрее."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hunter_faceblind,
 		/datum/status_effect/xeno_enhancement/hunter_faceblind/two,
 		/datum/status_effect/xeno_enhancement/hunter_faceblind/three,
 	)
 	level_buff_descs = list(
-		"Sneak Attack: слепота, нет оглушения. Перезарядка Mirage 90%.",
-		"Sneak Attack: слепота, нет оглушения. Перезарядка Mirage 80%.",
-		"Sneak Attack: слепота, нет оглушения. Перезарядка Mirage 70%.",
+		"Слепота вместо оглушения. Перезарядка Mirage 90%.",
+		"Слепота вместо оглушения. Перезарядка Mirage 80%.",
+		"Слепота вместо оглушения. Перезарядка Mirage 70%.",
 	)
 
 /datum/status_effect/xeno_enhancement/hunter_faceblind

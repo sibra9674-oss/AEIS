@@ -9,16 +9,16 @@
 // ***************************************
 /datum/xeno_mutation/leveled/puppeteer/flesh_for_life
 	name = "Flesh For Life"
-	desc = "Если полученный урон должен отправить вас в крит, вместо этого вы тратите плазму."
+	desc = "Если полученный урон должен отправить вас в крит, вы вместо этого тратите плазму. Чем выше уровень, тем меньше плазмы уходит на каждую единицу урона."
 	level_names = list("Flesh For Life", "Flesh For Life II")
-	level_costs = list(10, 15)
+	level_costs = list(5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/puppeteer_flesh_for_life,
 		/datum/status_effect/xeno_enhancement/puppeteer_flesh_for_life/two,
 	)
 	level_buff_descs = list(
-		"Урон, ведущий в крит, оплачивается плазмой (1.25 плазмы за единицу урона).",
-		"Урон, ведущий в крит, оплачивается плазмой (1.0 плазмы за единицу урона).",
+		"Урон оплачивается плазмой: 1.25 плазмы за 1 урона.",
+		"Урон оплачивается плазмой: 1.0 плазмы за 1 урона.",
 	)
 
 /datum/status_effect/xeno_enhancement/puppeteer_flesh_for_life
@@ -55,16 +55,16 @@
 /datum/xeno_mutation/leveled/puppeteer/suffocating_presence
 	required_ability_types = list(/datum/action/ability/xeno_action/dreadful_presence)
 	name = "Suffocating Presence"
-	desc = "Dreadful Presence дополнительно высасывает stamina у врагов со временем."
+	desc = "Dreadful Presence дополнительно высасывает stamina у людей в зоне действия."
 	level_names = list("Suffocating Presence", "Suffocating Presence II")
-	level_costs = list(10, 15)
+	level_costs = list(5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/puppeteer_suffocating_presence,
 		/datum/status_effect/xeno_enhancement/puppeteer_suffocating_presence/two,
 	)
 	level_buff_descs = list(
-		"Dreadful Presence высасывает 6 stamina в секунду.",
-		"Dreadful Presence высасывает 8 stamina в секунду.",
+		"Высасывает 6 stamina в секунду.",
+		"Высасывает 8 stamina в секунду.",
 	)
 
 /datum/status_effect/xeno_enhancement/puppeteer_suffocating_presence
@@ -101,14 +101,14 @@
 	name = "Shifting Costs"
 	desc = "Stitch Puppet стоит намного дешевле, но Bestow Blessings стоит дороже."
 	level_names = list("Shifting Costs", "Shifting Costs II")
-	level_costs = list(10, 15)
+	level_costs = list(5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/puppeteer_shifting_costs,
 		/datum/status_effect/xeno_enhancement/puppeteer_shifting_costs/two,
 	)
 	level_buff_descs = list(
-		"Puppet стоит 20% от исходной цены; Blessings стоят 130%.",
-		"Puppet стоит 20% от исходной цены; Blessings стоят 120%.",
+		"Puppet стоит 20% от обычного, Blessings 130%.",
+		"Puppet стоит 20% от обычного, Blessings 120%.",
 	)
 
 /datum/status_effect/xeno_enhancement/puppeteer_shifting_costs

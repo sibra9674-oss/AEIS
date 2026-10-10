@@ -19,17 +19,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/bull/unstoppable
 	name = "Unstoppable"
-	desc = "Во время рывка вы становитесь полностью невосприимчивы к стаггеру, как только рывок длится достаточно долго."
-	level_costs = list(10, 15, 20)
+	desc = "Во время рывка (Acid/Headbutt/Gore Charge) вы не можете быть застаггерены, но только после того, как рывок продлился достаточно долго. Чем выше уровень, тем раньше включается защита."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/bull_unstoppable,
 		/datum/status_effect/xeno_enhancement/bull_unstoppable/two,
 		/datum/status_effect/xeno_enhancement/bull_unstoppable/three,
 	)
 	level_buff_descs = list(
-		"Иммунитет к стаггеру в Acid Charge, Headbutt Charge и Gore Charge после 90% их длительности.",
-		"Иммунитет к стаггеру в Acid Charge, Headbutt Charge и Gore Charge после 80% их длительности.",
-		"Иммунитет к стаггеру в Acid Charge, Headbutt Charge и Gore Charge после 70% их длительности.",
+		"Защита от стаггера включается после 90% длительности рывка.",
+		"Защита от стаггера включается после 80% длительности рывка.",
+		"Защита от стаггера включается после 70% длительности рывка.",
 	)
 
 /datum/status_effect/xeno_enhancement/bull_unstoppable
@@ -56,17 +56,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/bull/speed_demon
 	name = "Speed Demon"
-	desc = "Acid Charge, Headbutt Charge и Gore Charge стоят вдвое больше плазмы, но скорость во время рывка увеличена."
-	level_costs = list(10, 15, 20)
+	desc = "Рывки Bull (Acid/Headbutt/Gore Charge) становятся быстрее, но тратят вдвое больше плазмы."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/bull_speed_demon,
 		/datum/status_effect/xeno_enhancement/bull_speed_demon/two,
 		/datum/status_effect/xeno_enhancement/bull_speed_demon/three,
 	)
 	level_buff_descs = list(
-		"Acid Charge, Headbutt Charge и Gore Charge стоят вдвое больше плазмы. +0.2 скорости во время рывка.",
-		"Acid Charge, Headbutt Charge и Gore Charge стоят вдвое больше плазмы. +0.4 скорости во время рывка.",
-		"Acid Charge, Headbutt Charge и Gore Charge стоят вдвое больше плазмы. +0.6 скорости во время рывка.",
+		"Скорость в рывке +0.2. Плазма на рывки x2.",
+		"Скорость в рывке +0.4. Плазма на рывки x2.",
+		"Скорость в рывке +0.6. Плазма на рывки x2.",
 	)
 
 /datum/status_effect/xeno_enhancement/bull_speed_demon
@@ -127,17 +127,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/bull/railgun
 	name = "Railgun"
-	desc = "Увеличивает длительность Acid Charge, Headbutt Charge и Gore Charge."
-	level_costs = list(10, 15, 20)
+	desc = "Рывки Bull (Acid/Headbutt/Gore Charge) длятся дольше, значит вы пробегаете большее расстояние."
+	level_costs = list(7.5, 12.5, 17.5)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/bull_railgun,
 		/datum/status_effect/xeno_enhancement/bull_railgun/two,
 		/datum/status_effect/xeno_enhancement/bull_railgun/three,
 	)
 	level_buff_descs = list(
-		"Acid Charge, Headbutt Charge и Gore Charge длятся на 40% дольше.",
-		"Acid Charge, Headbutt Charge и Gore Charge длятся на 80% дольше.",
-		"Acid Charge, Headbutt Charge и Gore Charge длятся на 120% дольше.",
+		"Длительность рывков +40%.",
+		"Длительность рывков +80%.",
+		"Длительность рывков +120%.",
 	)
 
 /datum/status_effect/xeno_enhancement/bull_railgun

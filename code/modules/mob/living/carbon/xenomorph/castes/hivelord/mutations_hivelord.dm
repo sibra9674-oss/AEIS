@@ -11,17 +11,17 @@
 /datum/xeno_mutation/leveled/hivelord/hardened_travel
 	required_ability_types = list(/datum/action/ability/xeno_action/toggle_speed)
 	name = "Hardened Travel"
-	desc = "Resin Walk повышает всю мягкую броню, но вы перестаёте восстанавливать плазму, пока он активен."
-	level_costs = list(10, 15, 20)
+	desc = "Во время Resin Walk вы получаете дополнительную мягкую броню, но плазма не восстанавливается, пока способность включена."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hivelord_hardened_travel,
 		/datum/status_effect/xeno_enhancement/hivelord_hardened_travel/two,
 		/datum/status_effect/xeno_enhancement/hivelord_hardened_travel/three,
 	)
 	level_buff_descs = list(
-		"Resin Walk: +10 ко всей мягкой броне, нет восстановления плазмы.",
-		"Resin Walk: +15 ко всей мягкой броне, нет восстановления плазмы.",
-		"Resin Walk: +20 ко всей мягкой броне, нет восстановления плазмы.",
+		"Resin Walk: мягкая броня +10, нет регена плазмы.",
+		"Resin Walk: мягкая броня +15, нет регена плазмы.",
+		"Resin Walk: мягкая броня +20, нет регена плазмы.",
 	)
 
 /datum/status_effect/xeno_enhancement/hivelord_hardened_travel
@@ -59,17 +59,17 @@
 /datum/xeno_mutation/leveled/hivelord/costly_travel
 	required_ability_types = list(/datum/action/ability/xeno_action/toggle_speed)
 	name = "Costly Travel"
-	desc = "Resin Walk создаёт временные weeds при движении. Каждый созданный weed тратит плазму."
-	level_costs = list(10, 15, 20)
+	desc = "Resin Walk оставляет за вами временные weeds при ходьбе, но за каждый weed платится плазма."
+	level_costs = list(5, 7.5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hivelord_costly_travel,
 		/datum/status_effect/xeno_enhancement/hivelord_costly_travel/two,
 		/datum/status_effect/xeno_enhancement/hivelord_costly_travel/three,
 	)
 	level_buff_descs = list(
-		"Resin Walk: каждый созданный weed тратит 75 плазмы.",
-		"Resin Walk: каждый созданный weed тратит 50 плазмы.",
-		"Resin Walk: каждый созданный weed тратит 25 плазмы.",
+		"Каждый weed стоит 75 плазмы.",
+		"Каждый weed стоит 50 плазмы.",
+		"Каждый weed стоит 25 плазмы.",
 	)
 
 /datum/status_effect/xeno_enhancement/hivelord_costly_travel
@@ -105,17 +105,17 @@
 /datum/xeno_mutation/leveled/hivelord/rejuvenating_build
 	required_ability_types = list(/datum/action/ability/activable/xeno/secrete_resin/hivelord)
 	name = "Rejuvenating Build"
-	desc = "Вы лечитесь на процент максимального здоровья при каждом успешном использовании Secrete Resin."
-	level_costs = list(10, 15, 20)
+	desc = "Каждое успешное использование Secrete Resin лечит вас на процент от максимального здоровья."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hivelord_rejuvenating_build,
 		/datum/status_effect/xeno_enhancement/hivelord_rejuvenating_build/two,
 		/datum/status_effect/xeno_enhancement/hivelord_rejuvenating_build/three,
 	)
 	level_buff_descs = list(
-		"Secrete Resin лечит 1% максимального здоровья.",
-		"Secrete Resin лечит 2% максимального здоровья.",
-		"Secrete Resin лечит 3% максимального здоровья.",
+		"Secrete Resin лечит 1% макс. здоровья.",
+		"Secrete Resin лечит 2% макс. здоровья.",
+		"Secrete Resin лечит 3% макс. здоровья.",
 	)
 
 /datum/status_effect/xeno_enhancement/hivelord_rejuvenating_build
@@ -150,17 +150,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/hivelord/combustive_jelly
 	name = "Combustive Jelly"
-	desc = "Вы теряете способность Place Resin Jelly pod. Брошенный Resin Jelly больше не даёт иммунитет к огню, а создаёт тонкую липкую смолу в зоне 3x3 на 15 секунд. Прямое попадание в человека накладывает стаггер."
-	level_costs = list(10, 15, 20)
+	desc = "Вы теряете Place Resin Jelly pod. Брошенный Resin Jelly больше не защищает от огня: он создаёт липкую смолу 3x3 на 15 секунд, а при прямом попадании в человека накладывает стаггер."
+	level_costs = list(7.5, 12.5, 17.5)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hivelord_combustive_jelly,
 		/datum/status_effect/xeno_enhancement/hivelord_combustive_jelly/two,
 		/datum/status_effect/xeno_enhancement/hivelord_combustive_jelly/three,
 	)
 	level_buff_descs = list(
-		"Нет Place Resin Jelly pod. Брошенный Resin Jelly: липкая смола 3x3, стаггер 2 секунды.",
-		"Нет Place Resin Jelly pod. Брошенный Resin Jelly: липкая смола 3x3, стаггер 4 секунды.",
-		"Нет Place Resin Jelly pod. Брошенный Resin Jelly: липкая смола 3x3, стаггер 6 секунд.",
+		"Липкая смола 3x3. Стаггер при попадании 2 сек.",
+		"Липкая смола 3x3. Стаггер при попадании 4 сек.",
+		"Липкая смола 3x3. Стаггер при попадании 6 сек.",
 	)
 
 /datum/status_effect/xeno_enhancement/hivelord_combustive_jelly
@@ -193,17 +193,17 @@
 // ***************************************
 /datum/xeno_mutation/leveled/hivelord/resin_splash
 	name = "Resin Splash"
-	desc = "Когда вы бьёте человека, тратится плазма, чтобы бросить в него липкую смоляную гранату. Срабатывает не чаще одного раза в 8 секунд."
-	level_costs = list(10, 15, 20)
+	desc = "Когда вы бьёте человека, автоматически тратится плазма и в него летит липкая смоляная граната. Срабатывает не чаще раза в 8 секунд."
+	level_costs = list(7.5, 12.5, 17.5)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hivelord_resin_splash,
 		/datum/status_effect/xeno_enhancement/hivelord_resin_splash/two,
 		/datum/status_effect/xeno_enhancement/hivelord_resin_splash/three,
 	)
 	level_buff_descs = list(
-		"Удар по человеку: -600 плазмы, липкая смоляная граната.",
-		"Удар по человеку: -400 плазмы, липкая смоляная граната.",
-		"Удар по человеку: -200 плазмы, липкая смоляная граната.",
+		"Стоит 600 плазмы за гранату.",
+		"Стоит 400 плазмы за гранату.",
+		"Стоит 200 плазмы за гранату.",
 	)
 
 /datum/status_effect/xeno_enhancement/hivelord_resin_splash
@@ -271,17 +271,17 @@
 /datum/xeno_mutation/leveled/hivelord/protective_light
 	required_ability_types = list(/datum/action/ability/activable/xeno/healing_infusion)
 	name = "Protective Light"
-	desc = "Healing Infusion дополнительно накладывает эффект resin jelly, но стоит дороже."
-	level_costs = list(10, 15, 20)
+	desc = "Healing Infusion дополнительно накладывает эффект resin jelly (защита от огня), но стоит больше плазмы."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hivelord_protective_light,
 		/datum/status_effect/xeno_enhancement/hivelord_protective_light/two,
 		/datum/status_effect/xeno_enhancement/hivelord_protective_light/three,
 	)
 	level_buff_descs = list(
-		"Healing Infusion накладывает resin jelly. Цена плазмы x2.",
-		"Healing Infusion накладывает resin jelly. Цена плазмы x1.75.",
-		"Healing Infusion накладывает resin jelly. Цена плазмы x1.5.",
+		"Цена плазмы Healing Infusion x2.",
+		"Цена плазмы Healing Infusion x1.75.",
+		"Цена плазмы Healing Infusion x1.5.",
 	)
 
 /datum/status_effect/xeno_enhancement/hivelord_protective_light
@@ -319,17 +319,17 @@
 /datum/xeno_mutation/leveled/hivelord/forward_light
 	required_ability_types = list(/datum/action/ability/activable/xeno/healing_infusion)
 	name = "Forward Light"
-	desc = "Healing Infusion длится меньше, но даёт innate healing, позволяющий лечиться вне weeds."
-	level_costs = list(10, 15, 20)
+	desc = "Healing Infusion действует короче, но лечит даже вне weeds (innate healing)."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hivelord_forward_light,
 		/datum/status_effect/xeno_enhancement/hivelord_forward_light/two,
 		/datum/status_effect/xeno_enhancement/hivelord_forward_light/three,
 	)
 	level_buff_descs = list(
-		"Healing Infusion длится 50% времени, даёт innate healing.",
-		"Healing Infusion длится 60% времени, даёт innate healing.",
-		"Healing Infusion длится 70% времени, даёт innate healing.",
+		"Длительность 50% от обычной.",
+		"Длительность 60% от обычной.",
+		"Длительность 70% от обычной.",
 	)
 
 /datum/status_effect/xeno_enhancement/hivelord_forward_light
@@ -367,17 +367,17 @@
 /datum/xeno_mutation/leveled/hivelord/weed_specialist
 	required_ability_types = list(/datum/action/ability/activable/xeno/plant_weeds)
 	name = "Weed Specialist"
-	desc = "Plant Weeds стоит дешевле, но вы теряете возможность выбрать обычные weeds."
-	level_costs = list(10, 15, 20)
+	desc = "Plant Weeds стоит дешевле, но вы больше не можете сажать обычные weeds (только специальные виды)."
+	level_costs = list(5, 7.5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/hivelord_weed_specialist,
 		/datum/status_effect/xeno_enhancement/hivelord_weed_specialist/two,
 		/datum/status_effect/xeno_enhancement/hivelord_weed_specialist/three,
 	)
 	level_buff_descs = list(
-		"Plant Weeds стоит 80% от обычного, нет базовых weeds.",
-		"Plant Weeds стоит 65% от обычного, нет базовых weeds.",
-		"Plant Weeds стоит 50% от обычного, нет базовых weeds.",
+		"Plant Weeds стоит 80% от обычного.",
+		"Plant Weeds стоит 65% от обычного.",
+		"Plant Weeds стоит 50% от обычного.",
 	)
 
 /datum/status_effect/xeno_enhancement/hivelord_weed_specialist

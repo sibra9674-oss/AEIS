@@ -12,17 +12,17 @@
 /datum/xeno_mutation/leveled/carrier/shared_jelly
 	required_ability_types = list(/datum/action/ability/activable/xeno/throw_hugger)
 	name = "Shared Jelly"
-	desc = "Если на вас действует Resin Jelly, все брошенные huggers получают иммунитет к огню. Каждый брошенный hugger сокращает длительность эффекта."
-	level_costs = list(10, 15, 20)
+	desc = "Пока на вас действует Resin Jelly, все брошенные вами huggers получают иммунитет к огню. Каждый брошенный hugger укорачивает ваш Resin Jelly."
+	level_costs = list(5, 7.5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/carrier_shared_jelly,
 		/datum/status_effect/xeno_enhancement/carrier_shared_jelly/two,
 		/datum/status_effect/xeno_enhancement/carrier_shared_jelly/three,
 	)
 	level_buff_descs = list(
-		"Каждый брошенный hugger сокращает эффект Resin Jelly на 3 секунды.",
-		"Каждый брошенный hugger сокращает эффект Resin Jelly на 2 секунды.",
-		"Каждый брошенный hugger сокращает эффект Resin Jelly на 1 секунду.",
+		"Каждый hugger сокращает Resin Jelly на 3 сек.",
+		"Каждый hugger сокращает Resin Jelly на 2 сек.",
+		"Каждый hugger сокращает Resin Jelly на 1 сек.",
 	)
 
 /datum/status_effect/xeno_enhancement/carrier_shared_jelly
@@ -57,17 +57,17 @@
 /datum/xeno_mutation/leveled/carrier/hugger_overflow
 	required_ability_types = list(/datum/action/ability/activable/xeno/throw_hugger)
 	name = "Hugger Overflow"
-	desc = "Пока у вас накоплено достаточно huggers, при получении стаггера вы автоматически роняете одного larval hugger под себя."
-	level_costs = list(10, 15, 20)
+	desc = "Если у вас накоплено достаточно huggers, то при получении стаггера вы автоматически роняете одного larval hugger под себя."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/carrier_hugger_overflow,
 		/datum/status_effect/xeno_enhancement/carrier_hugger_overflow/two,
 		/datum/status_effect/xeno_enhancement/carrier_hugger_overflow/three,
 	)
 	level_buff_descs = list(
-		"От 8 и более huggers: при стаггере роняется larval hugger.",
-		"От 7 и более huggers: при стаггере роняется larval hugger.",
-		"От 6 и более huggers: при стаггере роняется larval hugger.",
+		"Нужно 8 и более huggers.",
+		"Нужно 7 и более huggers.",
+		"Нужно 6 и более huggers.",
 	)
 
 /datum/status_effect/xeno_enhancement/carrier_hugger_overflow
@@ -104,17 +104,17 @@
 /datum/xeno_mutation/leveled/carrier/recurring_panic
 	required_ability_types = list(/datum/action/ability/xeno_action/carrier_panic)
 	name = "Recurring Panic"
-	desc = "Пока вы не отдыхаете, Drop All Facehuggers (Carrier Panic) сам срабатывает, когда это возможно. Перезарядка 20% от обычной, тратится только часть максимальной плазмы."
-	level_costs = list(10, 15, 20)
+	desc = "Drop All Facehuggers (Carrier Panic) срабатывает сам, когда это возможно и вы не отдыхаете. Перезарядка 20% от обычной, но каждый раз тратится часть максимальной плазмы."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/carrier_recurring_panic,
 		/datum/status_effect/xeno_enhancement/carrier_recurring_panic/two,
 		/datum/status_effect/xeno_enhancement/carrier_recurring_panic/three,
 	)
 	level_buff_descs = list(
-		"Автоактивация Carrier Panic, перезарядка 20%, тратит 50% максимальной плазмы.",
-		"Автоактивация Carrier Panic, перезарядка 20%, тратит 40% максимальной плазмы.",
-		"Автоактивация Carrier Panic, перезарядка 20%, тратит 30% максимальной плазмы.",
+		"Тратит 50% макс. плазмы за активацию.",
+		"Тратит 40% макс. плазмы за активацию.",
+		"Тратит 30% макс. плазмы за активацию.",
 	)
 
 /datum/status_effect/xeno_enhancement/carrier_recurring_panic
@@ -171,17 +171,17 @@
 /datum/xeno_mutation/leveled/carrier/leapfrog
 	required_ability_types = list(/datum/action/ability/activable/xeno/throw_hugger)
 	name = "Leapfrog"
-	desc = "Брошенные huggers прыгают на 1 клетку за раз. Все времена активации сокращены, но не быстрее 0.5 секунды."
-	level_costs = list(10, 15, 20)
+	desc = "Брошенные huggers прыгают на 1 клетку за раз, а все времена их активации сокращены (но не меньше 0.5 сек)."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/carrier_leapfrog,
 		/datum/status_effect/xeno_enhancement/carrier_leapfrog/two,
 		/datum/status_effect/xeno_enhancement/carrier_leapfrog/three,
 	)
 	level_buff_descs = list(
-		"Прыжок hugger 1 клетка, времена активации x0.8.",
-		"Прыжок hugger 1 клетка, времена активации x0.7.",
-		"Прыжок hugger 1 клетка, времена активации x0.6.",
+		"Времена активации x0.8.",
+		"Времена активации x0.7.",
+		"Времена активации x0.6.",
 	)
 
 /datum/status_effect/xeno_enhancement/carrier_leapfrog
@@ -221,17 +221,17 @@
 /datum/xeno_mutation/leveled/carrier/fake_huggers
 	required_ability_types = list(/datum/action/ability/activable/xeno/throw_hugger)
 	name = "Fake Huggers"
-	desc = "Вместе с брошенным hugger летит фальшивый hugger, повторяющий его поведение. Его цвет приближен к цвету настоящего."
-	level_costs = list(10, 15, 20)
+	desc = "Вместе с брошенным hugger летит фальшивый, который повторяет его поведение. Чем выше уровень, тем сложнее отличить фальшивого от настоящего по цвету."
+	level_costs = list(5, 7.5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/carrier_fake_huggers,
 		/datum/status_effect/xeno_enhancement/carrier_fake_huggers/two,
 		/datum/status_effect/xeno_enhancement/carrier_fake_huggers/three,
 	)
 	level_buff_descs = list(
-		"Фальшивый hugger: цвет на 50% как у настоящего.",
-		"Фальшивый hugger: цвет на 70% как у настоящего.",
-		"Фальшивый hugger: цвет на 90% как у настоящего.",
+		"Цвет фальшивого hugger на 50% похож на настоящий.",
+		"Цвет фальшивого hugger на 70% похож на настоящий.",
+		"Цвет фальшивого hugger на 90% похож на настоящий.",
 	)
 
 /datum/status_effect/xeno_enhancement/carrier_fake_huggers
@@ -267,17 +267,17 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/spawn_hugger)
 	conflicting_base_names = list("Oviposition")
 	name = "Life for Life"
-	desc = "Spawn Facehugger стоит 0 плазмы, перезарядка 70% от обычной, но наносит вам чистый урон."
-	level_costs = list(10, 15, 20)
+	desc = "Spawn Facehugger становится бесплатным по плазме и перезаряжается быстрее, но каждый раз наносит урон вам."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/carrier_life_for_life,
 		/datum/status_effect/xeno_enhancement/carrier_life_for_life/two,
 		/datum/status_effect/xeno_enhancement/carrier_life_for_life/three,
 	)
 	level_buff_descs = list(
-		"Spawn Facehugger: 0 плазмы, перезарядка 70%, 50 урона вам.",
-		"Spawn Facehugger: 0 плазмы, перезарядка 70%, 40 урона вам.",
-		"Spawn Facehugger: 0 плазмы, перезарядка 70%, 30 урона вам.",
+		"0 плазмы, перезарядка 70%, урон вам 50.",
+		"0 плазмы, перезарядка 70%, урон вам 40.",
+		"0 плазмы, перезарядка 70%, урон вам 30.",
 	)
 
 /datum/status_effect/xeno_enhancement/carrier_life_for_life
@@ -323,16 +323,16 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/lay_egg)
 	name = "Claw Delivered"
 	desc = "Huggers из ваших яиц быстрее прикрепляются к людям вручную."
-	level_costs = list(10, 15, 20)
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/carrier_claw_delivered,
 		/datum/status_effect/xeno_enhancement/carrier_claw_delivered/two,
 		/datum/status_effect/xeno_enhancement/carrier_claw_delivered/three,
 	)
 	level_buff_descs = list(
-		"Время ручного прикрепления hugger из яиц: 60% от обычного.",
-		"Время ручного прикрепления hugger из яиц: 50% от обычного.",
-		"Время ручного прикрепления hugger из яиц: 40% от обычного.",
+		"Время ручного прикрепления: 60% от обычного.",
+		"Время ручного прикрепления: 50% от обычного.",
+		"Время ручного прикрепления: 40% от обычного.",
 	)
 
 /datum/status_effect/xeno_enhancement/carrier_claw_delivered
@@ -368,17 +368,17 @@
 	required_ability_types = list(/datum/action/ability/xeno_action/lay_egg)
 	conflicting_base_names = list("Life for Life")
 	name = "Oviposition"
-	desc = "Lay Egg создаёт яйца с выбранным типом hugger внутри. Lay Egg стоит дешевле, а перезарядка 50%. Вы теряете способность Spawn Facehugger."
-	level_costs = list(10, 15, 20)
+	desc = "Lay Egg создаёт яйца сразу с выбранным типом hugger внутри, стоит дешевле и быстрее перезаряжается. Взамен вы теряете Spawn Facehugger."
+	level_costs = list(7.5, 12.5, 17.5)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/carrier_oviposition,
 		/datum/status_effect/xeno_enhancement/carrier_oviposition/two,
 		/datum/status_effect/xeno_enhancement/carrier_oviposition/three,
 	)
 	level_buff_descs = list(
-		"Lay Egg: выбранный hugger, цена 50% плазмы, перезарядка 50%. Нет Spawn Facehugger.",
-		"Lay Egg: выбранный hugger, цена 40% плазмы, перезарядка 50%. Нет Spawn Facehugger.",
-		"Lay Egg: выбранный hugger, цена 30% плазмы, перезарядка 50%. Нет Spawn Facehugger.",
+		"Lay Egg: цена 50% плазмы, перезарядка 50%.",
+		"Lay Egg: цена 40% плазмы, перезарядка 50%.",
+		"Lay Egg: цена 30% плазмы, перезарядка 50%.",
 	)
 
 /datum/status_effect/xeno_enhancement/carrier_oviposition

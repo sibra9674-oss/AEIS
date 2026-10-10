@@ -10,17 +10,17 @@
 /datum/xeno_mutation/leveled/warrior/zoomies
 	required_ability_types = list(/datum/action/ability/xeno_action/toggle_agility)
 	name = "Zoomies"
-	desc = "Agility даёт дополнительную скорость, но ещё сильнее снижает броню."
-	level_costs = list(10, 15, 20)
+	desc = "Agility даёт больше скорости, но сильнее режет вашу броню, пока она включена."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/warrior_zoomies,
 		/datum/status_effect/xeno_enhancement/warrior_zoomies/two,
 		/datum/status_effect/xeno_enhancement/warrior_zoomies/three,
 	)
 	level_buff_descs = list(
-		"Agility: +0.3 скорости, -10 брони.",
-		"Agility: +0.6 скорости, -20 брони.",
-		"Agility: +0.9 скорости, -30 брони.",
+		"Agility: скорость +0.3, броня -10.",
+		"Agility: скорость +0.6, броня -20.",
+		"Agility: скорость +0.9, броня -30.",
 	)
 
 /datum/status_effect/xeno_enhancement/warrior_zoomies
@@ -66,17 +66,17 @@
 /datum/xeno_mutation/leveled/warrior/enhanced_strength
 	required_ability_types = list(/datum/action/ability/activable/xeno/warrior/fling, /datum/action/ability/activable/xeno/warrior/grapple_toss)
 	name = "Enhanced Strength"
-	desc = "Fling и Grapple Toss отправляют цель дальше."
-	level_costs = list(10, 15, 20)
+	desc = "Fling и Grapple Toss отбрасывают цель дальше."
+	level_costs = list(5, 10, 15)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/warrior_enhanced_strength,
 		/datum/status_effect/xeno_enhancement/warrior_enhanced_strength/two,
 		/datum/status_effect/xeno_enhancement/warrior_enhanced_strength/three,
 	)
 	level_buff_descs = list(
-		"Fling и Grapple Toss отправляют цели на 1 клетку дальше.",
-		"Fling и Grapple Toss отправляют цели на 2 клетки дальше.",
-		"Fling и Grapple Toss отправляют цели на 3 клетки дальше.",
+		"Дальность броска +1 клетка.",
+		"Дальность броска +2 клетки.",
+		"Дальность броска +3 клетки.",
 	)
 
 /datum/status_effect/xeno_enhancement/warrior_enhanced_strength
@@ -117,17 +117,17 @@
 /datum/xeno_mutation/leveled/warrior/friendly_toss
 	required_ability_types = list(/datum/action/ability/activable/xeno/warrior/fling, /datum/action/ability/activable/xeno/warrior/grapple_toss)
 	name = "Friendly Toss"
-	desc = "Fling и Grapple Toss восстанавливаются гораздо быстрее, если применены на союзников."
-	level_costs = list(5, 10, 15)
+	desc = "Если Fling или Grapple Toss применены на союзного ксеноморфа, их перезарядка становится намного короче. Помогает быстро перебрасывать союзников в бой. На врагов не влияет."
+	level_costs = list(5, 7.5, 10)
 	level_effect_types = list(
 		/datum/status_effect/xeno_enhancement/warrior_friendly_toss,
 		/datum/status_effect/xeno_enhancement/warrior_friendly_toss/two,
 		/datum/status_effect/xeno_enhancement/warrior_friendly_toss/three,
 	)
 	level_buff_descs = list(
-		"Перезарядка Fling и Grapple Toss на союзников: 40% от обычной.",
-		"Перезарядка Fling и Grapple Toss на союзников: 25% от обычной.",
-		"Перезарядка Fling и Grapple Toss на союзников: 10% от обычной.",
+		"Перезарядка на союзников: 40% от обычной.",
+		"Перезарядка на союзников: 25% от обычной.",
+		"Перезарядка на союзников: 10% от обычной.",
 	)
 
 /datum/status_effect/xeno_enhancement/warrior_friendly_toss

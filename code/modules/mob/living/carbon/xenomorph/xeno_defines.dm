@@ -429,6 +429,8 @@ GLOBAL_LIST_INIT(strain_list, init_glob_strain_list())
 	var/charge_immunity_timer
 	/// Hivelord: how long (in deciseconds) thrown Resin Jelly staggers a human it hits. 0 means thrown jelly is not combustive. Set by the Combustive Jelly mutation.
 	var/jelly_combustive_stagger = 0
+	/// Spitter (Wet Claws): extra fire stacks removed from a burning allied xeno when this xeno helps put it out (help intent).
+	var/extinguish_bonus_stacks = 0
 
 	//Notification spam controls
 	var/recent_notice = 0
