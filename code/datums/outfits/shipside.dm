@@ -254,6 +254,26 @@
 		/obj/item/reagent_containers/glass/bottle/lemoline/doctor = 1,
 	)
 
+/datum/outfit/job/medical/shipresearcher
+	name = SHIP_RESEARCHER
+	jobtype = /datum/job/terragov/medical/shipresearcher
+
+	id = /obj/item/card/id
+	belt = /obj/item/storage/belt/rig/research
+	ears = /obj/item/radio/headset/mainship/res
+	w_uniform = /obj/item/clothing/under/marine/officer/researcher
+	wear_suit = /obj/item/clothing/suit/storage/labcoat/researcher
+	shoes = /obj/item/clothing/shoes/laceup
+	gloves = /obj/item/clothing/gloves/latex
+	glasses = /obj/item/clothing/glasses/hud/health
+	mask = /obj/item/clothing/mask/surgical
+	r_pocket = /obj/item/storage/pouch/surgery
+	l_pocket = /obj/item/storage/pouch/medkit/medic
+
+	r_pocket_contents = list(
+		/obj/item/tweezers = 1,
+	)
+
 /datum/outfit/job/liaison
 	name = CORPORATE_LIAISON
 	jobtype = /datum/job/terragov/civilian/liaison

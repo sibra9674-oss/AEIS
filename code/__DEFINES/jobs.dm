@@ -28,6 +28,7 @@
 #define JOB_DISPLAY_ORDER_CLOWN 24
 #define JOB_DISPLAY_ORDER_MILITARY_POLICE 25
 #define JOB_DISPLAY_ORDER_PREDATOR 26
+#define JOB_DISPLAY_ORDER_SHIP_RESEARCHER 27
 
 #define JOB_FLAG_SPECIALNAME (1<<0)
 #define JOB_FLAG_LATEJOINABLE (1<<1) //Can this job be selected for prefs to join as?
@@ -61,6 +62,7 @@
 #define SHIP_TECH "Ship Technician"
 #define MEDICAL_DOCTOR "Medical Doctor"
 #define FIELD_RESEARCHER "Field Researcher"
+#define SHIP_RESEARCHER "Ship Researcher"
 #define SQUAD_LEADER "Squad Leader"
 #define SQUAD_SPECIALIST "Squad Specialist"
 #define SQUAD_SMARTGUNNER "Squad Smartgunner"
@@ -128,6 +130,7 @@ GLOBAL_LIST_INIT(jobs_medical, list(
 	CHIEF_MEDICAL_OFFICER,
 	MEDICAL_DOCTOR,
 	FIELD_RESEARCHER,
+	SHIP_RESEARCHER,
 	SQUAD_CORPSMAN,
 ))
 GLOBAL_LIST_INIT(jobs_marines, list(
@@ -153,6 +156,7 @@ GLOBAL_LIST_INIT(jobs_regular_all, list(
 	SHIP_TECH,
 	MEDICAL_DOCTOR,
 	FIELD_RESEARCHER,
+	SHIP_RESEARCHER,
 	SQUAD_LEADER,
 	SQUAD_SMARTGUNNER,
 	SQUAD_CORPSMAN,

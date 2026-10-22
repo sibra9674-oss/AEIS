@@ -305,6 +305,10 @@
 
 ///Check if the xeno is currently able to evolve
 /mob/living/carbon/xenomorph/proc/generic_evolution_checks()
+	if(HAS_TRAIT(src, TRAIT_MECHANOID))
+		balloon_alert(src, "Mechanoids can't evolve")
+		return FALSE
+
 	if(HAS_TRAIT(src, TRAIT_BANISHED))
 		balloon_alert(src, span_warning("You are banished and cannot reach the hivemind."))
 		return FALSE

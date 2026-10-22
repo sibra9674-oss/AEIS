@@ -846,6 +846,44 @@ It is also recommended that you gear up like a regular marine, or your 'internsh
 			new_human.wear_id.paygrade = "PROF"
 	new_human.wear_id.update_label()
 
+/datum/job/terragov/medical/shipresearcher
+	title = SHIP_RESEARCHER
+	comm_title = "SRsr"
+	paygrade = "RSRA"
+	total_positions = 1
+	supervisors = "the chief medical officer"
+	access = list(ACCESS_MARINE_MEDBAY, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_CHEMISTRY, ACCESS_MARINE_ENGINEERING, ACCESS_CIVILIAN_ENGINEERING)
+	minimal_access = list(ACCESS_MARINE_MEDBAY, ACCESS_MARINE_RESEARCH, ACCESS_MARINE_CHEMISTRY, ACCESS_MARINE_CARGO, ACCESS_MARINE_DROPSHIP)
+	skills_type = /datum/skills/ship_researcher
+	display_order = JOB_DISPLAY_ORDER_SHIP_RESEARCHER
+	outfit = /datum/outfit/job/medical/shipresearcher
+	exp_type = EXP_TYPE_MEDICAL
+	exp_requirements = XP_REQ_UNSEASONED
+	job_flags = JOB_FLAG_LATEJOINABLE|JOB_FLAG_ROUNDSTARTJOINABLE|JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_ADDTOMANIFEST|JOB_FLAG_PROVIDES_SQUAD_HUD
+	jobworth = list(
+		/datum/job/xenomorph = LARVA_POINTS_SHIPSIDE,
+		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_REGULAR,
+		/datum/job/terragov/silicon/synthetic = SYNTH_POINTS_REGULAR,
+		/datum/job/terragov/command/mech_pilot = MECH_POINTS_REGULAR,
+		/datum/job/terragov/command/assault_crewman = ARMORED_VEHICLE_POINTS_REGULAR,
+	)
+	html_description = {"
+		<b>Difficulty</b>: Medium<br /><br />
+		<b>You answer to the</b> Chief Medical Officer<br /><br />
+		<b>Unlock Requirement</b>: Starting Role<br /><br />
+		<b>Gamemode Availability</b>: Nuclear War, Distress, Extended, Last Stand<br /><br /><br />
+		<b>Duty</b>: Stay aboard the ship and turn the xenomorph corpses brought by the marines into mechanoids. Turn a dead xenomorph into a neural core in the subnuclear encoder, then grow a mechanoid from it in the gestator using metal and plasteel. Ghosts take control of the finished mechanoid, which fights for the marines.
+	"}
+	job_desc = "Оставайтесь на корабле и перерабатывайте трупы ксеноморфов в механоидов. Переработайте мёртвого ксеноса в нейроядро в субъядерном кодировщике и вырастите из него механоида в гестаторе за металл и пласталь. Готовым механоидом управляет призрак, и он сражается на стороне морпехов."
+	minimap_icon = "researcher"
+
+/datum/job/terragov/medical/shipresearcher/radio_help_message(mob/M)
+	. = ..()
+	to_chat(M, {"You are a Nanotrasen researcher who stays aboard the [SSmapping.configs[SHIP_MAP].map_name].
+Marines bring you dead xenomorphs. Put the corpse next to the subnuclear encoder and use it to get a neural core (the body is destroyed), then put the core, metal and plasteel into a mechanoid gestator. T1 xeno gives a scrapper (blade), T2 a gunner (cannon), T3 a bulwark (shield and self destruct).
+Only a limited number of mechanoids can be active at once. Use the mechanoid console to track them or free up bandwidth.
+If shipside medbay is unstaffed, you may work as a regular doctor until someone else takes over."})
+
 /datum/job/terragov/civilian
 	job_category = JOB_CAT_CIVILIAN
 	selection_color = "#ffeedd"

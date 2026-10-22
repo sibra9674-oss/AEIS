@@ -12,6 +12,14 @@
 	medical = SKILL_MEDICAL_EXPERT
 	surgery = SKILL_SURGERY_PROFESSIONAL
 
+/datum/skills/ship_researcher
+	name = SHIP_RESEARCHER
+	cqc = SKILL_CQC_WEAK
+	engineer = SKILL_ENGINEER_PLASTEEL
+	construction = SKILL_CONSTRUCTION_PLASTEEL
+	medical = SKILL_MEDICAL_EXPERT
+	surgery = SKILL_SURGERY_PROFESSIONAL
+
 /datum/skills/cmo
 	name = CHIEF_MEDICAL_OFFICER
 	cqc = SKILL_CQC_WEAK

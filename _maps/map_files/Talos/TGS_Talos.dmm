@@ -40725,6 +40725,34 @@
 /turf/open/floor/mainship/metal/full,
 /area/mainship/hull/starboard_hull)
 
+"zzA" = (
+/obj/machinery/mechanoid_machine/encoder,
+/turf/open/floor/prison/whitepurple{
+	dir = 10
+	},
+/area/mainship/medical/medical_science)
+"zzB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden/layer1,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/mechanoid_machine/gestator,
+/turf/open/floor/plating/plating_catwalk/light,
+/area/mainship/medical/medical_science)
+"zzC" = (
+/obj/machinery/firealarm{
+	dir = 4
+	},
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
+/obj/machinery/computer/mechanoid_console,
+/turf/open/floor/prison/whitepurple{
+	dir = 8
+	},
+/area/mainship/medical/medical_science)
 (1,1,1) = {"
 dBM
 dBM
@@ -58143,9 +58171,9 @@ lrM
 eyv
 ojC
 icV
-cif
+zzC
 lrM
-lwo
+zzA
 lhv
 mpG
 oad
@@ -58400,7 +58428,7 @@ bRp
 qdV
 bRp
 bxQ
-bxQ
+zzB
 bxQ
 bzR
 lHG

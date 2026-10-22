@@ -58,6 +58,10 @@
 	icon_state = "Research"
 	job = /datum/job/terragov/medical/researcher
 
+/obj/effect/landmark/start/job/researcher/Initialize(mapload)
+	. = ..()
+	GLOB.spawns_by_job[/datum/job/terragov/medical/shipresearcher] += list(loc) //ship researchers share the researcher spawn
+
 /obj/effect/landmark/start/job/corporateliaison
 	icon_state = "CL"
 	job = /datum/job/terragov/civilian/liaison
