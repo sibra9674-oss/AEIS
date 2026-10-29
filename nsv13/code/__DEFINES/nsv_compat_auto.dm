@@ -1,0 +1,382 @@
+// AUTO-GENERATED stubs for not-yet-ported Beestation/NSV dependencies
+/area/centcom/supplypod/supplypod_temp_holding
+/area/quartermaster/warehouse
+/atom/movable/screen/movable/action_button
+/datum/ai_goal/human
+/datum/asset/spritesheet/simple/paper
+/datum/award/achievement/misc/blackhole_incident
+/datum/award/achievement/misc/crew_competent
+/datum/award/achievement/misc/crew_extremely_competent
+/datum/award/achievement/misc/crew_hypercompetent
+/datum/award/achievement/misc/fist_breaker
+/datum/award/achievement/misc/illegal_technology
+/datum/award/achievement/misc/pirate_exterminator
+/datum/award/achievement/misc/torp_directhit
+/datum/award/score/torpcount
+/datum/component/interdiction
+/datum/component/overmap_shields
+/datum/component/radioactive
+/datum/config_entry/flag/starmap_persistence_enabled
+/datum/design/slug_cold_iron
+/datum/design/slug_uranium
+/datum/mood_event/torphug
+/datum/reagent/colorful_reagent/powder/black
+/datum/reagent/toxin/plasma
+/datum/role_preference/midround_ghost/ghost_ship
+/datum/round_event/anomaly
+/datum/round_event_control/aurora_caelus
+/datum/round_event_control/carp_migration
+/datum/round_event_control/communications_blackout
+/datum/round_event_control/electrical_storm
+/datum/round_event_control/grey_tide
+/datum/round_event_control/ion_storm
+/datum/round_event_control/meteor_wave
+/datum/round_event_control/radiation_storm/deadly
+/datum/round_event_control/radioactive_sludge
+/datum/round_event_control/space_dust
+/datum/round_event_control/wormholes
+/datum/soundtrack_song/bee/mind_crawler
+/datum/thrownthing
+/datum/trader/randy
+/mob/living/dummy_pilot
+/mob/living/simple_animal/hostile/viscerator
+/mob/living/simple_animal/mothroach
+/mob/living/simple_animal/slime
+/obj/anomaly/singularity
+/obj/effect/decal/cleanable/oil
+/obj/effect/decal/nuclear_waste
+/obj/effect/decal/nuclear_waste/epicenter
+/obj/effect/pod_landingzone
+/obj/effect/temp_visual/bsa_splash
+/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
+/obj/effect/temp_visual/fading_overmap
+/obj/effect/temp_visual/heart
+/obj/effect/temp_visual/overmap_shield_hit
+/obj/item/borg/apparatus/munitions
+/obj/item/circuitboard/machine/pdc_mount
+/obj/item/construction/rcd
+/obj/item/encryptionkey/munitions_tech
+/obj/item/fighter_component/armour_plating
+/obj/item/fighter_component/countermeasure_dispenser
+/obj/item/gun/ballistic/rifle/boltaction/pdc
+/obj/item/mining_sensor_upgrade
+/obj/item/stack/sheet/iron
+/obj/item/weldingtool
+/obj/machinery/computer/ship/ftl_computer
+/obj/machinery/the_singularitygen
+/obj/projectile
+/obj/structure/overmap/asteroid/large
+/obj/structure/overmap/asteroid/medium
+/atom/movable/var/fingerprintslast
+/datum/action/innate/camera_off/overmap/var/button_icon_state
+/datum/action/innate/camera_off/overmap/var/icon_icon
+/datum/controller/configuration/var/return_system
+/datum/controller/subsystem/atoms/var/initialized_changed
+/datum/controller/subsystem/overmap_mode_stub/var/next_objective_reminder
+/datum/controller/subsystem/overmap_mode_stub/var/objective_reminder_stacks
+/datum/controller/subsystem/ticker/var/news_report
+/datum/design/board/gauss_rack_upgrade/var/build_path
+/datum/design/board/gauss_rack_upgrade/var/category
+/datum/design/board/gauss_rack_upgrade/var/departmental_flags
+/datum/design/board/gauss_rack_upgrade/var/desc
+/datum/design/board/gauss_rack_upgrade/var/id
+/datum/design/board/gauss_rack_upgrade/var/materials
+/datum/game_mode/pvp/var/winner
+/datum/lance/var/lance_leader
+/datum/lance/var/maximum_members
+/datum/lance/var/member_count
+/datum/overmap_mode_stub/var/debug_mode
+/datum/overmap_objective/cargo/var/crate_name
+/datum/overmap_objective/cargo/var/delivered_package
+/datum/overmap_objective/cargo/var/objective_number
+/datum/overmap_objective/cargo/var/status
+/datum/preferences/var/toggles
+/datum/reagent/hull_repair_juice/var/metabolization_rate
+/datum/reagent/hull_repair_juice/var/process_flags
+/datum/stub_map_config/var/votable_modes
+/datum/trader/var/shortname
+/datum/turf_reservation/var/overmap_fallback
+/mob/living/var/lying
+/mob/living/silicon/ai/var/aiMulti
+/mob/living/simple_animal/slime/var/amount_grown
+/mob/living/simple_animal/slime/var/flavor_text
+/mob/living/simple_animal/slime/var/rabid
+/obj/effect/particle_effect/foam/var/creation_time
+/obj/effect/particle_effect/foam/hull_repair_juice/var/slippery_foam
+/obj/effect/particle_effect/muzzleflash/var/light_flags
+/obj/item/ammo_box/magazine/var/stored_ammo
+/obj/item/ammo_casing/anti_air/var/projectile_type
+/obj/item/ammo_casing/flak/var/projectile_type
+/obj/item/ammo_casing/heavy_cannon/var/projectile_type
+/obj/item/ammo_casing/light_cannon/var/projectile_type
+/obj/item/ammo_casing/pdc/var/projectile_type
+/obj/item/borg/apparatus/munitions/var/stored
+/obj/item/circuitboard/machine/ammo_sorter/var/needs_anchored
+/obj/item/circuitboard/machine/ammo_sorter/upgraded/var/def_components
+/obj/item/extinguisher/advanced/hull_repair_juice/var/chem
+/obj/item/extinguisher/advanced/hull_repair_juice/var/tanktype
+/obj/item/fighter_component/countermeasure_dispenser/var/charges
+/obj/item/firing_pin/boarding/var/fail_message
+/obj/item/firing_pin/boarding/var/force_replace
+/obj/item/firing_pin/boarding/var/pin_removeable
+/obj/item/mining_sensor_upgrade/var/tier
+/obj/item/projectile/bullet/dart/var/syringe
+/obj/item/reagent_containers/food/snacks/var/bonus_reagents
+/obj/item/ship_weapon/ammunition/torpedo/var/interaction_flags_item
+/obj/item/stack/conveyor/slow/var/conveyor_type
+/obj/item/storage/box/boardingpins/var/illustration
+/obj/item/supplypod_beacon/var/express_console
+/obj/item/wallframe/pdc_frame/var/materials
+/obj/item/wallframe/pdc_frame/var/result_path
+/obj/machinery/air_sensor/atmos/nucleium_tank/var/id_tag
+/obj/machinery/atmospherics/components/unary/plasma_loader/var/linked_gun
+/obj/machinery/computer/atmos_control/tank/nucleium_tank/var/input_tag
+/obj/machinery/computer/atmos_control/tank/nucleium_tank/var/output_tag
+/obj/machinery/computer/atmos_control/tank/nucleium_tank/var/sensors
+/obj/machinery/computer/ship/dradis/mining/var/req_one_access_txt
+/obj/machinery/computer/ship/ftl_computer/var/progress
+/obj/machinery/computer/ship/ftl_computer/var/spoolup_time
+/obj/machinery/computer/ship/ftl_core/var/can_cancel_jump
+/obj/machinery/computer/ship/ftl_core/var/lockout
+/obj/machinery/computer/ship/ftl_core/var/max_range
+/obj/machinery/computer/ship/ftl_core/var/progress
+/obj/machinery/computer/ship/ftl_core/var/req_charge
+/obj/machinery/conveyor/slow/var/conveyor_speed
+/obj/machinery/conveyor/slow/var/stack_type
+/obj/machinery/conveyor/slow/var/subsystem_type
+/obj/machinery/missile_builder/var/can_be_unanchored
+/obj/machinery/missile_builder/var/processing_flags
+/obj/machinery/ship_weapon/deck_turret/var/interaction_flags_machine
+/obj/machinery/ship_weapon/plasma_caster/var/processing_flags
+/obj/machinery/ship_weapon/vls/var/CanAtmosPass
+/obj/machinery/ship_weapon/vls/var/CanAtmosPassVertical
+/obj/structure/chair/fancy/gauss/var/buildstackamount
+/obj/structure/chair/fancy/gauss/var/item_chair
+/obj/structure/closet/supplypod/freight_pod/var/explosionSize
+/obj/structure/fluff/vls_hatch/var/CanAtmosPass
+/obj/structure/fluff/vls_hatch/var/CanAtmosPassVertical
+/obj/structure/frame/machine/ship_weapon/pdc_mount/var/state
+/obj/structure/overmap/var/CanAtmosPass
+/obj/structure/overmap/asteroid/var/required_tier
+/obj/structure/overmap/trader/var/inhabited_trader
+/obj/structure/reagent_dispensers/foamtank/hull_repair_juice/var/reagent_id
+/atom/movable/proc/physics_collide(a,b,c,d,e,f,g,h)
+	return
+/client/proc/cmd_admin_delete(a,b,c,d,e,f,g,h)
+	return
+/datum/action/innate/camera_off/overmap/proc/Grant(a,b,c,d,e,f,g,h)
+	return
+/datum/bank_account/proc/adjust_money(a,b,c,d,e,f,g,h)
+	return
+/datum/component/material_container/proc/retrieve_all(a,b,c,d,e,f,g,h)
+	return
+/datum/controller/subsystem/overmap_mode_stub/proc/modify_threat_elevation(a,b,c,d,e,f,g,h)
+	return
+/datum/controller/subsystem/star_system/proc/sanitize_filepath(a,b,c,d,e,f,g,h)
+	return
+/datum/faction/proc/mini_announce(a,b,c,d,e,f,g,h)
+	return
+/datum/fleet/proc/mini_announce(a,b,c,d,e,f,g,h)
+	return
+/datum/fleet/proc/pollGhostCandidates(a,b,c,d,e,f,g,h)
+	return
+/datum/gas_mixture/proc/remove_ratio(a,b,c,d,e,f,g,h)
+	return
+/datum/gas_mixture/proc/set_volume(a,b,c,d,e,f,g,h)
+	return
+/datum/lance/proc/add_member(a,b,c,d,e,f,g,h)
+	return
+/datum/overmap_objective/cargo/proc/check_cargo(a,b,c,d,e,f,g,h)
+	return
+/datum/overmap_objective/cargo/proc/deliver_package(a,b,c,d,e,f,g,h)
+	return
+/datum/parsed_map/proc/initParsedTemplateBounds(a,b,c,d,e,f,g,h)
+	return
+/datum/star_system/proc/handle_combat(a,b,c,d,e,f,g,h)
+	return
+/datum/starsystem_manager/proc/capped_input(a,b,c,d,e,f,g,h)
+	return
+/datum/view_data/proc/resetToDefault(a,b,c,d,e,f,g,h)
+	return
+/mob/proc/IsAdvancedToolUser(a,b,c,d,e,f,g,h)
+	return
+/mob/proc/add_verb(a,b,c,d,e,f,g,h)
+	return
+/mob/proc/can_hear(a,b,c,d,e,f,g,h)
+	return
+/mob/proc/can_hear_ambience(a,b,c,d,e,f,g,h)
+	return
+/mob/proc/remove_verb(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/adjustFireLoss(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/adjustStaminaLoss(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/force_hit_projectile(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/get_bodypart(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/get_ear_protection(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/gravity_crush(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/mob_negates_gravity(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/on_hit(a,b,c,d,e,f,g,h)
+	return
+/mob/living/proc/soundbang_act(a,b,c,d,e,f,g,h)
+	return
+/mob/living/carbon/proc/adjust_disgust(a,b,c,d,e,f,g,h)
+	return
+/mob/living/simple_animal/slime/proc/Evolve(a,b,c,d,e,f,g,h)
+	return
+/mob/living/simple_animal/slime/proc/set_playable(a,b,c,d,e,f,g,h)
+	return
+/obj/item/proc/shake_animation(a,b,c,d,e,f,g,h)
+	return
+/obj/item/ammo_box/magazine/proc/ammo_count(a,b,c,d,e,f,g,h)
+	return
+/obj/item/paper/proc/add_raw_text(a,b,c,d,e,f,g,h)
+	return
+/obj/item/paper/proc/add_stamp(a,b,c,d,e,f,g,h)
+	return
+/obj/item/powder_bag/hungry/proc/isplasmaman(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/proc/IS_ORGANIC_LIMB(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/proc/RETURN_POINT_VECTOR_INCREMENT(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/proc/RETURN_PRECISE_POINT(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/proc/angle2dir_ship(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/proc/generate_tracer_between_points(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/proc/getline(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/proc/isInSight(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/bullet/delayed_prime/dirty_shell_stage_two/proc/isgroundlessturf(a,b,c,d,e,f,g,h)
+	return
+/obj/item/projectile/energy/nuclear_particle/dirty_shell_stage_three/proc/random_color_time(a,b,c,d,e,f,g,h)
+	return
+/obj/item/ship_weapon/ammunition/proc/do_mob(a,b,c,d,e,f,g,h)
+	return
+/obj/item/ship_weapon/ammunition/proc/has_gravity(a,b,c,d,e,f,g,h)
+	return
+/obj/item/ship_weapon/ammunition/proc/iscyborg(a,b,c,d,e,f,g,h)
+	return
+/obj/item/supplypod_beacon/proc/link_console(a,b,c,d,e,f,g,h)
+	return
+/obj/item/weldingtool/proc/get_fuel(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/armour_plating_nanorepair_well/proc/air_update_turf(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/broadside_shell_packer/proc/play_click_sound(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/computer/boarding_guns/proc/get_security_level(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/computer/ship/ftl_core/proc/cancel_ftl(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/computer/ship/ftl_core/proc/jump(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/computer/ship/ftl_core/proc/request_emergency_ftl_confirm(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/computer/ship/munitions_computer/proc/iscyborg(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/door/proc/id_scan_hacked(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/railgun_charger/proc/do_teleport(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/railgun_charger/proc/find_safe_turf(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/proc/angle2dir_ship(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/proc/shake_with_inertia(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/deck_turret/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/energy/beam/bsa/proc/getline(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/hybrid_rail/proc/do_teleport(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/hybrid_rail/proc/find_safe_turf(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/hybrid_rail/proc/tesla_zap(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/mac/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/pdc_mount/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/plasma_caster/proc/atmos_spawn_air(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/plasma_caster/proc/begin_processing(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/plasma_caster/proc/end_processing(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/plasma_caster/proc/tesla_zap(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/railgun/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/obj/machinery/ship_weapon/torpedo_launcher/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/chair/fancy/gauss/proc/has_buckled_mobs(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/chair/fancy/gauss/proc/iscyborg(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/hull_plate/proc/shake_animation(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/ai_load_interior(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/getline(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/ghost_ship(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/hardpoint_fire(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/hardpoint_get_ammo(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/hardpoint_get_max_ammo(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/instance_interior(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/jump_end(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/jump_start(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/kill_boarding_level(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/overmap_explode(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/send_supplypod(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/set_security_level(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/shake_animation(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/shake_with_inertia(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/spaceDebrisStartLoc(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/proc/spawn_boarders(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/overmap/small_craft/proc/docking_act(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/ship_weapon/artillery_frame/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/ship_weapon/mac_assembly/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/ship_weapon/railgun_assembly/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/obj/structure/ship_weapon/torpedo_launcher_assembly/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
+	return
+/turf/proc/atmos_spawn_air(a,b,c,d,e,f,g,h)
+	return
+/turf/proc/has_gravity(a,b,c,d,e,f,g,h)
+	return
+/turf/closed/wall/proc/add_dent(a,b,c,d,e,f,g,h)
+	return
+/proc/overmap_lighting_force(a,b,c,d,e,f,g,h)
+	return
+/proc/repopulate_sorted_areas(a,b,c,d,e,f,g,h)
+	return
