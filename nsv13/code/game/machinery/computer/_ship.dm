@@ -44,7 +44,6 @@ GLOBAL_LIST_INIT(computer_beeps, list('nsv13/sound/effects/computer/beep.ogg','n
 	return
 
 /obj/machinery/computer/ship/ui_interact(mob/user, datum/tgui/ui)
-	nsv_dbg(user, "[src] ui_interact reached")
 	if(isobserver(user))
 		return FALSE
 	if(!has_overmap())
@@ -61,8 +60,6 @@ GLOBAL_LIST_INIT(computer_beeps, list('nsv13/sound/effects/computer/beep.ogg','n
 	if(!position)
 		return TRUE
 	. = linked.start_piloting(user, position)
-	if(!.)
-		nsv_dbg(user, "[src] start_piloting refused (already operating? overmap_ship=[user.overmap_ship] position=[position])")
 
 	if(!.) //If we didn't actually start piloting, no need to show them info nor to change ui users.
 		return

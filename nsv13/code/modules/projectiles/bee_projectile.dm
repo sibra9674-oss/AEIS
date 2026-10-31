@@ -691,6 +691,9 @@
 		var/matrix/M = new
 		M.Turn(Angle)
 		transform = M
+	if(!starting) //the firing ship left the map (destroyed / moved to nullspace) before the shot was prepared
+		qdel(src)
+		return
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE

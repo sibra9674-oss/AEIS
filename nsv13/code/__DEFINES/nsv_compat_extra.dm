@@ -48,7 +48,7 @@
 #define GAS_PLUOXIUM			"pluox"
 #define COMSIG_SHIP_RELEASE_BOARDING "ship_release_boarding"
 #define COMSIG_MOB_OVERMAP_CHANGE "mob_overmap_change"
-#define FIRE_PROOF (1<<1)
+#define FIRE_PROOF (1<<21) //(1<<1) is UNACIDABLE in TGMC
 #define PASSGLASS (1<<1)
 #define TRAIT_SOURCE_OVERMAP_BLACKHOLE "overmap_singularity"
 // Stubs for Beestation/NSV systems that are intentionally not ported (yet). Each is replaced by the real thing when its module is brought in.
@@ -98,20 +98,19 @@
 /obj/machinery/var/panel_open = FALSE
 GLOBAL_LIST_EMPTY(critical_muni_items)
 GLOBAL_LIST_EMPTY(teleportlocs)
-/datum/controller/subsystem/overmap_mode_stub
-	name = "overmap_mode_stub"
-	var/datum/overmap_mode_stub/mode
+/datum/ss_overmap_mode_stub
+	var/datum/overmap_mode_stub/mode = new
 	var/threat_elevation = 0
 	var/override_ghost_ships = FALSE
 
 /datum/overmap_mode_stub
 	var/difficulty = 1
 	var/name = "stub"
-/datum/controller/subsystem/overmap_mode_stub
+/datum/ss_overmap_mode_stub
 	var/already_ended = FALSE
 	var/round_extended = FALSE
-/datum/controller/subsystem/overmap_mode_stub/mode_obj
-var/datum/controller/subsystem/overmap_mode_stub/SSovermap_mode = new
+/datum/ss_overmap_mode_stub/mode_obj
+var/datum/ss_overmap_mode_stub/SSovermap_mode = new
 /datum/component/remote_materials
 /datum/component/material_container
 /datum/component/two_handed
@@ -133,7 +132,7 @@ var/datum/controller/subsystem/overmap_mode_stub/SSovermap_mode = new
 /datum/controller/subsystem/mapping/proc/get_turf_below(turf/T)
 	return get_turf_below(T)
 
-#define ACID_PROOF (1<<2)
+#define ACID_PROOF (1<<22) //(1<<2) is ON_FIRE in TGMC
 #define PASSGRILLE (1<<2)
 #define PROJECTILE_PIERCE_HIT 1
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire"
@@ -153,7 +152,6 @@ var/datum/controller/subsystem/overmap_mode_stub/SSovermap_mode = new
 /datum/space_level/var/linked_overmap
 /client/var/overmap_zoomout
 /area/var/has_gravity
-/datum/controller/subsystem/processing/projectiles/var/global_iterations_per_move
 /obj/item/card/id/gulag/var/points
 /datum/controller/subsystem/mapping/proc/setup_map_transitions()
 	return
@@ -161,7 +159,26 @@ var/datum/controller/subsystem/overmap_mode_stub/SSovermap_mode = new
 /proc/isnum_safe(x)
 	return isnum(x) && !isnan(x) && !isinf(x)
 /proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
-	cell_explosion(get_turf(epicenter), max(devastation_range * 40, 1), 20)
+	var/turf/epicenter_turf = get_turf(epicenter)
+	if(!epicenter_turf)
+		return
+	if(SSmapping.level_trait(epicenter_turf.z, ZTRAIT_OVERMAP))
+		//Space has no ground to crater: on the overmap level an explosion is only the Goonstation sprite and a sound for the nearby ships (like NSV).
+		nsv_space_explosion(epicenter_turf, max(devastation_range, heavy_impact_range, light_impact_range))
+		return
+	cell_explosion(epicenter_turf, max(devastation_range * 40, 1), 20)
+
+/proc/nsv_space_explosion(turf/T, radius = 2)
+	var/obj/effect/temp_visual/impact_effect/torpedo/boom = new(T)
+	boom.pixel_x = -14 //the 60x60 sprite has to be centred on the tile
+	boom.pixel_y = -14
+	if(radius >= 5)
+		var/matrix/big = matrix()
+		big.Scale(1.8, 1.8)
+		boom.transform = big
+	for(var/obj/structure/overmap/OM in GLOB.overmap_objects)
+		if(OM.z == T.z && get_dist(OM, T) <= 30)
+			OM.relay('nsv13/sound/effects/ship/torpedo_detonate.ogg')
 
 #define PASSTABLE (1<<0)
 #define FREEZE_PROOF (1<<3)
@@ -189,7 +206,21 @@ var/datum/controller/subsystem/overmap_mode_stub/SSovermap_mode = new
 	return get_turf_above(T)
 // star_system transitions (real code lives in FTL/ftl_jump.dm; stubbed until FTL is ported)
 /datum/star_system/proc/add_ship(obj/structure/overmap/OM, turf/target_turf)
-	return
+	//Simplified port of FTL/ftl_jump.dm add_ship: registers the ship in this system (FTL itself is not ported).
+	if(QDELETED(OM))
+		return
+	if(!system_contents.Find(OM))
+		system_contents += OM
+	if(!occupying_z && OM.z)
+		occupying_z = OM.z
+	if(target_turf)
+		OM.forceMove(target_turf)
+	else if(!OM.z && occupying_z)
+		OM.forceMove(locate(rand(40, world.maxx - 39), rand(40, world.maxy - 39), occupying_z))
+	if(istype(OM))
+		OM.current_system = src
+		if(OM.faction != "nanotrasen" && OM.faction != "solgov")
+			enemies_in_system |= OM
 /datum/star_system/proc/remove_ship(obj/structure/overmap/OM, turf/new_location, is_ftl_jump = TRUE)
 	return
 /datum/star_system/proc/check_conflict_status()
@@ -200,6 +231,7 @@ var/datum/controller/subsystem/overmap_mode_stub/SSovermap_mode = new
 /atom/movable/var/movement_type = 0
 /mob/living/var/has_limbs = FALSE
 /datum/controller/subsystem/processing/projectiles/var/global_pixel_speed = 2
+/datum/controller/subsystem/processing/projectiles/var/global_iterations_per_move = 16
 /obj/machinery/computer/var/icon_keyboard
 /obj/machinery/computer/var/icon_screen
 /atom/proc/handle_ricochet(obj/item/projectile/P)
@@ -296,7 +328,7 @@ GLOBAL_LIST_EMPTY(blacklisted_paperwork_itemtypes)
 /proc/play_soundtrack_music(sound, a, b)
 	return
 /datum/overmap_mode_stub_dummy
-/datum/controller/subsystem/overmap_mode_stub/proc/update_reminder(objective)
+/datum/ss_overmap_mode_stub/proc/update_reminder(objective)
 	return
 /mob/living/dummy_pilot/proc/destroy_dummy_pilot(datum/source)
 	return
@@ -358,3 +390,37 @@ GLOBAL_VAR_INIT(MAX_EX_FLASH_RANGE, 20)
 	var/starmap_path = "config/starmap/starmap.json"
 GLOBAL_DATUM_INIT(nsv_map_config, /datum/stub_map_config, new)
 /obj/structure/overmap/var/datum/component/overmap_shields/shields
+
+// ---- real NSV helpers that the autostub used to replace with empty stubs ----
+///Whether the angle is on the port or starboard side of the ship (facing north or south on the map)
+/proc/angle2dir_ship(angle)
+	var/modulated_angle = (((angle % 360) + 360) % 360)
+	if(modulated_angle <= 180)
+		return SOUTH
+	else
+		return NORTH
+
+/proc/shake_with_inertia(mob/M, duration=0, strength=1, dampenerData=null)
+	set waitfor = FALSE
+	if(M?.client)
+		shake_camera(M, duration, strength)
+
+/atom/proc/shake_animation(intensity = 8) //Makes the object visibly shake
+	var/initial_transform = new/matrix(transform)
+	var/init_px = pixel_x
+	var/shake_dir = pick(-1, 1)
+	var/rotation = 2 + min(intensity, 12) * 0.3
+	var/offset = 1 + min(intensity, 12) * 0.2
+	var/time = 2 + min(intensity, 12) * 0.2
+	animate(src, transform = turn(transform, rotation * shake_dir), pixel_x = init_px + offset * shake_dir, time = 1)
+	animate(transform = initial_transform, pixel_x = init_px, time = time, easing = ELASTIC_EASING)
+
+/atom/movable/proc/physics_collide(atom/movable/A)
+	return TRUE
+
+/mob/proc/can_hear()
+	return TRUE
+/mob/proc/can_hear_ambience()
+	return TRUE
+
+/obj/structure/overmap/var/nsv_next_bounce = 0

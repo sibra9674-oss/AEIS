@@ -44,21 +44,26 @@
 /obj/structure/overmap/proc/CreateEye(mob/user)
 	if(!user.client)
 		return
-	var/view_w = nsv_view_size()
-	var/view_h = round(view_w * 0.72) | 1
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_operator_move))
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(on_operator_logout))
 	var/atom/movable/screen/overmap_catcher/catcher = new
 	catcher.ship = src
-	catcher.setup(view_w, view_h)
+	catcher.setup(19, 15)
 	user.client.screen += catcher
 	LAZYSET(catchers, user, catcher)
 	var/datum/action/innate/camera_off/overmap/leave = new(user)
 	leave.ship = src
 	leave.give_action(user)
 	LAZYSET(leave_actions, user, leave)
-	user.reset_perspective(src)
-	user.client.view_size.set_width_and_height(view_w, view_h)
+	if(!nsv_eye)
+		nsv_eye = new(get_turf(src))
+	nsv_eye.forceMove(get_turf(src))
+	user.reset_perspective(nsv_eye) //NSV also uses a separate eye object: the ship itself has animated pixel offsets, the client follows those through client.pixel_x
+	if(isliving(user))
+		var/mob/living/L = user
+		L.remote_control = src //TGMC's own hook: client.Move() relays the pilot's movement keys to relaymove() of this object
+	user.client.overmap_zoomout = (mass < MASS_MEDIUM) ? 1 : 2
+	user.client.nsv_apply_zoom()
 	user.client.pixel_x = pixel_x
 	user.client.pixel_y = pixel_y
 
@@ -104,7 +109,12 @@
 		leave.remove_action(M)
 		qdel(leave)
 	LAZYREMOVE(leave_actions, M)
+	if(isliving(M))
+		var/mob/living/living_operator = M
+		if(living_operator.remote_control == src)
+			living_operator.remote_control = null
 	if(M.client)
+		M.client.overmap_zoomout = 0
 		M.client.view_size.reset_to_default()
 		M.client.pixel_x = 0
 		M.client.pixel_y = 0
@@ -114,6 +124,15 @@
 /obj/structure/overmap/proc/remove_eye_control()
 	return TRUE
 
+/// Invisible camera anchor that always sits on the ship's turf (no pixel offset of its own, so the offset is not applied twice).
+/obj/effect/nsv_eye
+	name = "camera"
+	invisibility = INVISIBILITY_ABSTRACT
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	animate_movement = NO_STEPS //like NSV's eye: no sliding between tiles, the ship's pixel offset already does the smooth part
+	glide_size = 0
+/obj/structure/overmap/var/obj/effect/nsv_eye/nsv_eye
 /obj/structure/overmap/var/list/catchers
 /obj/structure/overmap/var/list/leave_actions
 
@@ -169,7 +188,6 @@
 /atom/movable/screen/overmap_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
 	var/mob/clicker = usr
-	nsv_dbg(clicker, "catcher click params=[params] ship=[ship] overmap_ship=[clicker?.overmap_ship]")
 	if(!istype(clicker) || !ship || clicker.overmap_ship != ship)
 		return
 	var/list/halves = splittext(modifiers["screen-loc"], ",")
@@ -180,10 +198,10 @@
 	var/click_x = (text2num(xs[1]) - 1) * 32 + (length(xs) > 1 ? text2num(xs[2]) : 0)
 	var/click_y = (text2num(ys[1]) - 1) * 32 + (length(ys) > 1 ? text2num(ys[2]) : 0)
 	// Offset (in tiles) from the view centre, where our ship sits.
-	var/dx = (click_x - view_w * 16) / 32
-	var/dy = (click_y - view_h * 16) / 32
+	var/list/real_view = getviewsize(clicker.client.view) //actual tiles on screen
+	var/dx = (click_x - real_view[1] * 16) / 32
+	var/dy = (click_y - real_view[2] * 16) / 32
 	var/turf/target = locate(clamp(round(ship.x + dx + 0.5), 1, world.maxx), clamp(round(ship.y + dy + 0.5), 1, world.maxy), ship.z)
-	nsv_dbg(clicker, "click dx=[dx] dy=[dy] target=[target] ([target?.x],[target?.y]) ship=([ship.x],[ship.y]) angle=[ship.angle]")
 	if(!target)
 		return
 	ship.InterceptClickOn(clicker, params, target)
@@ -202,3 +220,25 @@
 	gunner.reset_perspective(focus)
 	gunner.client.pixel_x = focus.pixel_x
 	gunner.client.pixel_y = focus.pixel_y
+
+/// Zoom levels: each step adds 8x6 tiles to the default view (keeps its aspect ratio so the map pane doesn't get letterboxed).
+/client/proc/nsv_apply_zoom()
+	var/obj/structure/overmap/ship = mob?.overmap_ship
+	if(!ship)
+		return
+	overmap_zoomout = clamp(overmap_zoomout, 0, 3)
+	view_size.set_width_and_height(overmap_zoomout * 8, overmap_zoomout * 6)
+	var/atom/movable/screen/overmap_catcher/catcher = LAZYACCESS(ship.catchers, mob)
+	if(catcher)
+		var/list/real_view = getviewsize(view)
+		catcher.setup(real_view[1], real_view[2])
+
+/// NSV's Ctrl + Scroll Wheel zoom.
+/client/MouseWheel(object, delta_x, delta_y, location, control, params)
+	if(mob?.overmap_ship)
+		var/list/modifiers = params2list(params)
+		if(modifiers["ctrl"])
+			overmap_zoomout += (delta_y > 0) ? -1 : 1
+			nsv_apply_zoom()
+			return
+	return ..()

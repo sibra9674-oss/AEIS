@@ -69,7 +69,10 @@ Written by Bokkiewokkie
 	return ATAN2(a, e)
 
 /matrix/proc/normalize()
-	return src / src.ln()
+	var/length = src.ln()
+	if(!length) //zero vector: nothing to normalize (original divides by zero)
+		return src
+	return src / length
 
 
 /matrix/proc/project(var/matrix/V)

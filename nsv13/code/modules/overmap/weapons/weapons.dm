@@ -65,6 +65,5 @@
 		if(user_override && length(report_list) && report_list[1] != null && firing_weapon) //Tell them we failed
 			if(world.time < firing_weapon.next_error_report) //Silence, SPAM.
 				return
-			nsv_dbg(user_override, "fire_weapon failed: target=[target] [target?.type] weapon=[firing_weapon]")
 			to_chat(user_override, "<span class='warning'>[report_list[1]]</span>")
 			firing_weapon.next_error_report = world.time + 0.5 SECONDS

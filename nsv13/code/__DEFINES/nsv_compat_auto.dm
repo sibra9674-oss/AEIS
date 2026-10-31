@@ -72,8 +72,8 @@
 /datum/action/innate/camera_off/overmap/var/icon_icon
 /datum/controller/configuration/var/return_system
 /datum/controller/subsystem/atoms/var/initialized_changed
-/datum/controller/subsystem/overmap_mode_stub/var/next_objective_reminder
-/datum/controller/subsystem/overmap_mode_stub/var/objective_reminder_stacks
+/datum/ss_overmap_mode_stub/var/next_objective_reminder
+/datum/ss_overmap_mode_stub/var/objective_reminder_stacks
 /datum/controller/subsystem/ticker/var/news_report
 /datum/design/board/gauss_rack_upgrade/var/build_path
 /datum/design/board/gauss_rack_upgrade/var/category
@@ -160,8 +160,6 @@
 /obj/structure/overmap/asteroid/var/required_tier
 /obj/structure/overmap/trader/var/inhabited_trader
 /obj/structure/reagent_dispensers/foamtank/hull_repair_juice/var/reagent_id
-/atom/movable/proc/physics_collide(a,b,c,d,e,f,g,h)
-	return
 /client/proc/cmd_admin_delete(a,b,c,d,e,f,g,h)
 	return
 /datum/action/innate/camera_off/overmap/proc/Grant(a,b,c,d,e,f,g,h)
@@ -170,7 +168,7 @@
 	return
 /datum/component/material_container/proc/retrieve_all(a,b,c,d,e,f,g,h)
 	return
-/datum/controller/subsystem/overmap_mode_stub/proc/modify_threat_elevation(a,b,c,d,e,f,g,h)
+/datum/ss_overmap_mode_stub/proc/modify_threat_elevation(a,b,c,d,e,f,g,h)
 	return
 /datum/controller/subsystem/star_system/proc/sanitize_filepath(a,b,c,d,e,f,g,h)
 	return
@@ -202,10 +200,6 @@
 	return
 /mob/proc/add_verb(a,b,c,d,e,f,g,h)
 	return
-/mob/proc/can_hear(a,b,c,d,e,f,g,h)
-	return
-/mob/proc/can_hear_ambience(a,b,c,d,e,f,g,h)
-	return
 /mob/proc/remove_verb(a,b,c,d,e,f,g,h)
 	return
 /mob/living/proc/adjustFireLoss(a,b,c,d,e,f,g,h)
@@ -232,8 +226,6 @@
 	return
 /mob/living/simple_animal/slime/proc/set_playable(a,b,c,d,e,f,g,h)
 	return
-/obj/item/proc/shake_animation(a,b,c,d,e,f,g,h)
-	return
 /obj/item/ammo_box/magazine/proc/ammo_count(a,b,c,d,e,f,g,h)
 	return
 /obj/item/paper/proc/add_raw_text(a,b,c,d,e,f,g,h)
@@ -247,8 +239,6 @@
 /obj/item/projectile/proc/RETURN_POINT_VECTOR_INCREMENT(a,b,c,d,e,f,g,h)
 	return
 /obj/item/projectile/proc/RETURN_PRECISE_POINT(a,b,c,d,e,f,g,h)
-	return
-/obj/item/projectile/proc/angle2dir_ship(a,b,c,d,e,f,g,h)
 	return
 /obj/item/projectile/proc/generate_tracer_between_points(a,b,c,d,e,f,g,h)
 	return
@@ -290,10 +280,6 @@
 	return
 /obj/machinery/railgun_charger/proc/find_safe_turf(a,b,c,d,e,f,g,h)
 	return
-/obj/machinery/ship_weapon/proc/angle2dir_ship(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/ship_weapon/proc/shake_with_inertia(a,b,c,d,e,f,g,h)
-	return
 /obj/machinery/ship_weapon/deck_turret/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
 	return
 /obj/machinery/ship_weapon/energy/beam/bsa/proc/getline(a,b,c,d,e,f,g,h)
@@ -324,8 +310,6 @@
 	return
 /obj/structure/chair/fancy/gauss/proc/iscyborg(a,b,c,d,e,f,g,h)
 	return
-/obj/structure/hull_plate/proc/shake_animation(a,b,c,d,e,f,g,h)
-	return
 /obj/structure/overmap/proc/ai_load_interior(a,b,c,d,e,f,g,h)
 	return
 /obj/structure/overmap/proc/getline(a,b,c,d,e,f,g,h)
@@ -351,10 +335,6 @@
 /obj/structure/overmap/proc/send_supplypod(a,b,c,d,e,f,g,h)
 	return
 /obj/structure/overmap/proc/set_security_level(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/overmap/proc/shake_animation(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/overmap/proc/shake_with_inertia(a,b,c,d,e,f,g,h)
 	return
 /obj/structure/overmap/proc/spaceDebrisStartLoc(a,b,c,d,e,f,g,h)
 	return

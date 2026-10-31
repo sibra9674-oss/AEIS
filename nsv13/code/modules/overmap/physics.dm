@@ -312,6 +312,7 @@ This proc is to be used when someone gets stuck in an overmap ship, gauss, WHATE
 		if(offset.a > 0 && velocity.a > 0)
 			dir = EAST
 			if(!Move(get_step(src, EAST)))
+				nsv_move_failed(src, EAST)
 				offset.a = 0
 				failed_x = TRUE
 				velocity.a *= -bounce_factor
@@ -322,6 +323,7 @@ This proc is to be used when someone gets stuck in an overmap ship, gauss, WHATE
 		else if(offset.a < 0 && velocity.a < 0)
 			dir = WEST
 			if(!Move(get_step(src, WEST)))
+				nsv_move_failed(src, WEST)
 				offset.a = 0
 				failed_x = TRUE
 				velocity.a *= -bounce_factor
@@ -334,6 +336,7 @@ This proc is to be used when someone gets stuck in an overmap ship, gauss, WHATE
 		if(offset.e > 0 && velocity.e > 0)
 			dir = NORTH
 			if(!Move(get_step(src, NORTH)))
+				nsv_move_failed(src, NORTH)
 				offset.e = 0
 				failed_y = TRUE
 				velocity.e *= -bounce_factor
@@ -344,6 +347,7 @@ This proc is to be used when someone gets stuck in an overmap ship, gauss, WHATE
 		else if(offset.e < 0 && velocity.e < 0)
 			dir = SOUTH
 			if(!Move(get_step(src, SOUTH)))
+				nsv_move_failed(src, SOUTH)
 				offset.e = 0
 				failed_y = TRUE
 				velocity.e *= -bounce_factor
@@ -417,6 +421,8 @@ This proc is to be used when someone gets stuck in an overmap ship, gauss, WHATE
 		last_fired.transform = mat_to
 	*/ //We don't use these overlays for now, but we may wish to later.
 
+	if(nsv_eye)
+		nsv_eye.forceMove(get_turf(src))
 	for(var/mob/living/M as() in operators)
 		var/client/C = M.client
 		if(!C)
@@ -589,7 +595,7 @@ This proc is to be used when someone gets stuck in an overmap ship, gauss, WHATE
 	other.offset += output
 
 /obj/structure/overmap/Bumped(atom/movable/A)
-	if(brakes || isovermap(A)) //No :)
+	if(brakes || isovermap(A) || isprojectile(A)) //TGMC: /atom/movable/Bump always calls Bumped(); projectiles must not shove the ship //No :)
 		return FALSE
 	handle_cloak(CLOAK_TEMPORARY_LOSS)
 	if(A.dir & NORTH)

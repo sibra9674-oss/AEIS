@@ -123,7 +123,7 @@ Method to try locate an overmap object that we should attach to. Recursively cal
 	if(prob(amount/5)) //magic number woo!
 		take_damage(amount)
 
-/obj/structure/hull_plate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = FALSE)
+/obj/structure/hull_plate/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = FALSE, attack_dir, armour_penetration = 0, mob/living/blame_mob)
 	if(damage_amount >= 15)
 		shake_animation(3)
 	if(obj_integrity <= damage_amount)

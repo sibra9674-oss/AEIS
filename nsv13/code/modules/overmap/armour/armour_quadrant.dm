@@ -76,6 +76,7 @@
 	var/list/quad = armour_quadrants[quadrant] //Should be a string define in format. Get the quadrant that we seek.
 	//Time for some witchcraft that I stole from obj_defense.dm
 	var/delta = damage-quad["current_armour"]
+	nsv_dbg_main("QUAD HIT: [src] quadrant=[quadrant] damage=[damage] armour_before=[quad["current_armour"]]/[quad["max_armour"]] to_hull=[max(delta, 0)] hull=[obj_integrity]/[max_integrity]")
 	quad["current_armour"] = max(quad["current_armour"] - damage, 0)
 	if(delta <= 0) //Woo! We absorbed the hit fully.
 		relay(ARMOUR_DING)

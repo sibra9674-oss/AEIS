@@ -97,7 +97,7 @@ Bullet reactions
 /obj/structure/overmap/small_craft/relay_damage(proj_type)
 	return
 
-/obj/structure/overmap/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, nsv_damagesound = TRUE)
+/obj/structure/overmap/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir, armour_penetration = 0, mob/living/blame_mob, nsv_damagesound = TRUE)
 	var/damage_sound = pick(GLOB.overmap_impact_sounds)
 	if(nsv_damagesound && !impact_sound_cooldown && damage_sound)
 		relay(damage_sound)
@@ -112,6 +112,7 @@ Bullet reactions
 			handle_crit(damage_amount)
 			return FALSE
 	update_icon()
+	nsv_report_turf(src)
 	return ..()
 
 /**

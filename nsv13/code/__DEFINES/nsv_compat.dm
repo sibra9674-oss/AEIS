@@ -45,7 +45,7 @@
 #define INTERACT_ATOM_IGNORE_INCAPACITATED		 	(1<<4)	//! ignores incapacitated check
 #define INTERACT_ATOM_IGNORE_RESTRAINED 			(1<<5)	//! incapacitated check ignores restrained
 #define INTERACT_ATOM_REQUIRES_DEXTERITY 			(1<<3)	//! user must be dextrous
-#define LAVA_PROOF		(1<<0)
+#define LAVA_PROOF		(1<<20) //NOT (1<<0): that is INDESTRUCTIBLE in TGMC and made every ship immortal
 #define MAX_CHARTER_LEN			80
 #define MOBILITY_MOVE			(1<<0)		//! can move
 #define NEVER_DELETE_OCCUPIED		(1<<2) // Even if the overmap takes enough damage to be destroyed, never delete it if it's occupied. I don't know when we'd use this it just seems useful

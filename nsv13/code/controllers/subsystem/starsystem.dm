@@ -567,7 +567,7 @@ Returns a faction datum by its name (case insensitive!)
 		fleet.current_system = src
 		src.fleets += fleet
 		fleet.assemble(src)
-	if(src.preset_trader)
+	if(FALSE && src.preset_trader) //TGMC port: traders are not ported (stub), skip trader stations
 		log_world("[src] has a preset trader")
 		src.trader = new src.preset_trader
 		//We need to instantiate the trader's shop now and give it info, so unfortunately these'll always load in.

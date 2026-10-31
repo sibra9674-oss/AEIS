@@ -587,7 +587,6 @@ Proc to spool up a new Z-level for a player ship and assign it a treadmill.
 /obj/structure/overmap/InterceptClickOn(mob/user, params, atom/target)
 	if(user.incapacitated() || !isliving(user))
 		return FALSE
-	nsv_dbg(user, "InterceptClickOn target=[target] [target?.type] user_is_gunner=[user == gunner] user_is_pilot=[user == pilot] safety=[weapon_safety]")
 	if(weapon_safety && !can_friendly_fire())
 		return FALSE
 	if(istype(target, /obj/machinery/button))
@@ -837,7 +836,7 @@ Proc to spool up a new Z-level for a player ship and assign it a treadmill.
 	icon_state = "[initial(icon_state)]-[progress]"
 
 /obj/structure/overmap/proc/relay(S, var/message=null, loop = FALSE, channel = null) //Sends a sound and / or text message to the crew of a ship
-	for(var/mob/M as() in mobs_in_ship)
+	for(var/mob/M as() in nsv_ship_listeners())
 		if(S && M.can_hear())
 			if(channel) //Doing this forbids overlapping of sounds
 				SEND_SOUND(M, sound(S, repeat = loop, wait = 0, volume = 100, channel = channel))
@@ -850,7 +849,7 @@ Proc to spool up a new Z-level for a player ship and assign it a treadmill.
 			O.relay(S,message,loop,channel)
 
 /obj/structure/overmap/proc/stop_relay(channel) //Stops all playing sounds for crewmen on N channel.
-	for(var/mob/M as() in mobs_in_ship)
+	for(var/mob/M as() in nsv_ship_listeners())
 		M.stop_sound_channel(channel)
 	for(var/obj/structure/overmap/O as() in overmaps_in_ship) //Of course they get relayed the same message if they're in the same ship too
 		if(length(O.mobs_in_ship))

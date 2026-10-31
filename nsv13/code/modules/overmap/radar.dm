@@ -415,7 +415,7 @@ Called by add_sensor_profile_penalty if remove_in is used.
 			else
 				filterType *= 0.01 //Scale the number down to be an opacity figure for CSS
 			filterType = clamp(filterType, 0, 1)
-			blips[++blips.len] = list("x" = OM.x, "y" = OM.y, "colour" = thecolour, "name"=thename, opacity=filterType ,alignment = thefaction, "id"="\ref[OM]") //So now make a 2-d array that TGUI can iterate through. This is just a list within a list.
+			blips[++blips.len] = list("x" = OM.x + OM.offset?.a, "y" = OM.y + OM.offset?.e, "colour" = thecolour, "name"=thename, opacity=filterType ,alignment = thefaction, "id"="\ref[OM]") //So now make a 2-d array that TGUI can iterate through. This is just a list within a list.
 	if(ship_count > last_ship_count) //Play a tone if ship count changes
 		var/delta = ship_count - last_ship_count
 		last_ship_count = ship_count
@@ -424,8 +424,8 @@ Called by add_sensor_profile_penalty if remove_in is used.
 	data["zoom_factor"] = zoom_factor
 	data["zoom_factor_min"] = zoom_factor_min
 	data["zoom_factor_max"] = zoom_factor_max
-	data["focus_x"] = linked.x
-	data["focus_y"] = linked.y
+	data["focus_x"] = linked.x + linked.offset?.a
+	data["focus_y"] = linked.y + linked.offset?.e
 	data["ships"] = blips //Create a category in data called "ships" with our 2-d arrays.
 	data["showFriendlies"] = showFriendlies
 	data["showEnemies"] = showEnemies
