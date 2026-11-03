@@ -158,6 +158,7 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(welding)
+		nsv_weld_flame(src) //NSV atmos: an open welder flame ignites flammable gas
 		if(++weld_tick >= 20)
 			weld_tick = 0
 			remove_fuel(1)
@@ -197,6 +198,7 @@
 	var/list/icons = target.get_weld_spark_icon_and_state()
 	var/mutable_appearance/sparks = mutable_appearance(icons[1], icons[2], WELDING_TOOL_EFFECT_LAYER, src, ABOVE_LIGHTING_PLANE)
 	target.add_overlay(sparks)
+	nsv_weld_flame(target)
 	LAZYADD(update_overlays_on_z, sparks)
 	. = ..()
 	LAZYREMOVE(update_overlays_on_z, sparks)

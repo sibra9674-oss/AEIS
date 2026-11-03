@@ -1,5 +1,5 @@
 // Port of NSV13 tgui/interfaces/Dradis.js (+ components/Map.js) from Inferno/JS to React/TS. Same ui_data / ui_act contract as nsv13/code/modules/overmap/radar.dm.
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Knob, Section } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -9,7 +9,7 @@ import { NSV_SPACE_BG } from './NsvAssets';
 
 const CSS = `
 .sc-outer{overflow:hidden;position:relative;width:100%;background-image:url(NSV_SPACE_BG);border:1px solid #40628a;cursor:grab}
-.sc-inner{position:relative;width:4000px;height:4000px;background-size:40px 40px;background-image:radial-gradient(circle at center,#360 1px,rgba(0,0,0,0) 1px)}
+.sc-inner{position:relative;background-size:40px 40px;background-image:radial-gradient(circle at center,#360 1px,rgba(0,0,0,0) 1px)}
 .sc-range{position:absolute;border-radius:50%;border:2px solid #360;transition:all .5s ease-out}
 .star_marker_syndicate,.star_marker_nanotrasen,.star_marker_unaligned,.star_marker_uncharted{display:inline-block;padding:0 5px;color:rgba(0,0,0,0);line-height:25px;width:25px;height:25px;min-width:25px;min-height:25px;margin-left:-12px;margin-bottom:-12px;border-radius:50%;z-index:3;outline:0}
 .star_marker_syndicate{background:radial-gradient(ellipse at center,#a30000 0%,#a30000 20%,rgba(163,0,0,.71) 40%,rgba(163,0,0,0) 60%)}
@@ -49,19 +49,30 @@ type Data = {
   can_use_radar: BooleanLike;
 };
 
-const HALF = 2000;
+const MAP_TILES = 256; //the overmap level is 255x255 tiles
 
-/** NSV13 Map: a draggable container that starts focused on the middle. */
-const DradisMapView = (props: { height: string; children: React.ReactNode }) => {
+/**
+ * NSV13 Map: the radar is a fixed plane showing the whole system (absolute coordinates). Ships move across it.
+ * The view is a draggable (scrollable) window onto the plane that is centred on our ship when opened, on zoom and on "Re-focus".
+ */
+const DradisMapView = (props: {
+  height: string;
+  planeSize: number;
+  focusLeft: number; // px from the left of the plane
+  focusBottom: number; // px from the bottom of the plane
+  refocusKey: number;
+  children: React.ReactNode;
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const focus = () => {
     const map = ref.current;
     if (map) {
-      map.scrollLeft = HALF - map.clientWidth / 2;
-      map.scrollTop = HALF - map.clientHeight / 2;
+      map.scrollLeft = props.focusLeft - map.clientWidth / 2;
+      map.scrollTop = props.planeSize - props.focusBottom - map.clientHeight / 2;
     }
   };
-  useEffect(focus, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(focus, [props.refocusKey, props.planeSize]);
   const onMouseDown = (e: React.MouseEvent) => {
     let curX = e.screenX;
     let curY = e.screenY;
@@ -84,7 +95,9 @@ const DradisMapView = (props: { height: string; children: React.ReactNode }) => 
   };
   return (
     <div className="sc-outer" ref={ref} onMouseDown={onMouseDown} style={{ height: props.height }}>
-      <div className="sc-inner">{props.children}</div>
+      <div className="sc-inner" style={{ width: `${props.planeSize}px`, height: `${props.planeSize}px` }}>
+        {props.children}
+      </div>
     </div>
   );
 };
@@ -115,6 +128,8 @@ export const DradisContent = (props: { height?: string }) => {
   const zoom = data.zoom_factor;
   const scale = 5 * zoom;
   const diameter = data.width_mod * 562.5 * zoom;
+  const planeSize = MAP_TILES * scale + 400;
+  const [refocus, setRefocus] = useState(0);
 
   const drawShip = (ship: Ship, index: number) => (
     <Button
@@ -124,8 +139,8 @@ export const DradisContent = (props: { height?: string }) => {
       style={{
         height: '1px',
         position: 'absolute',
-        left: `${HALF + (ship.x - data.focus_x) * scale}px`,
-        bottom: `${HALF + (ship.y - data.focus_y) * scale}px`,
+        left: `${ship.x * scale}px`,
+        bottom: `${ship.y * scale}px`,
         border: `1px solid ${ship.colour}`,
         opacity: ship.opacity,
         transition: 'all 0.5s ease-out',
@@ -144,6 +159,9 @@ export const DradisContent = (props: { height?: string }) => {
         <>
           <Button icon="search-plus" onClick={() => act('zoomin')} />
           <Button icon="search-minus" onClick={() => act('zoomout')} />
+          <Button icon="crosshairs" onClick={() => setRefocus(refocus + 1)}>
+            Re-focus
+          </Button>
           {!!data.can_use_radar && (
             <>
               <Button icon="bullseye" disabled={!data.can_radar_pulse} onClick={() => act('radar_pulse')}>
@@ -187,13 +205,19 @@ export const DradisContent = (props: { height?: string }) => {
         stepPixelSize={1}
         onDrag={(e, value) => act('setZoom', { zoom: value })}
       />
-      <DradisMapView height={props.height || '75vh'}>
+      <DradisMapView
+        height={props.height || '75vh'}
+        planeSize={planeSize}
+        focusLeft={data.focus_x * scale}
+        focusBottom={data.focus_y * scale}
+        refocusKey={refocus + scale}
+      >
         {(data.ships || []).map(drawShip)}
         <div
           className="sc-range"
           style={{
-            left: `${HALF - diameter / 2}px`,
-            bottom: `${HALF - diameter / 2}px`,
+            left: `${data.focus_x * scale - diameter / 2}px`,
+            bottom: `${data.focus_y * scale - diameter / 2}px`,
             width: `${diameter}px`,
             height: `${diameter}px`,
           }}

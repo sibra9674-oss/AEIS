@@ -204,7 +204,25 @@
 	var/turf/target = locate(clamp(round(ship.x + dx + 0.5), 1, world.maxx), clamp(round(ship.y + dy + 0.5), 1, world.maxy), ship.z)
 	if(!target)
 		return
-	ship.InterceptClickOn(clicker, params, target)
+	//In NSV the player clicks the actual atom under the cursor. Our click catcher only sees the tile, so resolve what is there:
+	//enemy missiles/torpedoes (PDC rounds only hit them when they are the clicked target) and other ships (so missiles can home on them).
+	var/atom/clicked = target
+	var/best_dist = 3
+	for(var/obj/item/projectile/guided_munition/GM in range(2, target))
+		if(GM.faction == ship.faction)
+			continue
+		var/gm_dist = get_dist(GM, target)
+		if(gm_dist < best_dist)
+			best_dist = gm_dist
+			clicked = GM
+	if(clicked == target)
+		for(var/obj/structure/overmap/OM as anything in GLOB.overmap_objects)
+			if(OM == ship || OM.z != target.z)
+				continue
+			if(target.x >= OM.x && target.x < OM.x + max(1, round(OM.bound_width / 32)) && target.y >= OM.y && target.y < OM.y + max(1, round(OM.bound_height / 32)))
+				clicked = OM
+				break
+	ship.InterceptClickOn(clicker, params, clicked)
 
 
 /obj/structure/overmap/var/obj/structure/overmap/gunner_cam_target

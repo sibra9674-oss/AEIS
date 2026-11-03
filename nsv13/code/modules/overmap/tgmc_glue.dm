@@ -37,10 +37,45 @@ GLOBAL_VAR_INIT(nsv_debug, TRUE)
 			continue
 		GLOB.teleportlocs[A.name] = A
 		OM.linked_areas |= A
+	nsv_setup_map_wrap(OM.z)
 	message_admins("NSV overmap started: [OM] on Z[OM.z] (port build a19)")
 	return OM
 
-ADMIN_VERB(nsv_start_overmap_verb, R_DEBUG, "NSV: Start Overmap", "Creates the NSV overmap z-level and ship and links the TGMC ship z-levels to it.", ADMIN_CATEGORY_DEBUG)
+#define NSV_WRAP_EDGE 2 //distance of the wrap trigger line from the map border
+/// NSV overmap z-levels are SELFLOOPING: whatever reaches an edge (ships, projectiles) re-appears on the opposite side. We put trigger signals on a ring of turfs.
+/proc/nsv_setup_map_wrap(z)
+	var/list/ring = list()
+	for(var/x in 1 to world.maxx)
+		ring += locate(x, NSV_WRAP_EDGE, z)
+		ring += locate(x, world.maxy - NSV_WRAP_EDGE + 1, z)
+	for(var/y in 1 to world.maxy)
+		ring += locate(NSV_WRAP_EDGE, y, z)
+		ring += locate(world.maxx - NSV_WRAP_EDGE + 1, y, z)
+	for(var/turf/T as anything in ring)
+		if(T)
+			T.RegisterSignal(T, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/turf, nsv_wrap_entered))
+
+/turf/proc/nsv_wrap_entered(datum/source, atom/movable/crosser, atom/oldloc)
+	SIGNAL_HANDLER
+	if(!isovermap(crosser) && !isprojectile(crosser))
+		return
+	var/inner = NSV_WRAP_EDGE + 2
+	var/nx = x
+	var/ny = y
+	if(x <= NSV_WRAP_EDGE)
+		nx = world.maxx - inner
+	else if(x >= world.maxx - NSV_WRAP_EDGE + 1)
+		nx = inner
+	if(y <= NSV_WRAP_EDGE)
+		ny = world.maxy - inner
+	else if(y >= world.maxy - NSV_WRAP_EDGE + 1)
+		ny = inner
+	var/turf/dest = locate(nx, ny, z)
+	if(!dest || dest == src)
+		return
+	INVOKE_ASYNC(crosser, TYPE_PROC_REF(/atom/movable, forceMove), dest)
+
+ADMIN_VERB(nsv_start_overmap_verb, R_DEBUG, "Start Overmap", "Creates the NSV overmap z-level and ship and links the TGMC ship z-levels to it.", "NSV")
 	var/obj/structure/overmap/OM = nsv_start_overmap()
 	if(OM)
 		to_chat(user, span_notice("NSV overmap started: [OM] (Z[OM.z])."))
@@ -48,7 +83,7 @@ ADMIN_VERB(nsv_start_overmap_verb, R_DEBUG, "NSV: Start Overmap", "Creates the N
 		to_chat(user, span_warning("NSV overmap failed to start, check the runtime log."))
 
 /// Beestation's /obj/proc/run_obj_armor, reading NSV's list-style `armor` (list("overmap_light" = 95, ...)).
-/obj/structure/overmap/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
+/obj/structure/overmap/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
 	if(damage_type != BRUTE && damage_type != BURN)
 		return 0
 	var/armor_protection = 0
@@ -81,7 +116,7 @@ ADMIN_VERB(nsv_start_overmap_verb, R_DEBUG, "NSV: Start Overmap", "Creates the N
 		C.prefs.save_keybinds()
 		to_chat(C, span_notice("NSV: ship control keybinds were added to your keybindings."))
 
-ADMIN_VERB(nsv_console_info, R_DEBUG, "NSV: Console Info", "Lists every NSV ship console: type, location, power, linked ship (debug).", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(nsv_console_info, R_DEBUG, "Console Info", "Lists every NSV ship console: type, location, power, linked ship (debug).", "NSV")
 	to_chat(user, span_notice("NSV port build a19, debug=[GLOB.nsv_debug], overmap=[GLOB.nsv_main_overmap || "none"]"))
 	var/count = 0
 	for(var/obj/machinery/computer/ship/C in world)
@@ -103,7 +138,7 @@ ADMIN_VERB(nsv_console_info, R_DEBUG, "NSV: Console Info", "Lists every NSV ship
 	return listeners
 
 // ---- admin helpers to test combat ----
-ADMIN_VERB(nsv_spawn_enemy, R_DEBUG, "NSV: Spawn Enemy Ship", "Spawns an AI overmap ship near the NSV ship.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(nsv_spawn_enemy, R_DEBUG, "Spawn Enemy Ship", "Spawns an AI overmap ship near the NSV ship.", "NSV")
 	var/obj/structure/overmap/OM = GLOB.nsv_main_overmap
 	if(!OM)
 		to_chat(user, span_warning("Start the overmap first (nsv_start_overmap)."))
@@ -136,7 +171,7 @@ ADMIN_VERB(nsv_spawn_enemy, R_DEBUG, "NSV: Spawn Enemy Ship", "Spawns an AI over
 	F.add_ship(enemy, role)
 	message_admins("[key_name_admin(user)] spawned [enemy] at [T.x],[T.y],[T.z].")
 
-ADMIN_VERB(nsv_spawn_fleet, R_DEBUG, "NSV: Spawn Enemy Fleet", "Spawns an AI fleet in the NSV ship's star system.", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(nsv_spawn_fleet, R_DEBUG, "Spawn Enemy Fleet", "Spawns an AI fleet in the NSV ship's star system.", "NSV")
 	var/obj/structure/overmap/OM = GLOB.nsv_main_overmap
 	if(!OM?.current_system)
 		to_chat(user, span_warning("Start the overmap first, and make sure the ship has a star system."))
@@ -155,7 +190,7 @@ ADMIN_VERB(nsv_spawn_fleet, R_DEBUG, "NSV: Spawn Enemy Fleet", "Spawns an AI fle
 	F.assemble(sys)
 	message_admins("[key_name_admin(user)] spawned fleet [F] in [sys].")
 
-ADMIN_VERB(nsv_enemy_info, R_DEBUG, "NSV: Enemy Info", "Prints the state of every AI overmap ship (debug).", ADMIN_CATEGORY_DEBUG)
+ADMIN_VERB(nsv_enemy_info, R_DEBUG, "Enemy Info", "Prints the state of every AI overmap ship (debug).", "NSV")
 	var/obj/structure/overmap/OM = GLOB.nsv_main_overmap
 	if(!OM)
 		to_chat(user, span_warning("No NSV ship."))
@@ -238,3 +273,171 @@ ADMIN_VERB(nsv_enemy_info, R_DEBUG, "NSV: Enemy Info", "Prints the state of ever
 		near += "[OM]"
 	nsv_dbg_main("ERRORPROP created at [x],[y],[z] loc=[loc] mapload=[mapload] ships_near=[english_list(near, "none")] type=[type]")
 	stack_trace("NSV debug: errorprop created at [x],[y],[z]")
+
+ADMIN_VERB(nsv_spawn_weapons, R_DEBUG, "Spawn Weapons", "Spawns ONE real NSV ship weapon machine with its ammo next to you (pick which).", "NSV")
+	var/turf/start = get_turf(user.mob)
+	if(!start || !SSmapping.level_trait(start.z, ZTRAIT_MARINE_MAIN_SHIP))
+		to_chat(user, span_warning("Stand on the ship z-level first."))
+		return
+	var/list/choices = list(
+		"PDC" = list(/obj/machinery/ship_weapon/pdc_mount/north, /obj/item/ammo_box/magazine/nsv/pdc),
+		"Torpedo tube" = list(/obj/machinery/ship_weapon/torpedo_launcher/east, /obj/item/ship_weapon/ammunition/torpedo, /obj/item/ship_weapon/ammunition/torpedo),
+		"MAC" = list(/obj/machinery/ship_weapon/mac),
+		"Railgun" = list(/obj/machinery/ship_weapon/railgun, /obj/item/ship_weapon/ammunition/railgun_ammo),
+		"Gauss" = list(/obj/machinery/ship_weapon/gauss_gun/north, /obj/item/ship_weapon/ammunition/gauss, /obj/item/ship_weapon/ammunition/gauss),
+	)
+	var/pick = tgui_input_list(user, "Which weapon?", "NSV spawn weapon", choices)
+	if(!pick)
+		return
+	var/list/paths = choices[pick]
+	var/turf/machine_turf = locate(start.x + 3, start.y + 2, start.z)
+	var/turf/ammo_turf = locate(start.x + 1, start.y - 1, start.z)
+	for(var/i in 1 to length(paths))
+		var/path = paths[i]
+		var/atom/created = new path(i == 1 ? machine_turf : ammo_turf)
+		if(istype(created, /obj/machinery/ship_weapon))
+			var/obj/machinery/ship_weapon/SW = created
+			SW.get_ship() //do not wait for the 15 second link timer
+	to_chat(user, span_notice("NSV: spawned [pick]."))
+
+ADMIN_VERB(nsv_spawn_atmos_test, R_DEBUG, "Spawn Atmos Test", "Spawns an NSV gas canister next to you (pick the gas), or the basic set (plasma, oxygen, air, tritium) in a row. Break a plasma canister to watch it flood the room; use Atmos Ignite in the NSV tab to light it.", "NSV")
+	var/turf/start = get_turf(user.mob)
+	if(!start)
+		return
+	var/list/choices = list(
+		"Basic set (plasma, oxygen, air, tritium)" = null,
+		"Plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
+		"Oxygen" = /obj/machinery/portable_atmospherics/canister/oxygen,
+		"Nitrogen" = /obj/machinery/portable_atmospherics/canister/nitrogen,
+		"Air" = /obj/machinery/portable_atmospherics/canister/air,
+		"Tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
+		"Carbon dioxide" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+		"Nitrous oxide" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"Water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
+		"BZ" = /obj/machinery/portable_atmospherics/canister/bz,
+	)
+	var/pick = tgui_input_list(user, "Which canister?", "NSV atmos test", choices)
+	if(!pick)
+		return
+	var/list/types = list()
+	if(isnull(choices[pick]))
+		types = list(
+			/obj/machinery/portable_atmospherics/canister/toxins,
+			/obj/machinery/portable_atmospherics/canister/oxygen,
+			/obj/machinery/portable_atmospherics/canister/air,
+			/obj/machinery/portable_atmospherics/canister/tritium,
+		)
+	else
+		types = list(choices[pick])
+	var/offset = 1
+	for(var/path in types)
+		var/turf/T = locate(start.x + offset, start.y, start.z)
+		if(T)
+			var/obj/machinery/portable_atmospherics/canister/can = new path(T)
+			can.release_pressure = can.can_max_release_pressure //a canister only pushes gas until the room reaches its release pressure: at the default 1 atm it releases nothing into a pressurised room
+		offset++
+	to_chat(user, span_notice("NSV: spawned [length(types)] canister(s) to the east of you."))
+
+ADMIN_VERB(nsv_atmos_ignite, R_DEBUG, "Atmos Ignite", "Ignites the gas on your turf (needs oxygen and fuel gas to actually burn).", "NSV")
+	var/turf/open/T = get_turf(user.mob)
+	if(!istype(T) || !T.air)
+		to_chat(user, span_warning("No gas mixture here."))
+		return
+	var/fuel = T.air.get_moles(GAS_PLASMA) + T.air.get_moles(GAS_CONSTRICTED_PLASMA) + T.air.get_moles(GAS_TRITIUM)
+	var/o2 = T.air.get_moles(GAS_O2)
+	T.hotspot_expose(1000, CELL_VOLUME, 1)
+	var/why = ""
+	if(!T.active_hotspot)
+		if(o2 < 0.5)
+			why = " NOT lit: less than 0.5 mol oxygen."
+		else if(fuel <= 0.5)
+			why = " NOT lit: no fuel gas (needs more than 0.5 mol plasma or tritium on THIS tile)."
+		else
+			why = " NOT lit for an unknown reason (conditions look fine)."
+	to_chat(user, span_notice("NSV: hotspot [T.active_hotspot ? "CREATED" : "not created"].[why] pressure=[round(T.air.return_pressure(), 0.1)] kPa, fuel=[round(fuel, 0.1)] mol, o2=[round(o2, 0.1)] mol, temp=[round(T.air.return_temperature(), 0.1)] K."))
+
+ADMIN_VERB(nsv_atmos_check, R_DEBUG, "Atmos Check Here", "Prints the gas mixture of your turf.", "NSV")
+	var/turf/open/T = get_turf(user.mob)
+	if(!istype(T) || !T.air)
+		to_chat(user, span_warning("No gas mixture here."))
+		return
+	var/list/lines = list("pressure=[round(T.air.return_pressure(), 0.1)] kPa  temp=[round(T.air.return_temperature(), 0.1)] K  active=[T.excited] group=[T.excited_group ? length(T.excited_group.turf_list) : 0]  adjacent=[length(T.atmos_adjacent_turfs)]")
+	for(var/id in T.air.get_gases())
+		lines += "[GLOB.gas_data.names[id] || id]: [round(T.air.get_moles(id), 0.01)] mol"
+	to_chat(user, span_notice(jointext(lines, "\n")))
+
+ADMIN_VERB(nsv_radiation_pulse, R_DEBUG, "Radiation Pulse", "Fires NSV's real radiation_pulse() from your turf. Walls insulate; mobs accumulate radiation and take toxin damage over time.", "NSV")
+	var/intensity = tgui_input_number(user, "Intensity (50 = weak, 500 = strong, 3000 = reactor leak)", "NSV radiation", 500, 100000, 1)
+	if(!intensity)
+		return
+	radiation_pulse(user.mob, intensity, RAD_DISTANCE_COEFFICIENT, TRUE)
+	to_chat(user, span_notice("NSV: radiation_pulse([intensity]) from [get_turf(user.mob)]."))
+
+ADMIN_VERB(nsv_spawn_rpd, R_DEBUG, "Spawn RPD", "Spawns an NSV Rapid Pipe Dispenser next to you.", "NSV")
+	var/turf/T = get_turf(user.mob)
+	if(!T)
+		return
+	new /obj/item/pipe_dispenser(T)
+	to_chat(user, span_notice("NSV: spawned a Rapid Pipe Dispenser."))
+
+ADMIN_VERB(nsv_radiation_check, R_DEBUG, "Radiation Check", "Shows how much accumulated radiation you carry.", "NSV")
+	var/mob/living/L = user.mob
+	if(!istype(L))
+		return
+	to_chat(user, span_notice("NSV: radiation=[round(L.radiation, 0.1)] (safe below [RAD_MOB_SAFE], toxin damage above)."))
+
+/obj/item/ammo_box/Initialize(mapload)
+	. = ..()
+	stored_ammo = list()
+	if(!start_empty && ammo_type)
+		for(var/i in 1 to max_ammo)
+			stored_ammo += new ammo_type(src)
+	update_icon()
+
+/obj/item/ammo_box/Destroy()
+	QDEL_LIST(stored_ammo)
+	return ..()
+
+/// tg clears a mob's hand reference when the held item is forceMove()'d away (NSV weapons do `A.forceMove(src)` to take ammo from your hand); TGMC does not, leaving a ghost item in the hand.
+/mob/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(istype(gone, /obj/item) && (gone == r_hand || gone == l_hand))
+		temporarilyRemoveItemFromInventory(gone, TRUE)
+
+/// NSV ships have gravity: munitions must be moved on trolleys (ammunition/can_be_pulled refuses hand-dragging while there is gravity). TGMC has no gravity system.
+/atom/proc/has_gravity(turf/T)
+	return TRUE
+
+/proc/iscyborg(mob/M)
+	return istype(M, /mob/living/silicon/robot)
+
+/// tg do_mob(user, target, time): timed action that is cancelled if either of them moves.
+/proc/do_mob(mob/user, mob/target, time = 30, ...)
+	return do_after(user, time, target = target)
+
+/// tg machinery tool helpers (TGMC machinery only has default_deconstruction_crowbar). Return values follow tg: 0 can't, 1 failed, 2 done.
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
+	if((atom_flags & NODECONSTRUCT) || I.tool_behaviour != TOOL_SCREWDRIVER)
+		return FALSE
+	I.play_tool_sound(src, 50)
+	if(!panel_open)
+		panel_open = TRUE
+		icon_state = icon_state_open
+		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
+	else
+		panel_open = FALSE
+		icon_state = icon_state_closed
+		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
+	return TRUE
+
+/obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
+	if((atom_flags & NODECONSTRUCT) || I.tool_behaviour != TOOL_WRENCH)
+		return 0
+	to_chat(user, span_notice("You begin [anchored ? "un" : ""]securing [src]..."))
+	I.play_tool_sound(src, 50)
+	if(!I.use_tool(src, user, time))
+		return 1
+	anchored = !anchored
+	to_chat(user, span_notice("You [anchored ? "" : "un"]secure [src]."))
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	return 2

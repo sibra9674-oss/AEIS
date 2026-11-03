@@ -41,7 +41,7 @@
 			. += "<span class='notice'>The casing has been closed and bolted shut. It only requires sealing with a welding tool to be ready for action.</span>"
 
 /obj/item/ship_weapon/ammunition/torpedo/torpedo_casing/attackby(obj/item/W, mob/user, params)
-	add_fingerprint(user)
+	add_fingerprint(user, "nsv")
 	if(istype(W, /obj/item/ship_weapon/parts/missile/warhead))
 		var/obj/item/ship_weapon/parts/missile/warhead/WW = W
 		if(WW.fits_type && !istype(src, WW.fits_type))
@@ -189,7 +189,7 @@
 		if(tool.use_tool(src, user, 40, volume=100))
 			to_chat(user, "<span class='notice'>You cut the wiring in [src].</span>")
 			var/obj/item/stack/cable_coil/C = new (loc, 3)
-			C.add_fingerprint(user)
+			C.add_fingerprint(user, "nsv")
 			state = 8
 			update_icon()
 		return TRUE
@@ -206,7 +206,7 @@
 			if(tool.use_tool(src, user, 40, amount=1, volume=100))
 				to_chat(user, "<span class='notice'>You disassmeble [src].</span>")
 				new /obj/item/stack/sheet/iron(loc, 15)
-				add_fingerprint(user)
+				add_fingerprint(user, "nsv")
 				qdel(src)
 			return TRUE
 		if(10)

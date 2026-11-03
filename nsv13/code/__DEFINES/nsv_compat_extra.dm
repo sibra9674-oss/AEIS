@@ -52,21 +52,6 @@
 #define PASSGLASS (1<<1)
 #define TRAIT_SOURCE_OVERMAP_BLACKHOLE "overmap_singularity"
 // Stubs for Beestation/NSV systems that are intentionally not ported (yet). Each is replaced by the real thing when its module is brought in.
-/datum/gas_mixture
-	var/volume = 0
-	var/temperature = 293
-/datum/gas_mixture/proc/return_volume()
-	return volume
-/datum/gas_mixture/proc/return_temperature()
-	return temperature
-/datum/gas_mixture/proc/set_temperature(new_temp)
-	temperature = new_temp
-/datum/gas_mixture/proc/return_pressure()
-	return 0
-/datum/gas_mixture/proc/remove(amount)
-	return new /datum/gas_mixture
-/datum/gas_mixture/proc/merge(datum/gas_mixture/other)
-	return
 
 /datum/trader
 /datum/lance
@@ -123,12 +108,6 @@ var/datum/ss_overmap_mode_stub/SSovermap_mode = new
 	var/lance_target
 	var/last_finder
 /atom/movable/var/movement_type_bee = 0
-/datum/gas_mixture/proc/get_moles(gas_id)
-	return 0
-/datum/gas_mixture/proc/adjust_moles(gas_id, amt)
-	return
-/datum/gas_mixture/proc/total_moles()
-	return 0
 /datum/controller/subsystem/mapping/proc/get_turf_below(turf/T)
 	return get_turf_below(T)
 
@@ -146,8 +125,6 @@ var/datum/ss_overmap_mode_stub/SSovermap_mode = new
 /obj/machinery/computer/ship/ftl_core
 /obj/machinery/atmospherics/components/unary/plasma_loader
 /turf/closed/indestructible/boarding_cordon
-/obj/machinery/computer/ammo_sorter/proc/ui_update()
-	return
 /datum/freight_delivery_receipt/var/shipment
 /datum/space_level/var/linked_overmap
 /client/var/overmap_zoomout
@@ -155,7 +132,6 @@ var/datum/ss_overmap_mode_stub/SSovermap_mode = new
 /obj/item/card/id/gulag/var/points
 /datum/controller/subsystem/mapping/proc/setup_map_transitions()
 	return
-/obj/machinery/atmospherics/var/list/airs
 /proc/isnum_safe(x)
 	return isnum(x) && !isnan(x) && !isinf(x)
 /proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
@@ -198,34 +174,9 @@ var/datum/ss_overmap_mode_stub/SSovermap_mode = new
 /datum/trader/var/system
 /obj/structure/overmap/trader/proc/set_trader(datum/trader/T)
 	return
-/obj/machinery/computer/ship/ftl_core/var/ftl_state
 /atom/var/interaction_flags_atom = 0
-/datum/gas_mixture/proc/set_moles(gas_id, amt)
-	return
 /datum/controller/subsystem/mapping/proc/get_turf_above(turf/T)
 	return get_turf_above(T)
-// star_system transitions (real code lives in FTL/ftl_jump.dm; stubbed until FTL is ported)
-/datum/star_system/proc/add_ship(obj/structure/overmap/OM, turf/target_turf)
-	//Simplified port of FTL/ftl_jump.dm add_ship: registers the ship in this system (FTL itself is not ported).
-	if(QDELETED(OM))
-		return
-	if(!system_contents.Find(OM))
-		system_contents += OM
-	if(!occupying_z && OM.z)
-		occupying_z = OM.z
-	if(target_turf)
-		OM.forceMove(target_turf)
-	else if(!OM.z && occupying_z)
-		OM.forceMove(locate(rand(40, world.maxx - 39), rand(40, world.maxy - 39), occupying_z))
-	if(istype(OM))
-		OM.current_system = src
-		if(OM.faction != "nanotrasen" && OM.faction != "solgov")
-			enemies_in_system |= OM
-/datum/star_system/proc/remove_ship(obj/structure/overmap/OM, turf/new_location, is_ftl_jump = TRUE)
-	return
-/datum/star_system/proc/check_conflict_status()
-	return
-
 /atom/var/pass_flags_self = 0
 /atom/var/flags_ricochet = 0
 /atom/movable/var/movement_type = 0
@@ -248,9 +199,43 @@ var/datum/ss_overmap_mode_stub/SSovermap_mode = new
 /obj/item/projectile/bullet/dart
 /obj/item/bodypart
 
-/obj/item/ammo_box/magazine/var/max_ammo = 0
-/obj/item/ammo_box/magazine/var/ammo_type
-/obj/item/ammo_box/magazine/var/caliber
+/// TGMC has no tg-style ammo_box; NSV magazines hold their rounds as casing objects in stored_ammo (the ship weapon machine pops them while firing).
+/obj/item/ammo_box
+	name = "ammo box"
+	icon = 'icons/obj/items/casings.dmi'
+	icon_state = "casing_"
+	w_class = WEIGHT_CLASS_NORMAL
+	var/list/stored_ammo
+	var/ammo_type = /obj/item/ammo_casing
+	var/max_ammo = 30
+	var/caliber
+	var/start_empty = FALSE
+
+/obj/item/ammo_box/proc/get_round(keep = FALSE)
+	if(!length(stored_ammo))
+		return null
+	var/round = stored_ammo[length(stored_ammo)]
+	stored_ammo -= round
+	if(keep)
+		stored_ammo.Insert(1, round)
+	return round
+
+/obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/casing, replace_spent = FALSE)
+	if(!casing || length(stored_ammo) >= max_ammo)
+		return FALSE
+	casing.forceMove(src)
+	stored_ammo += casing
+	update_icon()
+	return TRUE
+
+/obj/item/ammo_box/proc/ammo_count(countempties = TRUE)
+	var/boolets = 0
+	for(var/obj/item/ammo_casing/casing in stored_ammo)
+		if(casing.BB || countempties)
+			boolets++
+	return boolets
+
+/obj/item/ammo_box/magazine
 /obj/item/projectile/var/armour_penetration = 0
 /obj/structure/overmap/var/armor
 #define ACCESS_ENGINE 10
@@ -271,11 +256,7 @@ var/datum/ss_overmap_mode_stub/SSovermap_mode = new
 	return
 /obj/item/projectile/guided_munition/var/armor
 /obj/machinery/var/is_operational = TRUE
-/turf/open/var/datum/gas_mixture/air
 /obj/item/ammo_casing/var/caliber
-#define ATMOS_GAS_MONITOR_SENSOR_NUCLEIUM "nucleium_sensor"
-#define ATMOS_GAS_MONITOR_INPUT_NUCLEIUM "nucleium_in"
-#define ATMOS_GAS_MONITOR_OUTPUT_NUCLEIUM "nucleium_out"
 #define INTERACT_MACHINE_OFFLINE (1<<1)
 
 /mob/var/obj/structure/overmap/last_overmap
@@ -314,10 +295,6 @@ GLOBAL_LIST_EMPTY(blacklisted_paperwork_itemtypes)
 	return
 /atom/proc/attack_robot(mob/user)
 	return
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
-	return FALSE
-/obj/machinery/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
-	return FALSE
 /obj/item/ammo_casing/proc/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	return
 /obj/item/ammo_casing/var/BB
@@ -332,8 +309,6 @@ GLOBAL_LIST_EMPTY(blacklisted_paperwork_itemtypes)
 	return
 /mob/living/dummy_pilot/proc/destroy_dummy_pilot(datum/source)
 	return
-/obj/structure/overmap/proc/force_parallax_update()
-	return
 /obj/structure/frame/var/circuit
 GLOBAL_LIST_EMPTY(busy_states)
 GLOBAL_LIST_EMPTY(bombers)
@@ -347,8 +322,6 @@ GLOBAL_VAR_INIT(MAX_EX_FLASH_RANGE, 20)
 // ---- compiler-driven fixes (round 2) ----
 #define HARDPOINT_SLOT_COUNTERMEASURE "Countermeasure"
 #define HARDPOINT_SLOT_ARMOUR "Armour"
-/atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	return
 /datum/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob/M)
 	return
 /datum/proc/onMouseMove(object, location, control, params)
@@ -424,3 +397,14 @@ GLOBAL_DATUM_INIT(nsv_map_config, /datum/stub_map_config, new)
 	return TRUE
 
 /obj/structure/overmap/var/nsv_next_bounce = 0
+
+// real NSV proc (fleet_combat/combat_handling.dm), copied verbatim
+/datum/star_system/proc/check_conflict_status()
+	for(var/i = 1; i <= fleets.len; i++)
+		var/datum/fleet/F = fleets[i]
+		for(var/j = i + 1; j <= fleets.len; j++)
+			var/datum/fleet/FF = fleets[j]
+			if(F.faction_id != FF.faction_id)
+				return TRUE
+
+	return FALSE

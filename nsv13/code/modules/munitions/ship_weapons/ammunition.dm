@@ -44,7 +44,7 @@
 		density = TRUE
 
 /obj/item/ship_weapon/ammunition/proc/climb_torp(mob/living/user)
-	src.add_fingerprint(user)
+	src.add_fingerprint(user, "nsv")
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
 								"<span class='notice'>You start climbing onto [src]...</span>")
 	var/adjusted_climb_time = climb_time

@@ -96,7 +96,7 @@
 	state = BS_DOOR_BOLTED
 
 /obj/structure/ship_weapon/torpedo_launcher_assembly/attackby(obj/item/W, mob/user, params)
-	add_fingerprint(user)
+	add_fingerprint(user, "nsv")
 
 	if(istype(W, /obj/item/stack/sheet/nanocarbon_glass))
 		if(state == BS_MOUNT_WELDED)

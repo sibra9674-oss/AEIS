@@ -78,7 +78,7 @@ GLOBAL_VAR_INIT(boarding_guns_z_locked, TRUE)
 	if(..())
 		return
 	usr.set_machine(src)
-	add_fingerprint(usr)
+	add_fingerprint(usr, "nsv")
 	if(!allowed(usr))
 		to_chat(usr, "<span class='danger'>Access denied.</span>")
 		return

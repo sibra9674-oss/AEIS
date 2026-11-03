@@ -81,7 +81,7 @@
 	state = BS_CASING_ADDED
 
 /obj/structure/ship_weapon/railgun_assembly/attackby(obj/item/W, mob/user, params)
-	add_fingerprint(user)
+	add_fingerprint(user, "nsv")
 	if(istype(W, /obj/item/stack/sheet/nanocarbon_glass) && state == BS_MOUNT_WELDED)
 		var/obj/item/stack/sheet/nanocarbon_glass/S = W
 		if(S.get_amount() < num_sheets_insulation)

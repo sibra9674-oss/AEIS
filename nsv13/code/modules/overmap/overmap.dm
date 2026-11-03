@@ -483,7 +483,7 @@ Proc to spool up a new Z-level for a player ship and assign it a treadmill.
 			RegisterSignal(src, COMSIG_INTERIOR_DONE_LOADING, PROC_REF(after_init_load_interior))
 			SSstar_system.queue_for_interior_load(src)
 
-	RegisterSignal(src, list(COMSIG_FTL_STATE_CHANGE, COMSIG_SHIP_KILLED), PROC_REF(dump_locks)) // Setup lockon handling
+	RegisterSignals(src, list(COMSIG_FTL_STATE_CHANGE, COMSIG_SHIP_KILLED), PROC_REF(dump_locks)) // Setup lockon handling
 
 ///Listens for when the interior is done initing and finishes up some variables when it is.
 /obj/structure/overmap/proc/after_init_load_interior()
@@ -658,7 +658,7 @@ Proc to spool up a new Z-level for a player ship and assign it a treadmill.
 		target_last_tracked[target] = world.time
 	to_chat(gunner, "<span class='notice'>Target painted.</span>")
 	relay('nsv13/sound/effects/fighters/locked.ogg', message=null, loop=FALSE, channel=CHANNEL_IMPORTANT_SHIP_ALERT)
-	RegisterSignal(target, list(COMSIG_PARENT_QDELETING, COMSIG_FTL_STATE_CHANGE), PROC_REF(dump_lock))
+	RegisterSignals(target, list(COMSIG_PARENT_QDELETING, COMSIG_FTL_STATE_CHANGE), PROC_REF(dump_lock))
 	SEND_SIGNAL(src, COMSIG_TARGET_PAINTED, target)
 	if(autotarget)
 		select_target(target) //autopaint our target

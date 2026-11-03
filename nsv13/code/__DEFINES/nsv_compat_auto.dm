@@ -104,7 +104,6 @@
 /obj/effect/particle_effect/foam/var/creation_time
 /obj/effect/particle_effect/foam/hull_repair_juice/var/slippery_foam
 /obj/effect/particle_effect/muzzleflash/var/light_flags
-/obj/item/ammo_box/magazine/var/stored_ammo
 /obj/item/ammo_casing/anti_air/var/projectile_type
 /obj/item/ammo_casing/flak/var/projectile_type
 /obj/item/ammo_casing/heavy_cannon/var/projectile_type
@@ -133,30 +132,16 @@
 /obj/machinery/computer/atmos_control/tank/nucleium_tank/var/input_tag
 /obj/machinery/computer/atmos_control/tank/nucleium_tank/var/output_tag
 /obj/machinery/computer/atmos_control/tank/nucleium_tank/var/sensors
-/obj/machinery/computer/ship/dradis/mining/var/req_one_access_txt
-/obj/machinery/computer/ship/ftl_computer/var/progress
-/obj/machinery/computer/ship/ftl_computer/var/spoolup_time
-/obj/machinery/computer/ship/ftl_core/var/can_cancel_jump
-/obj/machinery/computer/ship/ftl_core/var/lockout
-/obj/machinery/computer/ship/ftl_core/var/max_range
-/obj/machinery/computer/ship/ftl_core/var/progress
-/obj/machinery/computer/ship/ftl_core/var/req_charge
 /obj/machinery/conveyor/slow/var/conveyor_speed
 /obj/machinery/conveyor/slow/var/stack_type
 /obj/machinery/conveyor/slow/var/subsystem_type
 /obj/machinery/missile_builder/var/can_be_unanchored
 /obj/machinery/missile_builder/var/processing_flags
-/obj/machinery/ship_weapon/deck_turret/var/interaction_flags_machine
 /obj/machinery/ship_weapon/plasma_caster/var/processing_flags
-/obj/machinery/ship_weapon/vls/var/CanAtmosPass
-/obj/machinery/ship_weapon/vls/var/CanAtmosPassVertical
 /obj/structure/chair/fancy/gauss/var/buildstackamount
 /obj/structure/chair/fancy/gauss/var/item_chair
 /obj/structure/closet/supplypod/freight_pod/var/explosionSize
-/obj/structure/fluff/vls_hatch/var/CanAtmosPass
-/obj/structure/fluff/vls_hatch/var/CanAtmosPassVertical
 /obj/structure/frame/machine/ship_weapon/pdc_mount/var/state
-/obj/structure/overmap/var/CanAtmosPass
 /obj/structure/overmap/asteroid/var/required_tier
 /obj/structure/overmap/trader/var/inhabited_trader
 /obj/structure/reagent_dispensers/foamtank/hull_repair_juice/var/reagent_id
@@ -177,10 +162,6 @@
 /datum/fleet/proc/mini_announce(a,b,c,d,e,f,g,h)
 	return
 /datum/fleet/proc/pollGhostCandidates(a,b,c,d,e,f,g,h)
-	return
-/datum/gas_mixture/proc/remove_ratio(a,b,c,d,e,f,g,h)
-	return
-/datum/gas_mixture/proc/set_volume(a,b,c,d,e,f,g,h)
 	return
 /datum/lance/proc/add_member(a,b,c,d,e,f,g,h)
 	return
@@ -226,8 +207,6 @@
 	return
 /mob/living/simple_animal/slime/proc/set_playable(a,b,c,d,e,f,g,h)
 	return
-/obj/item/ammo_box/magazine/proc/ammo_count(a,b,c,d,e,f,g,h)
-	return
 /obj/item/paper/proc/add_raw_text(a,b,c,d,e,f,g,h)
 	return
 /obj/item/paper/proc/add_stamp(a,b,c,d,e,f,g,h)
@@ -250,37 +229,19 @@
 	return
 /obj/item/projectile/energy/nuclear_particle/dirty_shell_stage_three/proc/random_color_time(a,b,c,d,e,f,g,h)
 	return
-/obj/item/ship_weapon/ammunition/proc/do_mob(a,b,c,d,e,f,g,h)
-	return
-/obj/item/ship_weapon/ammunition/proc/has_gravity(a,b,c,d,e,f,g,h)
-	return
-/obj/item/ship_weapon/ammunition/proc/iscyborg(a,b,c,d,e,f,g,h)
-	return
 /obj/item/supplypod_beacon/proc/link_console(a,b,c,d,e,f,g,h)
 	return
 /obj/item/weldingtool/proc/get_fuel(a,b,c,d,e,f,g,h)
 	return
-/obj/machinery/armour_plating_nanorepair_well/proc/air_update_turf(a,b,c,d,e,f,g,h)
-	return
 /obj/machinery/broadside_shell_packer/proc/play_click_sound(a,b,c,d,e,f,g,h)
 	return
 /obj/machinery/computer/boarding_guns/proc/get_security_level(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/computer/ship/ftl_core/proc/cancel_ftl(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/computer/ship/ftl_core/proc/jump(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/computer/ship/ftl_core/proc/request_emergency_ftl_confirm(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/computer/ship/munitions_computer/proc/iscyborg(a,b,c,d,e,f,g,h)
 	return
 /obj/machinery/door/proc/id_scan_hacked(a,b,c,d,e,f,g,h)
 	return
 /obj/machinery/railgun_charger/proc/do_teleport(a,b,c,d,e,f,g,h)
 	return
 /obj/machinery/railgun_charger/proc/find_safe_turf(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/ship_weapon/deck_turret/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
 	return
 /obj/machinery/ship_weapon/energy/beam/bsa/proc/getline(a,b,c,d,e,f,g,h)
 	return
@@ -290,25 +251,11 @@
 	return
 /obj/machinery/ship_weapon/hybrid_rail/proc/tesla_zap(a,b,c,d,e,f,g,h)
 	return
-/obj/machinery/ship_weapon/mac/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/ship_weapon/pdc_mount/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/ship_weapon/plasma_caster/proc/atmos_spawn_air(a,b,c,d,e,f,g,h)
-	return
 /obj/machinery/ship_weapon/plasma_caster/proc/begin_processing(a,b,c,d,e,f,g,h)
 	return
 /obj/machinery/ship_weapon/plasma_caster/proc/end_processing(a,b,c,d,e,f,g,h)
 	return
 /obj/machinery/ship_weapon/plasma_caster/proc/tesla_zap(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/ship_weapon/railgun/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
-	return
-/obj/machinery/ship_weapon/torpedo_launcher/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/chair/fancy/gauss/proc/has_buckled_mobs(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/chair/fancy/gauss/proc/iscyborg(a,b,c,d,e,f,g,h)
 	return
 /obj/structure/overmap/proc/ai_load_interior(a,b,c,d,e,f,g,h)
 	return
@@ -324,10 +271,6 @@
 	return
 /obj/structure/overmap/proc/instance_interior(a,b,c,d,e,f,g,h)
 	return
-/obj/structure/overmap/proc/jump_end(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/overmap/proc/jump_start(a,b,c,d,e,f,g,h)
-	return
 /obj/structure/overmap/proc/kill_boarding_level(a,b,c,d,e,f,g,h)
 	return
 /obj/structure/overmap/proc/overmap_explode(a,b,c,d,e,f,g,h)
@@ -341,18 +284,6 @@
 /obj/structure/overmap/proc/spawn_boarders(a,b,c,d,e,f,g,h)
 	return
 /obj/structure/overmap/small_craft/proc/docking_act(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/ship_weapon/artillery_frame/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/ship_weapon/mac_assembly/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/ship_weapon/railgun_assembly/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
-	return
-/obj/structure/ship_weapon/torpedo_launcher_assembly/proc/transfer_fingerprints_to(a,b,c,d,e,f,g,h)
-	return
-/turf/proc/atmos_spawn_air(a,b,c,d,e,f,g,h)
-	return
-/turf/proc/has_gravity(a,b,c,d,e,f,g,h)
 	return
 /turf/closed/wall/proc/add_dent(a,b,c,d,e,f,g,h)
 	return
