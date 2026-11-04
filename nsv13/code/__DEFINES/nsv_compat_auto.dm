@@ -44,8 +44,6 @@
 /mob/living/simple_animal/slime
 /obj/anomaly/singularity
 /obj/effect/decal/cleanable/oil
-/obj/effect/decal/nuclear_waste
-/obj/effect/decal/nuclear_waste/epicenter
 /obj/effect/pod_landingzone
 /obj/effect/temp_visual/bsa_splash
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter

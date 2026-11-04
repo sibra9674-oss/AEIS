@@ -99,6 +99,8 @@ var/datum/ss_overmap_mode_stub/SSovermap_mode = new
 /datum/component/remote_materials
 /datum/component/material_container
 /datum/component/two_handed
+	// NSV two-handed carrying is not ported (TGMC has no such component); the rods/shells can be carried one-handed
+	return
 /datum/reagent/oil
 /obj/item/stack/sheet/nanocarbon_glass
 /datum/freight_delivery_receipt

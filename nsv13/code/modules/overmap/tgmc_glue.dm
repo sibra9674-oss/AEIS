@@ -380,6 +380,85 @@ ADMIN_VERB(nsv_spawn_rpd, R_DEBUG, "Spawn RPD", "Spawns an NSV Rapid Pipe Dispen
 	new /obj/item/pipe_dispenser(T)
 	to_chat(user, span_notice("NSV: spawned a Rapid Pipe Dispenser."))
 
+ADMIN_VERB(nsv_spawn_stormdrive, R_DEBUG, "Spawn Stormdrive", "Spawns an NSV stormdrive reactor (class IV) with a linked control console and 5 control rods next to you, in maintenance mode so rods can be handled. There is no particle accelerator in this port: use Stormdrive Quick Start to fire it up.", "NSV")
+	var/turf/T = get_turf(user.mob)
+	if(!T)
+		return
+	var/obj/machinery/atmospherics/components/binary/stormdrive_reactor/R = new(T)
+	R.reactor_id = "test"
+	for(var/i in 1 to 5)
+		R.control_rods += new /obj/item/control_rod(R)
+	R.handle_control_rod_efficiency()
+	R.handle_control_rod_integrity()
+	var/turf/CT = get_step(T, SOUTH)
+	var/obj/machinery/computer/ship/reactor_control_computer/C = new(CT || T)
+	C.reactor_id = "test"
+	C.reactor = R
+	to_chat(user, span_notice("NSV: spawned a stormdrive and its console (south of you). Pipes: input on the east side, output on the west."))
+
+ADMIN_VERB(nsv_stormdrive_quickstart, R_DEBUG, "Stormdrive Quick Start", "Instantly starts the nearest stormdrive (rods + fuel injected, no accelerator needed).", "NSV")
+	var/obj/machinery/atmospherics/components/binary/stormdrive_reactor/best
+	for(var/obj/machinery/atmospherics/components/binary/stormdrive_reactor/R in GLOB.machines)
+		if(!best || get_dist(user.mob, R) < get_dist(user.mob, best))
+			best = R
+	if(!best)
+		to_chat(user, span_warning("NSV: no stormdrive found."))
+		return
+	best.lazy_startup()
+	to_chat(user, span_notice("NSV: stormdrive quick start requested."))
+
+ADMIN_VERB(nsv_spawn_rbmk, R_DEBUG, "Spawn RBMK", "Spawns an NSV RBMK reactor with its stats / control rod / fuel rod consoles next to you (all use the default reactor id). Coolant needs pipes on the three ports; Quick Start fills the vessel for you.", "NSV")
+	var/turf/T = get_turf(user.mob)
+	if(!T)
+		return
+	var/obj/machinery/atmospherics/components/trinary/nuclear_reactor/R = new(T)
+	R.id = "default_reactor_for_lazy_mappers"
+	var/turf/CT = get_step(T, SOUTH)
+	new /obj/machinery/computer/reactor/stats(CT || T)
+	new /obj/machinery/computer/reactor/control_rods(CT ? get_step(CT, EAST) : T)
+	new /obj/machinery/computer/reactor/fuel_rods(CT ? get_step(CT, WEST) : T)
+	to_chat(user, span_notice("NSV: spawned an RBMK and three consoles south of you (they link to the reactor after ~10 seconds)."))
+
+ADMIN_VERB(nsv_rbmk_quickstart, R_DEBUG, "RBMK Quick Start", "Instantly loads and starts the nearest RBMK reactor.", "NSV")
+	var/obj/machinery/atmospherics/components/trinary/nuclear_reactor/best
+	for(var/obj/machinery/atmospherics/components/trinary/nuclear_reactor/R in GLOB.machines)
+		if(!best || get_dist(user.mob, R) < get_dist(user.mob, best))
+			best = R
+	if(!best)
+		to_chat(user, span_warning("NSV: no RBMK found."))
+		return
+	best.lazy_startup()
+	to_chat(user, span_notice("NSV: RBMK quick start requested."))
+
+ADMIN_VERB(nsv_spawn_particle_accelerator, R_DEBUG, "Spawn Particle Accelerator", "Spawns a fully assembled, anchored NSV particle accelerator facing north: control console on your tile, the 6 parts east/north of it. Fire the emitters at a stormdrive to heat it up for a start.", "NSV")
+	var/turf/T = get_turf(user.mob)
+	if(!T)
+		return
+	var/obj/machinery/particle_accelerator/control_box/box = new(T)
+	box.anchored = TRUE
+	box.construction_state = 3 // PA_CONSTRUCTION_COMPLETE
+	var/list/layout = list(
+		list(1, 0, /obj/structure/particle_accelerator/fuel_chamber),
+		list(1, -1, /obj/structure/particle_accelerator/end_cap),
+		list(1, 1, /obj/structure/particle_accelerator/power_box),
+		list(1, 2, /obj/structure/particle_accelerator/particle_emitter/center),
+		list(0, 2, /obj/structure/particle_accelerator/particle_emitter/left),
+		list(2, 2, /obj/structure/particle_accelerator/particle_emitter/right),
+	)
+	for(var/list/L in layout)
+		var/turf/PT = locate(T.x + L[1], T.y + L[2], T.z)
+		if(!PT)
+			continue
+		var/part_type = L[3]
+		var/obj/structure/particle_accelerator/P = new part_type(PT)
+		P.dir = NORTH
+		P.anchored = TRUE
+		P.construction_state = 3 // PA_CONSTRUCTION_COMPLETE
+		P.update_icon()
+	box.update_state()
+	box.update_icon()
+	to_chat(user, span_notice("NSV: spawned a particle accelerator. Turn it on from its console (needs power: place it in a powered area)."))
+
 ADMIN_VERB(nsv_radiation_check, R_DEBUG, "Radiation Check", "Shows how much accumulated radiation you carry.", "NSV")
 	var/mob/living/L = user.mob
 	if(!istype(L))
@@ -441,3 +520,23 @@ ADMIN_VERB(nsv_radiation_check, R_DEBUG, "Radiation Check", "Shows how much accu
 	to_chat(user, span_notice("You [anchored ? "" : "un"]secure [src]."))
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	return 2
+
+/// NSV: true when both atoms belong to the same overmap ship (or, with no overmap running, the same z-level)
+/proc/shares_overmap(atom/source, atom/other)
+	if(!source || !other)
+		return FALSE
+	var/obj/structure/overmap/OM = source.get_overmap()
+	var/obj/structure/overmap/OM2 = other.get_overmap()
+	if(OM || OM2)
+		return OM == OM2
+	return source.z == other.z
+
+/// tg helper: is this atom in space (used by the particle accelerator to refuse anchoring on space)
+/atom/proc/isinspace()
+	return isspaceturf(get_turf(src))
+
+// tg: machines and living mobs get hit by particle-accelerator beams but let them pass (see accelerated_particle)
+/obj/machinery
+	pass_flags_self = PASSMACHINE
+/mob/living
+	pass_flags_self = PASSMOB

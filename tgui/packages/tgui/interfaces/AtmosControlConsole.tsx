@@ -1,5 +1,4 @@
 // Port of NSV13 tgui/interfaces/AtmosControlConsole.js (Inferno) to TGMC React/TS. Mechanical conversion, not compiled.
-import { map } from 'tgui-core/collections';
 import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from 'tgui-core/components';
@@ -32,11 +31,11 @@ export const AtmosControlConsole = (props: any) => {
                       {toFixed(sensor.temperature, 2) + ' K'}
                     </LabeledList.Item>
                   )}
-                  {map((gasPercent, gasId) => (
-                    <LabeledList.Item label={gasId}>
+                  {Object.entries(gases || {}).map(([gasId, gasPercent]: [string, any]) => (
+                    <LabeledList.Item key={gasId} label={gasId}>
                       {toFixed(gasPercent, 2) + '%'}
                     </LabeledList.Item>
-                  ))(gases)}
+                  ))}
                 </LabeledList>
               </Section>
             );

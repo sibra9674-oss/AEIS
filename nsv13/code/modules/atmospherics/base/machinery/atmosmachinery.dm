@@ -252,10 +252,18 @@
 
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	add_fingerprint(user, "nsv")
+	add_fingerprint(user, "wrench")
 
 	var/unsafe_wrenching = FALSE
-	var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+	// NSV port: devices (injectors, pumps, connectors...) have no single pipeline air, take the highest pressure inside
+	var/internal_pressure = 0
+	if(int_air)
+		internal_pressure = int_air.return_pressure()
+	else if(istype(src, /obj/machinery/atmospherics/components))
+		for(var/datum/gas_mixture/nsv_mix in return_analyzable_air())
+			internal_pressure = max(internal_pressure, nsv_mix.return_pressure())
+	if(env_air)
+		internal_pressure -= env_air.return_pressure()
 
 	var/empty_pipe = FALSE
 

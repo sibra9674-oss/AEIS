@@ -345,6 +345,20 @@
 #define INVESTIGATE_RADIATION "radiation"
 
 
+#define CHANNEL_REACTOR_ALERT 1011 // NSV: reactor alarm sound channel
+
+// NSV (tg) temperature / pressure conversion helpers used by the RBMK
+#define KELVIN_TO_CELSIUS(K) ((K) - T0C)
+#define CELSIUS_TO_KELVIN(C) ((C) + T0C)
+#define KPA_TO_PSI(KPA) ((KPA) * 0.14503773773)
+
+// NSV particle accelerator: tg projectile pass flags that TGMC does not have (custom bits, only used by pass_flags_self / projectile_piercing)
+#define PASSMOB (1<<19)
+#define PASSMACHINE (1<<20)
+#define PASSANOMALY (1<<21)
+#define PASSBLOB (1<<22)
+#define INVESTIGATE_ENGINES "engines"
+
 #define MINIMUM_HEAT_CAPACITY 0.0003
 #define OXYGEN_BURN_RATE_BASE				1.4
 #define PLASMA_BURN_RATE_DELTA				9
