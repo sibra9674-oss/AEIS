@@ -111,19 +111,24 @@
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.setDir(shuttle_port.dir)
 	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
-	for(var/area/shuttle_area as anything in shuttle_port.shuttle_areas)
-		for(var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
-			for(var/turf/shuttle_turf as anything in zlevel_turfs)
-				if(shuttle_turf.z != origin.z)
-					continue
-				var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
-				var/x_off = shuttle_turf.x - origin.x
-				var/y_off = shuttle_turf.y - origin.y
-				I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
-				I.layer = ABOVE_NORMAL_TURF_LAYER
-				SET_PLANE(I, ABOVE_GAME_PLANE, shuttle_turf)
-				I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-				the_eye.placement_images[I] = list(x_off, y_off)
+	if(!origin)
+		return
+	var/list/bounds = shuttle_port.return_coords(shuttle_port.x, shuttle_port.y, shuttle_port.dir)
+	var/min_x = bounds[1]
+	var/min_y = bounds[2]
+	var/max_x = bounds[3]
+	var/max_y = bounds[4]
+	for(var/turf/T as anything in block(locate(min_x, min_y, origin.z), locate(max_x, max_y, origin.z)))
+		if(!shuttle_port.shuttle_areas[T.loc])
+			continue
+		var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
+		var/x_off = T.x - origin.x
+		var/y_off = T.y - origin.y
+		I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z)
+		I.layer = ABOVE_NORMAL_TURF_LAYER
+		SET_PLANE(I, ABOVE_GAME_PLANE, T)
+		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		the_eye.placement_images[I] = list(x_off, y_off)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/give_eye_control(mob/user)
 	. = ..()
@@ -418,7 +423,7 @@
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin
 
-	playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+	playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 
 	var/list/L = list()
 	for(var/V in SSshuttle.stationary_docking_ports)
@@ -431,18 +436,18 @@
 		if(console.jumpto_ports[S.shuttle_id])
 			L["([length(L)])[S.name]"] = S
 
-	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
+	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 	var/selected = tgui_input_list(usr, "Choose location to jump to", "Locations", sortList(L))
 	if(QDELETED(src) || QDELETED(target) || !isliving(target))
 		return
 	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 	if(isnull(selected))
-		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 		return
 	var/turf/T = get_turf(L[selected])
 	if(isnull(T))
 		return
-	playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+	playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE, MEDIUM_SOUND_RANGE)
 	remote_eye.setLoc(T)
 	to_chat(target, span_notice("Jumped to [selected]."))
 	C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/noise)

@@ -29,7 +29,7 @@
 
 	apply_damage(shock_damage, BURN, def_zone, updating_health = TRUE)
 
-	playsound(loc, SFX_SPARKS, 25, TRUE)
+	playsound(loc, SFX_SPARKS, 25, TRUE, MEDIUM_SOUND_RANGE)
 	if (shock_damage > 10)
 		src.visible_message(
 			span_warning("[src] was shocked by the [source]!"), \
@@ -248,7 +248,7 @@
 
 	stop_pulling()
 	visible_message(span_warning("[src] slipped on \the [slip_source_name]!"), span_warning("You slipped on \the [slip_source_name]!"))
-	playsound(src, 'sound/misc/slip.ogg', 25, 1)
+	playsound(src, 'sound/misc/slip.ogg', 25, 1, MEDIUM_SOUND_RANGE)
 	Stun(stun_time)
 	Paralyze(paralyze_time)
 	. = TRUE
@@ -316,9 +316,14 @@
 	if(!length(gear))
 		return
 
+	var/mob/living/carbon/human/human_mob = ishuman(src) ? src : null
+	var/player_squad = human_mob?.assigned_squad?.name || P.preferred_squad
+
 	for(var/i in GLOB.gear_datums)
 		var/datum/gear/G = GLOB.gear_datums[i]
 		if(!G || !gear.Find(i))
+			continue
+		if(G.squad && G.squad != player_squad)
 			continue
 		if(!equip_to_slot_or_del(new G.path, G.slot)) //try to put in the slot it says its supposed to go, if you can't: put it in a bag
 			equip_to_slot_or_del(new G.path, SLOT_IN_BACKPACK)

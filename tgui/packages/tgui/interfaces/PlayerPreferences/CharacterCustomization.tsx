@@ -12,7 +12,6 @@ import { useBackend } from '../../backend';
 import {
   SelectFieldPreference,
   TextFieldPreference,
-  ToggleFieldPreference,
 } from './FieldPreferences';
 import { ProfilePicture } from './ProfilePicture';
 
@@ -74,10 +73,6 @@ export const CharacterCustomization = (props) => {
                 }
               />
               <TextFieldPreference label={'Xenomorph'} value={'xeno_name'} />
-              <TextFieldPreference
-                label={'Squad Robot Name'}
-                value={'squad_robot_name'}
-              />
               <TextFieldPreference
                 label={'Synthetic Name'}
                 value={'synthetic_name'}
@@ -157,13 +152,6 @@ export const CharacterCustomization = (props) => {
                     <Button icon="edit" onClick={() => act('eyecolor')} />
                   </>
                 }
-              />
-              <ToggleFieldPreference
-                label={'Eye sight'}
-                value={'good_eyesight'}
-                leftLabel={'Good'}
-                rightLabel={'Bad'}
-                action={'toggle_eyesight'}
               />
               <SelectFieldPreference
                 label={'Facial hair'}

@@ -66,6 +66,8 @@
 	.["dest_status"] = SSevacuation.dest_status
 	.["time_message"] = cooldown_message
 	.["time_request"] = cooldown_request
+	.["distress_pending"] = just_called || SSticker.mode?.waiting_for_candidates
+	.["distress_recharging"] = SSticker.mode?.on_distress_cooldown
 	.["time_central"] = cooldown_central
 	.["stat_msg1"] = stat_msg1
 	.["stat_msg2"] = stat_msg2
@@ -265,7 +267,7 @@
 
 			var/filter_result = CAN_BYPASS_FILTER(user) ? null : is_ic_filtered(input)
 			if(filter_result)
-				to_chat(user, span_warning("That announcement contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[input]\"</span>"))
+				to_chat(user, span_warning("That announcement contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[html_encode(input)]\"</span>"))
 				SSblackbox.record_feedback(FEEDBACK_TALLY, "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 				REPORT_CHAT_FILTER_TO_USER(src, filter_result)
 				log_filter("IC", input, filter_result)
@@ -276,7 +278,10 @@
 				return FALSE
 
 			var/mob/living/carbon/human/sender = user
-			priority_announce(input, subtitle = "Sent by [sender.get_paygrade(0) ? sender.get_paygrade(0) : sender.job.title] [sender.real_name]", type = ANNOUNCEMENT_COMMAND)
+			var/paygrade = sender.get_paygrade(0)
+			var/sender_rank = paygrade ? paygrade : sender.job.title
+			var/subtitle = "Sent by [sender_rank] [sender.real_name]"
+			priority_announce(chat_text_to_html(input, allow_break_tag = TRUE), subtitle = html_encode(subtitle), type = ANNOUNCEMENT_COMMAND)
 			message_admins("[ADMIN_TPMONTY(user)] has just sent a command announcement")
 			log_game("[key_name(user)] has just sent a command announcement.")
 			TIMER_COOLDOWN_START(user, COOLDOWN_HUD_ORDER, CIC_ORDER_COOLDOWN)
@@ -332,7 +337,7 @@
 				to_chat(user, span_warning("The ship must be under red alert in order to enact evacuation procedures."))
 				return FALSE
 
-			if(SSevacuation.scuttle_flags & SDEVAC_TIMELOCK_flags)
+			if(!SSevacuation.has_scuttle_threat())
 				to_chat(user, span_warning("The sensors do not detect a sufficient threat present."))
 				return FALSE
 
@@ -379,7 +384,7 @@
 				to_chat(user, span_warning("The distress beacon has been just launched."))
 				return FALSE
 
-			if(SSticker.mode.on_distress_cooldown)
+			if(SSticker.mode.on_distress_cooldown || (cooldown_request && world.time < cooldown_request + COOLDOWN_COMM_REQUEST))
 				to_chat(user, span_warning("The distress beacon is currently recalibrating."))
 				return FALSE
 
@@ -394,9 +399,12 @@
 				return FALSE
 
 			SSticker.mode.distress_cancelled = FALSE
-			just_called = TRUE
 
 			var/datum/emergency_call/emergency_call = SSticker.mode.get_random_call()
+			if(!emergency_call)
+				to_chat(user, span_warning("No response teams are available."))
+				return FALSE
+			just_called = TRUE
 
 			var/admin_response = admin_approval("<span color='prefix'>DISTRESS:</span> [ADMIN_TPMONTY(user)] has called a Distress Beacon that was received by [emergency_call.name]. Humans: [all_marines], Xenos: [all_xenos].",
 				user_message = span_boldnotice("A distress beacon will launch in 60 seconds unless High Command responds otherwise."),

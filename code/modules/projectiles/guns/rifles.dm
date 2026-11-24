@@ -5,7 +5,6 @@
 		slot_r_hand_str = 'icons/mob/inhands/gun/rifle_righthand_1.dmi',
 	)
 	reload_sound = 'sound/weapons/guns/interact/rifle_reload.ogg'
-	cocked_sound = 'sound/weapons/guns/interact/cocked.ogg'
 	silenced_sound = 'sound/weapons/guns/rifles/AR-12/AR12_SIL.ogg'
 	wield_sound =    'sound/weapons/guns/rifles/Deploy_Wave_RIFLES.ogg'
 	equip_slot_flags = ITEM_SLOT_BACK
@@ -789,6 +788,14 @@
 	fire_delay = 0.2 SECONDS
 	aim_speed_modifier = 2.5
 	placed_overlay_iconstate = "ak47"
+
+/obj/item/weapon/gun/rifle/type16/survivor_rambo
+	starting_attachment_types = list(
+		/obj/item/attachable/stock/mpi_km,
+		/obj/item/attachable/magnetic_harness,
+		/obj/item/attachable/bayonet,
+		/obj/item/weapon/gun/shotgun/combat/masterkey,
+	)
 
 /obj/item/weapon/gun/rifle/type16/m2
 	name = "\improper Type-16M2 Zarya carbine"

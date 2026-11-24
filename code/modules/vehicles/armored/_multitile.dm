@@ -36,6 +36,7 @@
 		/obj/item/armored_weapon/secondary_flamer,
 		/obj/item/armored_weapon/tow,
 		/obj/item/armored_weapon/microrocket_pod,
+		/obj/item/armored_weapon/secondary_tesla
 	)
 	max_occupants = 4
 	move_delay = 0.75 SECONDS
@@ -193,7 +194,7 @@
 		if(!do_after(user, fumbling_time, NONE, src, BUSY_ICON_UNSKILLED))
 			return FALSE
 	balloon_alert_to_viewers("Applying plasteel reinforcement...")
-	playsound(loc, 'sound/items/screwdriver.ogg', 25, TRUE)
+	playsound(loc, 'sound/items/screwdriver.ogg', 25, TRUE, MEDIUM_SOUND_RANGE)
 	if(!do_after(user, 30 SECONDS - 2 SECONDS * user.skills.getRating(SKILL_ENGINEER), NONE, src, BUSY_ICON_BUILD))
 		return FALSE
 	if(!plasteel_stack.use(50))
@@ -254,4 +255,4 @@
 
 	for(var/turf/T in track_turfs)
 		for(var/obj/alien/weeds/W in T)
-			qdel(W)
+			W.take_damage(W.max_integrity, BRUTE, MELEE)
