@@ -633,7 +633,8 @@ SUBSYSTEM_DEF(mapping)
 	while(TRUE)
 		var/z_level = current_z.z_value
 		z_stack += z_level
-		z_level_to_plane_offset[z_level] = plane_offset
+		// NSV port: the per-deck plane offsets of this TGMC build render every game-plane object of the lower deck as a black silhouette, so decks stay on plane offset 0.
+		z_level_to_plane_offset[z_level] = 0
 		levels_checked += current_z
 		if(!current_z.traits[ZTRAIT_DOWN]) // If there's nothing below, stop looking
 			break
@@ -652,7 +653,7 @@ SUBSYSTEM_DEF(mapping)
 		generate_lighting_appearance_by_z(i)
 
 	var/old_max = max_plane_offset
-	max_plane_offset = max(max_plane_offset, plane_offset)
+	max_plane_offset = max_plane_offset // NSV port: no plane offsets
 	if(max_plane_offset == old_max)
 		return
 

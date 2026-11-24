@@ -47,10 +47,10 @@
 	var/turf/T = loc
 	if(level == 2 || (istype(T) && !T.intact_tile))
 		showpipe = TRUE
-		plane = GAME_PLANE
+		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 	else
 		showpipe = FALSE
-		plane = FLOOR_PLANE
+		SET_PLANE_IMPLICIT(src, GAME_PLANE) //NSV port: TGMC floors sit above FLOOR_PLANE objects, so devices stay on GAME_PLANE to be visible; SET_PLANE_IMPLICIT keeps the deck plane offset
 
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing

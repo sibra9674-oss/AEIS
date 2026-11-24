@@ -250,7 +250,7 @@ Starting Materials
 			if(P.apnw_id == apnw_id)
 				apnp += P
 
-	if(!OM?.linked_apnw)
+	if(OM && !OM.linked_apnw)
 		OM.linked_apnw = src
 
 /obj/machinery/armour_plating_nanorepair_well/attackby(obj/item/I, mob/user, params)

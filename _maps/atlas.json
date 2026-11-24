@@ -1,0 +1,9 @@
+{
+	"map_name": "NSV Atlas",
+	"map_path": "map_files/Atlas",
+	"map_file": ["atlas1.dmm", "atlas2.dmm"],
+	"traits": [
+		{"Marine Main Ship": true, "Breakable Floors": true},
+		{"Marine Main Ship": true, "Breakable Floors": true}
+	]
+}

@@ -131,6 +131,8 @@ Preset classes of FTL drive with pre-programmed behaviours
 
 //Tell the FTL computer to start tracking a ship, regardless of how far apart you both are.
 /obj/machinery/computer/ship/ftl_computer/proc/start_monitoring(obj/structure/overmap/OM)
+	if(!OM)
+		return
 	tracking[OM] = list("ship" = OM, "name" = OM.name, "current_system" = OM.starting_system, "target_system" = null)
 	RegisterSignal(OM, COMSIG_FTL_STATE_CHANGE, PROC_REF(announce_jump))
 

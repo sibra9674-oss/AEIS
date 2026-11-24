@@ -51,6 +51,7 @@ GLOBAL_VAR_INIT(nsv_debug, TRUE)
 	for(var/y in 1 to world.maxy)
 		ring += locate(NSV_WRAP_EDGE, y, z)
 		ring += locate(world.maxx - NSV_WRAP_EDGE + 1, y, z)
+	ring = unique_list(ring)
 	for(var/turf/T as anything in ring)
 		if(T)
 			T.RegisterSignal(T, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/turf, nsv_wrap_entered))
@@ -417,7 +418,11 @@ ADMIN_VERB(nsv_spawn_rbmk, R_DEBUG, "Spawn RBMK", "Spawns an NSV RBMK reactor wi
 	new /obj/machinery/computer/reactor/stats(CT || T)
 	new /obj/machinery/computer/reactor/control_rods(CT ? get_step(CT, EAST) : T)
 	new /obj/machinery/computer/reactor/fuel_rods(CT ? get_step(CT, WEST) : T)
-	to_chat(user, span_notice("NSV: spawned an RBMK and three consoles south of you (they link to the reactor after ~10 seconds)."))
+	for(var/i in 1 to 4)
+		new /obj/item/fuel_rod(T)
+	for(var/i in 1 to 2)
+		new /obj/item/control_rod(T)
+	to_chat(user, span_notice("NSV: spawned an RBMK, three consoles south of you (they link to the reactor after ~10 seconds) and loose fuel/control rods on its tile. The reactor is not dense, as in NSV."))
 
 ADMIN_VERB(nsv_rbmk_quickstart, R_DEBUG, "RBMK Quick Start", "Instantly loads and starts the nearest RBMK reactor.", "NSV")
 	var/obj/machinery/atmospherics/components/trinary/nuclear_reactor/best
@@ -430,10 +435,8 @@ ADMIN_VERB(nsv_rbmk_quickstart, R_DEBUG, "RBMK Quick Start", "Instantly loads an
 	best.lazy_startup()
 	to_chat(user, span_notice("NSV: RBMK quick start requested."))
 
-ADMIN_VERB(nsv_spawn_particle_accelerator, R_DEBUG, "Spawn Particle Accelerator", "Spawns a fully assembled, anchored NSV particle accelerator facing north: control console on your tile, the 6 parts east/north of it. Fire the emitters at a stormdrive to heat it up for a start.", "NSV")
-	var/turf/T = get_turf(user.mob)
-	if(!T)
-		return
+/// Builds a finished particle accelerator with its control box on T.
+/proc/nsv_build_particle_accelerator(turf/T)
 	var/obj/machinery/particle_accelerator/control_box/box = new(T)
 	box.anchored = TRUE
 	box.construction_state = 3 // PA_CONSTRUCTION_COMPLETE
@@ -457,6 +460,12 @@ ADMIN_VERB(nsv_spawn_particle_accelerator, R_DEBUG, "Spawn Particle Accelerator"
 		P.update_icon()
 	box.update_state()
 	box.update_icon()
+
+ADMIN_VERB(nsv_spawn_particle_accelerator, R_DEBUG, "Spawn Particle Accelerator", "Spawns a fully assembled, anchored NSV particle accelerator facing north: control console on your tile, the 6 parts east/north of it. Fire the emitters at a stormdrive to heat it up for a start.", "NSV")
+	var/turf/T = get_turf(user.mob)
+	if(!T)
+		return
+	nsv_build_particle_accelerator(T)
 	to_chat(user, span_notice("NSV: spawned a particle accelerator. Turn it on from its console (needs power: place it in a powered area)."))
 
 ADMIN_VERB(nsv_radiation_check, R_DEBUG, "Radiation Check", "Shows how much accumulated radiation you carry.", "NSV")
@@ -540,3 +549,333 @@ ADMIN_VERB(nsv_radiation_check, R_DEBUG, "Radiation Check", "Shows how much accu
 	pass_flags_self = PASSMACHINE
 /mob/living
 	pass_flags_self = PASSMOB
+
+/// NSV two-handed carrying is not ported (TGMC has no such component); rods/shells can be carried one-handed.
+/datum/component/two_handed/Initialize(require_twohands, wieldsound, unwieldsound, attacksound, force_multiplier, force_wielded, force_unwielded, icon_wielded, datum/callback/wield_callback, datum/callback/unwield_callback)
+	return
+
+
+// ---- test deck: a code-built NSV test ship deck on its own z-level ----
+/area/nsv_test_deck
+	name = "NSV Test Deck"
+	requires_power = FALSE
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+
+#define NSV_TD_W 46 //outer size, walls included
+#define NSV_TD_H 28
+#define TD(X, Y) locate(base.x + (X), base.y + (Y), z) //turf at an offset from the deck's south-west corner
+#define NSV_TD_SPLIT 24 //x of the partition wall between the engine bay (west) and the weapons bay (east)
+
+ADMIN_VERB(nsv_build_test_deck, R_DEBUG, "Build Test Deck", "Creates a new z-level (ship trait, linked to the NSV overmap) with a lit, unpowered-but-working test deck: stormdrive + console + particle accelerator, RBMK + consoles + rods, atmos devices, canisters, RPD and tools, helm/tactical/dradis/munitions consoles and one of each ship weapon. Teleports you there.", "NSV")
+	var/obj/structure/overmap/OM = nsv_start_overmap()
+	if(!OM)
+		to_chat(user, span_warning("NSV overmap failed to start, check the runtime log."))
+		return
+	var/datum/space_level/SL = SSmapping.add_new_zlevel("NSV Test Deck", ZTRAITS_MAIN_SHIP)
+	if(!SL)
+		return
+	var/z = SL.z_value
+	var/ox = round((world.maxx - NSV_TD_W) * 0.5) + 1
+	var/oy = round((world.maxy - NSV_TD_H) * 0.5) + 1
+	var/area/nsv_test_deck/A = new
+	for(var/dx in 0 to NSV_TD_W - 1)
+		for(var/dy in 0 to NSV_TD_H - 1)
+			var/turf/T = locate(ox + dx, oy + dy, z)
+			if(!T)
+				continue
+			var/edge = (dx == 0 || dy == 0 || dx == NSV_TD_W - 1 || dy == NSV_TD_H - 1)
+			var/split = (dx == NSV_TD_SPLIT && dy != 13 && dy != 14) //two tile gap in the partition
+			var/turf/NT = T.ChangeTurf((edge || split) ? /turf/closed/wall/r_wall : /turf/open/floor/plating)
+			if(!NT)
+				NT = T
+			NT.change_area(NT.loc, A)
+	var/turf/base = locate(ox, oy, z)
+	// --- engine bay (west) ---
+	var/obj/machinery/atmospherics/components/binary/stormdrive_reactor/SD = new(TD(6, 21))
+	SD.reactor_id = "test"
+	for(var/i in 1 to 5)
+		SD.control_rods += new /obj/item/control_rod(SD)
+	SD.handle_control_rod_efficiency()
+	SD.handle_control_rod_integrity()
+	var/obj/machinery/computer/ship/reactor_control_computer/SC = new(TD(6, 16))
+	SC.reactor_id = "test"
+	SC.reactor = SD
+	nsv_build_particle_accelerator(TD(14, 6))
+	var/obj/machinery/atmospherics/components/trinary/nuclear_reactor/RB = new(TD(17, 21))
+	RB.id = "default_reactor_for_lazy_mappers"
+	new /obj/machinery/computer/reactor/stats(TD(15, 16))
+	new /obj/machinery/computer/reactor/control_rods(TD(17, 16))
+	new /obj/machinery/computer/reactor/fuel_rods(TD(19, 16))
+	for(var/i in 1 to 4)
+		new /obj/item/fuel_rod(TD(17, 18))
+	for(var/i in 1 to 2)
+		new /obj/item/control_rod(TD(17, 18))
+	// atmos devices to unwrench / pipe up, canisters, tools
+	new /obj/machinery/atmospherics/components/binary/pump(TD(3, 8))
+	new /obj/machinery/atmospherics/components/binary/volume_pump(TD(5, 8))
+	new /obj/machinery/atmospherics/components/unary/vent_pump(TD(7, 8))
+	new /obj/machinery/atmospherics/components/unary/portables_connector(TD(9, 8))
+	new /obj/machinery/portable_atmospherics/canister/toxins(TD(3, 4))
+	new /obj/machinery/portable_atmospherics/canister/oxygen(TD(4, 4))
+	new /obj/machinery/portable_atmospherics/canister/air(TD(5, 4))
+	new /obj/machinery/portable_atmospherics/canister/tritium(TD(6, 4))
+	new /obj/machinery/portable_atmospherics/canister/nitrogen(TD(7, 4))
+	var/turf/tools = TD(3, 2)
+	new /obj/item/pipe_dispenser(tools)
+	new /obj/item/tool/wrench(tools)
+	new /obj/item/tool/weldingtool(tools)
+	new /obj/item/tool/multitool(tools)
+	new /obj/item/tool/crowbar(tools)
+	new /obj/item/tool/screwdriver(tools)
+	new /obj/item/tool/wirecutters(tools)
+	// --- ship consoles (east, near the partition gap) ---
+	new /obj/machinery/computer/ship/helm(TD(28, 24))
+	new /obj/machinery/computer/ship/tactical(TD(30, 24))
+	new /obj/machinery/computer/ship/dradis(TD(32, 24))
+	new /obj/machinery/computer/ship/munitions_computer(TD(34, 24))
+	new /obj/machinery/computer/ship/navigation(TD(36, 24))
+	new /obj/machinery/computer/ship/ftl_computer(TD(38, 24))
+	// --- weapons bay (east) ---
+	var/list/weapons = list(
+		list(/obj/machinery/ship_weapon/pdc_mount/north, /obj/item/ammo_box/magazine/nsv/pdc),
+		list(/obj/machinery/ship_weapon/torpedo_launcher/east, /obj/item/ship_weapon/ammunition/torpedo, /obj/item/ship_weapon/ammunition/torpedo),
+		list(/obj/machinery/ship_weapon/mac),
+		list(/obj/machinery/ship_weapon/railgun, /obj/item/ship_weapon/ammunition/railgun_ammo),
+		list(/obj/machinery/ship_weapon/gauss_gun/north, /obj/item/ship_weapon/ammunition/gauss, /obj/item/ship_weapon/ammunition/gauss),
+	)
+	var/wx = 28
+	for(var/list/W in weapons)
+		for(var/i in 1 to length(W))
+			var/wpath = W[i]
+			var/atom/created = new wpath(i == 1 ? TD(wx, 16) : TD(wx - 1, 12))
+			if(istype(created, /obj/machinery/ship_weapon))
+				var/obj/machinery/ship_weapon/SW = created
+				SW.get_ship()
+		wx += 4
+	// link the new level to the overmap ship like the TGMC ship levels
+	SL.linked_overmap = OM
+	OM.occupying_levels += SL
+	OM.linked_areas |= A
+	GLOB.teleportlocs[A.name] = A
+	SSair.setup_atmos_machinery()
+	SSair.setup_pipenets()
+	var/mob/M = user.mob
+	if(M)
+		M.forceMove(locate(ox + 4, oy + 12, z))
+	message_admins("[key_name_admin(user)] built the NSV test deck on Z[z].")
+	to_chat(user, span_notice("NSV: test deck built on Z[z]. West: stormdrive+console, particle accelerator, RBMK+consoles+rods, atmos devices, canisters, RPD and tools. East: ship consoles and one of each weapon. Nothing was run-tested in BYOND by the port author, report what breaks."))
+
+#undef TD
+#undef NSV_TD_W
+#undef NSV_TD_H
+#undef NSV_TD_SPLIT
+
+ADMIN_VERB(change_ship_map, R_SERVER, "Change Ship Map", "Change the ship map for the next round.", ADMIN_CATEGORY_SERVER)
+	var/list/choices = list()
+	for(var/map in config.maplist[SHIP_MAP])
+		var/datum/map_config/VM = config.maplist[SHIP_MAP][map]
+		var/mapname = VM.map_name
+		if(VM == config.defaultmaps[SHIP_MAP])
+			mapname += " (Default)"
+		choices[mapname] = VM
+	if(!length(choices))
+		to_chat(user, span_warning("No ship maps are configured (config/shipmaps.txt)."))
+		return
+	var/chosen = tgui_input_list(user, "Choose a ship map to change to", "Change Ship Map", choices, timeout = 0)
+	if(!chosen)
+		return
+	var/datum/map_config/VM = choices[chosen]
+	if(!SSmapping.changemap(VM, SHIP_MAP))
+		to_chat(user, span_warning("Failed to change the ship map."))
+		return
+	log_admin("[key_name(user)] changed the ship map to [VM.map_name].")
+	message_admins("[ADMIN_TPMONTY(user.mob)] changed the ship map to [VM.map_name].")
+
+// ---- multi-z: open space + falling + destructible decks ----
+/// Floors on levels with the "Breakable Floors" trait (NSV Atlas) turn into a hole when blown up: open space if there is a deck below, space otherwise.
+/// Overridden by the Atlas floors: a tile is torn off to the plating first. Returns TRUE if it handled the blast.
+/turf/open/floor/proc/nsv_tile_blast()
+	return FALSE
+
+/turf/open/floor/proc/nsv_blow_hole(severity)
+	if(!SSmapping.level_trait(z, "Breakable Floors"))
+		return FALSE
+	if(severity < EXPLODE_LIGHT || !prob(severity * 0.25))
+		return FALSE
+	// like NSV13: a blast first tears the tile off to the plating, a second one opens the plating up
+	if(nsv_tile_blast())
+		return TRUE
+	var/turf/below = GET_TURF_BELOW(src)
+	ChangeTurf(below ? /turf/open/openspace : /turf/open/space)
+	return TRUE
+
+#define NSV_OPENSPACE_PLANE -9
+#define NSV_OPENSPACE_BACKDROP_PLANE -8
+
+/// Transparent hole in a deck. Rendering is TGMC's own tg-style multiz: the turf sits on TRANSPARENT_FLOOR_PLANE and the plane master of the deck below is mirrored through it (darkened per level). Drops whatever stands on it.
+/turf/open/openspace
+	name = "open space"
+	desc = "Watch your step!"
+	icon = null
+	icon_state = ""
+	plane = NSV_OPENSPACE_PLANE
+	layer = 17
+	baseturfs = /turf/open/openspace
+
+/turf/open/openspace/Initialize(mapload)
+	. = ..()
+	overlays += GLOB.nsv_openspace_backdrop
+	update_multiz()
+	if(!mapload && !GET_TURF_BELOW(src))
+		// nothing below to look at or fall to: it is just a hole to space (NSV13 prunes openspace the same way)
+		ChangeTurf(/turf/open/space)
+		return
+	if(!mapload)
+		for(var/atom/movable/AM in src)
+			INVOKE_ASYNC(src, PROC_REF(zfall), AM)
+
+/// NSV13 style multiz view: the turf below is shown through us via vis_contents (everything on the ship decks carries VIS_INHERIT_PLANE, so it is drawn on our plane); a grey backdrop square on a multiply plane with inner drop shadows darkens it, giving the depth look.
+/turf/open/openspace/proc/update_multiz()
+	vis_contents.Cut()
+	var/turf/below = GET_TURF_BELOW(src)
+	if(below)
+		vis_contents += below
+
+GLOBAL_DATUM_INIT(nsv_openspace_backdrop, /atom/movable/nsv_openspace_backdrop, new)
+
+/atom/movable/nsv_openspace_backdrop
+	name = "openspace_backdrop"
+	anchored = TRUE
+	icon = 'nsv13/icons/turf/pure_white.dmi'
+	icon_state = "grey"
+	plane = NSV_OPENSPACE_BACKDROP_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	layer = 20
+	vis_flags = VIS_INHERIT_ID
+
+/// What is seen through a hole: the deck below, drawn here.
+/atom/movable/screen/plane_master/nsv_openspace
+	name = "NSV open space"
+	documentation = "Holds the deck seen through holes in the floor (tiles below carry VIS_INHERIT_PLANE)."
+	plane = NSV_OPENSPACE_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME)
+	multiz_scaled = FALSE
+
+/// Multiplies the hole contents with a grey square and inner drop shadows, as in NSV13.
+/atom/movable/screen/plane_master/nsv_openspace_backdrop
+	name = "NSV open space backdrop"
+	documentation = "Grey squares over holes, multiplied onto the view below them, with drop shadows for depth (NSV13)."
+	plane = NSV_OPENSPACE_BACKDROP_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_MULTIPLY
+	render_relay_planes = list(RENDER_PLANE_GAME)
+	multiz_scaled = FALSE
+
+/atom/movable/screen/plane_master/nsv_openspace_backdrop/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("first_stage_openspace", 1, drop_shadow_filter(color = "#04080FAA", size = -10))
+	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
+	add_filter("third_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -20))
+
+/turf/open/openspace/multiz_turf_new(turf/T, dir)
+	. = ..()
+	if(dir == DOWN)
+		update_multiz()
+
+/turf/open/openspace/multiz_turf_del(turf/T, dir)
+	. = ..()
+	if(dir == DOWN)
+		update_multiz()
+
+/turf/open/openspace/Entered(atom/movable/arrived, atom/old_loc)
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(zfall), arrived)
+
+/turf/open/openspace/proc/zfall(atom/movable/AM)
+	if(QDELETED(AM) || AM.loc != src || AM.anchored)
+		return
+	if(istype(AM, /obj/effect) || istype(AM, /atom/movable/projectile) || istype(AM, /mob/dead) || istype(AM, /mob/camera) || isovermap(AM))
+		return
+	var/turf/below = GET_TURF_BELOW(src)
+	if(!below)
+		return
+	var/mob/living/L = isliving(AM) ? AM : null
+	AM.forceMove(below)
+	if(!L)
+		return
+	if(locate(/obj/structure/stairs) in below) // walking down the stairwell
+		return
+	playsound(below, 'sound/effects/bang.ogg', 40, TRUE)
+	L.visible_message(span_warning("[L] falls from the deck above!"), span_userdanger("You fall down a deck!"))
+	L.apply_damage(rand(10, 25), BRUTE, null, 0, FALSE, FALSE, TRUE)
+	L.Paralyze(2 SECONDS)
+
+// miner.dm is new in this port and may not be in tgmc.dme; the guard inside the file makes a second include harmless.
+#include "../atmospherics/miner.dm"
+
+// ---- boot: start the overmap before atoms initialise so ship weapons / hull plates find it ----
+GLOBAL_LIST_INIT(nsv_keep_indestructible, typecacheof(list(
+	text2path("/obj/machinery/atmospherics/miner"), // resolved at runtime: the file is included after this one
+	/obj/machinery/atmospherics/components/binary/stormdrive_reactor,
+	/obj/machinery/atmospherics/components/trinary/nuclear_reactor,
+	/obj/machinery/computer/ship/ftl_computer,
+)))
+
+SUBSYSTEM_DEF(nsv_boot)
+	name = "NSV Boot"
+	init_order = 6 // after mapping (9), before atoms (5)
+	flags = SS_NO_FIRE
+
+/datum/controller/subsystem/nsv_boot/Initialize()
+	if(length(SSmapping.levels_by_trait(ZTRAIT_MARINE_MAIN_SHIP)))
+		// everything on the ship decks inherits the plane of the holder that shows it through an open hole (see openspace)
+		for(var/z in SSmapping.levels_by_trait(ZTRAIT_MARINE_MAIN_SHIP))
+			for(var/turf/T as anything in Z_TURFS(z))
+				T.vis_flags |= VIS_INHERIT_PLANE
+				T.resistance_flags &= ~INDESTRUCTIBLE // nothing on the ship is a hull-proof wall or floor
+				for(var/atom/movable/AM as anything in T)
+					if(ismob(AM) || istype(AM, /obj/effect/abstract))
+						continue
+					AM.vis_flags |= VIS_INHERIT_PLANE
+					// NSV's own indestructible machinery (reactors, miners, FTL, ship weapons) stays as it is in NSV13; everything else on the deck can be broken
+					if(isobj(AM) && !is_type_in_typecache(AM, GLOB.nsv_keep_indestructible))
+						var/obj/O = AM
+						O.resistance_flags &= ~INDESTRUCTIBLE
+		nsv_start_overmap()
+	return SS_INIT_SUCCESS
+
+// ---- stairs: walk up the stair line to reach the deck above ----
+/obj/structure/stairs/nsv
+	name = "stairs"
+	desc = "Stairs. You walk up and down them."
+	icon = 'nsv13/icons/obj/stairs.dmi'
+	icon_state = "stairs"
+
+/obj/structure/stairs/nsv/Initialize(mapload)
+	. = ..()
+	var/static/list/climb_connections = list(
+		COMSIG_ATOM_ENTERED = TYPE_PROC_REF(/obj/structure/stairs/nsv, climb),
+	)
+	AddElement(/datum/element/connect_loc, climb_connections)
+
+/obj/structure/stairs/nsv/proc/climb(datum/source, atom/movable/AM, atom/old_loc)
+	SIGNAL_HANDLER
+	if(!ismob(AM) || AM.dir != dir)
+		return
+	// walk to the top end of this flight of stairs
+	var/turf/end = get_turf(src)
+	var/turf/ahead = get_step(end, dir)
+	var/guard = 0
+	while(ahead && (locate(/obj/structure/stairs) in ahead) && guard++ < 6)
+		end = ahead
+		ahead = get_step(end, dir)
+	if(!ahead)
+		return
+	var/turf/up = GET_TURF_ABOVE(ahead)
+	if(!up || up.density)
+		return
+	for(var/atom/A in up)
+		if(A.density)
+			return
+	INVOKE_ASYNC(AM, TYPE_PROC_REF(/atom/movable, forceMove), up)

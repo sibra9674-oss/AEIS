@@ -20,6 +20,9 @@ endmap
 map talos
 endmap
 
+map atlas
+endmap
+
 map theseus
 endmap
 

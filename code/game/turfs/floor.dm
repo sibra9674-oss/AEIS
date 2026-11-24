@@ -29,6 +29,8 @@
 /turf/open/floor/ex_act(severity)
 	if(hull_floor)
 		return ..()
+	if(nsv_blow_hole(severity))
+		return ..()
 	if(prob(severity * 0.5))
 		make_plating()
 	else if(severity >= EXPLODE_WEAK)

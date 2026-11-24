@@ -550,6 +550,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	light_color = "#55BA55"
 	light_power = 1
 	light_range = 3
+	icon = 'nsv13/icons/obj/computer.dmi'
 	icon_state = "oldcomp"
 	icon_screen = "library"
 	icon_keyboard = null
@@ -557,6 +558,7 @@ The reactor CHEWS through moderator. It does not do this slowly. Be very careful
 	var/id = "default_reactor_for_lazy_mappers"
 
 /obj/machinery/computer/reactor/Initialize(mapload, obj/item/circuitboard/C)
+	screen_overlay = icon_screen // TGMC draws computer screens via screen_overlay
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(link_to_reactor)), 10 SECONDS)
 
