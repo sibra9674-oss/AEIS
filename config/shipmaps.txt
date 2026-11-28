@@ -13,11 +13,10 @@ Format:
 endmap
 
 map debugdalus
-	default
-	voteweight 0
 endmap
 
 map talos
+    default
 endmap
 
 map theseus

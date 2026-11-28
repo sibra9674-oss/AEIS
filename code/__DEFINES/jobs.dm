@@ -27,6 +27,7 @@
 #define JOB_DISPLAY_ORDER_CLOWN 24
 #define JOB_DISPLAY_ORDER_MILITARY_POLICE 25
 #define JOB_DISPLAY_ORDER_PREDATOR 26
+#define JOB_DISPLAY_ORDER_ORDNANCE_TECH 27
 
 #define JOB_FLAG_SPECIALNAME (1<<0)
 #define JOB_FLAG_LATEJOINABLE (1<<1) //Can this job be selected for prefs to join as?
@@ -58,6 +59,7 @@
 #define CORPORATE_LIAISON "Corporate Liaison"
 #define SYNTHETIC "Synthetic"
 #define SHIP_TECH "Ship Technician"
+#define ORDNANCE_TECH "Ordnance Technician"
 #define MEDICAL_DOCTOR "Medical Doctor"
 #define FIELD_RESEARCHER "Field Researcher"
 #define SQUAD_LEADER "Squad Leader"
@@ -118,10 +120,12 @@ GLOBAL_LIST_INIT(jobs_support, list(
 GLOBAL_LIST_INIT(jobs_engineering, list(
 	SQUAD_ENGINEER,
 	SHIP_TECH,
+	ORDNANCE_TECH,
 ))
 GLOBAL_LIST_INIT(jobs_requisitions, list(
 	REQUISITIONS_OFFICER,
 	SHIP_TECH,
+	ORDNANCE_TECH,
 ))
 GLOBAL_LIST_INIT(jobs_medical, list(
 	CHIEF_MEDICAL_OFFICER,
@@ -149,6 +153,7 @@ GLOBAL_LIST_INIT(jobs_regular_all, list(
 	SILICON_AI,
 	CORPORATE_LIAISON,
 	SHIP_TECH,
+	ORDNANCE_TECH,
 	MEDICAL_DOCTOR,
 	FIELD_RESEARCHER,
 	SQUAD_LEADER,

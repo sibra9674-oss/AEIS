@@ -1,0 +1,197 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/testroom)
+"m" = (
+/turf/open/floor/iron,
+/area/testroom)
+"b" = (
+/obj/structure/reagent_dispensers/ot_tank/ammonia,
+/turf/open/floor/iron,
+/area/testroom)
+"c" = (
+/obj/structure/reagent_dispensers/ot_tank/sacid,
+/turf/open/floor/iron,
+/area/testroom)
+"d" = (
+/obj/structure/reagent_dispensers/ot_tank/pacid,
+/turf/open/floor/iron,
+/area/testroom)
+"e" = (
+/obj/structure/reagent_dispensers/fueltank/ot_ethanol,
+/turf/open/floor/iron,
+/area/testroom)
+"f" = (
+/obj/structure/reagent_dispensers/fueltank/ot_hydrogen,
+/turf/open/floor/iron,
+/area/testroom)
+"g" = (
+/obj/structure/reagent_dispensers/fueltank/ot_methane,
+/turf/open/floor/iron,
+/area/testroom)
+"h" = (
+/obj/structure/reagent_dispensers/fueltank/ot_oxygen,
+/turf/open/floor/iron,
+/area/testroom)
+"i" = (
+/obj/structure/reagent_dispensers/ot_tank/custom,
+/turf/open/floor/iron,
+/area/testroom)
+"t" = (
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/testroom)
+"D" = (
+/obj/machinery/chem_dispenser,
+/turf/open/floor/iron,
+/area/testroom)
+"M" = (
+/obj/machinery/chem_master,
+/turf/open/floor/iron,
+/area/testroom)
+"F" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron,
+/area/testroom)
+"W" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/iron,
+/area/testroom)
+"V" = (
+/obj/machinery/vending/ordnance_workshop/debug,
+/turf/open/floor/iron,
+/area/testroom)
+"l" = (
+/obj/machinery/ordnance_lathe/debug,
+/turf/open/floor/iron,
+/area/testroom)
+"E" = (
+/obj/machinery/vending/engivend/nopower,
+/turf/open/floor/iron,
+/area/testroom)
+"L" = (
+/obj/effect/landmark/start/job/ordnance_tech,
+/turf/open/floor/iron,
+/area/testroom)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+m
+m
+m
+m
+V
+m
+a
+"}
+(3,1,1) = {"
+a
+c
+m
+m
+m
+F
+E
+m
+a
+"}
+(4,1,1) = {"
+a
+d
+m
+t
+m
+m
+m
+m
+a
+"}
+(5,1,1) = {"
+a
+e
+m
+t
+m
+W
+m
+m
+a
+"}
+(6,1,1) = {"
+a
+f
+m
+t
+m
+m
+m
+m
+a
+"}
+(7,1,1) = {"
+a
+g
+m
+m
+m
+m
+m
+m
+a
+"}
+(8,1,1) = {"
+a
+h
+m
+D
+m
+l
+m
+m
+a
+"}
+(9,1,1) = {"
+a
+i
+m
+M
+m
+m
+m
+m
+a
+"}
+(10,1,1) = {"
+a
+m
+m
+m
+m
+m
+L
+m
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+m
+a
+a
+a
+a
+"}

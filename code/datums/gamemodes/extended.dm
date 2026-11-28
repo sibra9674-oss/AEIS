@@ -12,6 +12,7 @@
 		/datum/job/terragov/command/assault_crewman = 2,
 		/datum/job/terragov/command/transport_crewman = 1,
 		/datum/job/terragov/requisitions/tech = 1,
+		/datum/job/terragov/requisitions/ordnance_tech = 1,
 		/datum/job/terragov/requisitions/officer = 1,
 		/datum/job/terragov/medical/professor = 1,
 		/datum/job/terragov/medical/medicalofficer = 6,

@@ -1340,6 +1340,7 @@
 #include "code\game\objects\structures\rack.dm"
 #include "code\game\objects\structures\razorwire.dm"
 #include "code\game\objects\structures\reagent_dispensers.dm"
+#include "code\game\objects\structures\ot_equipment.dm"
 #include "code\game\objects\structures\rocks.dm"
 #include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\signs.dm"

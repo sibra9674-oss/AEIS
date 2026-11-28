@@ -330,3 +330,17 @@
 	back = /obj/item/storage/backpack/satchel/sec
 	wear_suit = /obj/item/clothing/suit/armor/bulletproof/mp
 	suit_store = /obj/item/weapon/gun/energy/taser
+
+/datum/outfit/job/requisitions/ordnance_tech
+	name = ORDNANCE_TECH
+	jobtype = /datum/job/terragov/requisitions/ordnance_tech
+
+	id = /obj/item/card/id/silver
+	belt = /obj/item/storage/belt/utility/full
+	ears = /obj/item/radio/headset/mainship/st
+	w_uniform = /obj/item/clothing/under/marine/officer/engi/ot
+	shoes = /obj/item/clothing/shoes/marine/full
+	gloves = /obj/item/clothing/gloves/insulated
+	glasses = /obj/item/clothing/glasses/welding/flipped
+	r_pocket = /obj/item/storage/pouch/general/medium
+	back = /obj/item/storage/backpack/marine/engineerpack

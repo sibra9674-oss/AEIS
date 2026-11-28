@@ -160,3 +160,9 @@
 	medical = SKILL_MEDICAL_UNTRAINED
 	firearms = SKILL_FIREARMS_UNTRAINED
 	melee_weapons = SKILL_MELEE_TRAINED
+
+/datum/skills/ot
+	name = ORDNANCE_TECH
+	engineer = SKILL_ENGINEER_MASTER
+	construction = SKILL_CONSTRUCTION_MASTER
+	powerloader = SKILL_POWERLOADER_MASTER

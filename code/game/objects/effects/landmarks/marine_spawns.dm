@@ -46,6 +46,10 @@
 	icon_state = "SE"
 	job = /datum/job/terragov/requisitions/tech
 
+/obj/effect/landmark/start/job/ordnance_tech
+	icon_state = "SE"
+	job = /datum/job/terragov/requisitions/ordnance_tech
+
 /obj/effect/landmark/start/job/cmo
 	icon_state = "CMO"
 	job = /datum/job/terragov/medical/professor

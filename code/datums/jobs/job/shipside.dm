@@ -1162,3 +1162,61 @@ If you require any help, use <b>mentorhelp</b> to ask mentors about what you're 
 	. = ..()
 	to_chat(M, {"Your primary job is to uphold the law, order, peace and stability aboard the ship. Marines can get rowdy after a few weeks of cryosleep!
 	In addition, you are tasked with the security of high-ranking personnel, including the command staff. Keep them safe!"})
+
+//Ordnance Technician (port from CM-SS13)
+/datum/job/terragov/requisitions/ordnance_tech
+	title = ORDNANCE_TECH
+	comm_title = "OT"
+	paygrade = "PO3"
+	total_positions = 1
+	supervisors = "the requisitions officer"
+	access = list(ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_PREP, ACCESS_MARINE_CARGO, ACCESS_MARINE_CHEMISTRY, ACCESS_CIVILIAN_ENGINEERING)
+	minimal_access = list(ACCESS_MARINE_ENGINEERING, ACCESS_MARINE_PREP, ACCESS_MARINE_DROPSHIP, ACCESS_MARINE_CARGO, ACCESS_MARINE_CHEMISTRY, ACCESS_CIVILIAN_ENGINEERING)
+	skills_type = /datum/skills/ot
+	display_order = JOB_DISPLAY_ORDER_ORDNANCE_TECH
+	outfit = /datum/outfit/job/requisitions/ordnance_tech
+	exp_type = EXP_TYPE_MARINES
+	exp_requirements = XP_REQ_NOVICE
+	job_flags = JOB_FLAG_LATEJOINABLE|JOB_FLAG_ROUNDSTARTJOINABLE|JOB_FLAG_ALLOWS_PREFS_GEAR|JOB_FLAG_PROVIDES_BANK_ACCOUNT|JOB_FLAG_ADDTOMANIFEST|JOB_FLAG_PROVIDES_SQUAD_HUD
+	jobworth = list(
+		/datum/job/xenomorph = LARVA_POINTS_SHIPSIDE,
+		/datum/job/terragov/squad/smartgunner = SMARTIE_POINTS_REGULAR,
+		/datum/job/terragov/silicon/synthetic = SYNTH_POINTS_REGULAR,
+		/datum/job/terragov/command/mech_pilot = MECH_POINTS_REGULAR,
+		/datum/job/terragov/command/assault_crewman = ARMORED_VEHICLE_POINTS_REGULAR,
+	)
+	html_description = {"
+		<b>Difficulty</b>: Medium<br /><br />
+		<b>You answer to the</b> Requisitions Officer<br /><br />
+		<b>Unlock Requirement</b>: Starting Role<br /><br />
+		<b>Gamemode Availability</b>: Nuclear War, Distress<br /><br /><br />
+		<b>Duty</b>: Maintain the integrity of the TGMC weapons, munitions and equipment. Prepare custom ordnance for the marines and help the Pilot Officer reload the dropships.
+	"}
+	job_desc = "Следите за исправностью оружия, боеприпасов и снаряжения корпуса. Готовьте кастомные боеприпасы для морпехов и помогайте пилоту заряжать десантный корабль."
+	minimap_icon = "st"
+
+/datum/job/terragov/requisitions/ordnance_tech/after_spawn(mob/living/carbon/new_mob, mob/user, latejoin = FALSE)
+	. = ..()
+	if(!ishuman(new_mob))
+		return
+	var/mob/living/carbon/human/new_human = new_mob
+	var/playtime_mins = user?.client?.get_exp(title)
+	if(!playtime_mins || playtime_mins < 1 )
+		return
+	switch(playtime_mins)
+		if(0 to 600) // starting
+			new_human.wear_id.paygrade = "PO3"
+		if(601 to 1500) // 10hrs
+			new_human.wear_id.paygrade = "PO2"
+		if(1501 to 6000) // 25 hrs
+			new_human.wear_id.paygrade = "PO1"
+		if(6001 to 18000) // 100 hrs
+			new_human.wear_id.paygrade = "CPO"
+		if(18001 to INFINITY) // 300 hrs
+			new_human.wear_id.paygrade = "SCPO"
+	new_human.wear_id.update_label()
+
+/datum/job/terragov/requisitions/ordnance_tech/radio_help_message(mob/M)
+	. = ..()
+	to_chat(M, {"Your job is to maintain the integrity of the TGMC weapons, munitions and equipment.
+You can construct new armaments for the marines, but you remain one of the more flexible roles on the ship and may receive other menial tasks from your superiors."})

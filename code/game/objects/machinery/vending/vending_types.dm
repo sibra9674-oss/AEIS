@@ -885,3 +885,26 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/nanoammo, (-26))
 
 /obj/machinery/vending/engineering/nopower
 	use_power = NO_POWER_USE
+
+/obj/machinery/vending/ordnance_workshop
+	name = "\improper Ordnance Workshop Vendor"
+	desc = "Casings, containers and triggers for custom chemical ordnance. Ordnance Technicians only."
+	icon_state = "engivend"
+	icon_vend = "engivend-vend"
+	icon_deny = "engivend-deny"
+	req_access = list(ACCESS_MARINE_CHEMISTRY)
+	products = list(
+		/obj/item/explosive/grenade/chem_grenade = -1,
+		/obj/item/explosive/grenade/chem_grenade/large = -1,
+		/obj/item/reagent_containers/glass/beaker = -1,
+		/obj/item/reagent_containers/glass/beaker/large = -1,
+		/obj/item/assembly/igniter/unsecured = -1,
+		/obj/item/assembly/timer/unsecured = -1,
+		/obj/item/assembly/prox_sensor/unsecured = -1,
+		/obj/item/assembly/signaler/unsecured = -1,
+		/obj/item/tool/screwdriver = -1,
+		/obj/item/stack/cable_coil = -1,
+	)
+
+/obj/machinery/vending/ordnance_workshop/nopower
+	use_power = NO_POWER_USE

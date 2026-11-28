@@ -33,6 +33,10 @@
 	icon_state = "ST"
 	job = /datum/job/terragov/requisitions/tech
 
+/obj/effect/landmark/start/job/crash/ordnance_tech
+	icon_state = "ST"
+	job = /datum/job/terragov/requisitions/ordnance_tech
+
 /obj/effect/landmark/start/job/crash/cmo
 	icon_state = "CMO"
 	job = /datum/job/terragov/medical/professor

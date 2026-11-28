@@ -11,6 +11,7 @@
 		/datum/job/terragov/command/pilot = 1,
 		/datum/job/terragov/command/transportofficer = 1,
 		/datum/job/terragov/requisitions/tech = 2,
+		/datum/job/terragov/requisitions/ordnance_tech = 1,
 		/datum/job/terragov/requisitions/officer = 1,
 		/datum/job/terragov/medical/professor = 1,
 		/datum/job/terragov/medical/medicalofficer = 4,
